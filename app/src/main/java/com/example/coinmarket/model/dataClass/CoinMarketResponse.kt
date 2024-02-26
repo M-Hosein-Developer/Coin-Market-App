@@ -8,6 +8,7 @@ data class CoinMarketResponse(
         val cryptoCurrencyList: List<CryptoCurrency>,
         val totalCount: String
     ) {
+
         data class CryptoCurrency(
             val ath: Double,
             val atl: Double,
