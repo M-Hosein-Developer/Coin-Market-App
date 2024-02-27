@@ -1,5 +1,8 @@
 package com.example.coinmarket.model.dataClass
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class CoinMarketResponse(
     val `data`: Data,
     val status: Status
@@ -8,16 +11,17 @@ data class CoinMarketResponse(
         val cryptoCurrencyList: List<CryptoCurrency>,
         val totalCount: String
     ) {
-
+        @Entity
         data class CryptoCurrency(
             val ath: Double,
             val atl: Double,
-            val auditInfoList: List<AuditInfo>,
+//            val auditInfoList: List<AuditInfo>,
             val badges: List<Int>,
             val circulatingSupply: Double,
             val cmcRank: Int,
             val dateAdded: String,
             val high24h: Double,
+            @PrimaryKey(autoGenerate = false)
             val id: Int,
             val isActive: Int,
             val isAudited: Boolean,

@@ -29,6 +29,15 @@ class MainActivity : ComponentActivity() {
             Log.v("testData1",it.toString())
         }
 
+        viewModel.getCryptoListFromDb {
+            Log.v("testDataFromDb",it.toString())
+        }
+
+        viewModel.getCryptoById(1027){
+            Log.v("testDataByID",it.toString())
+
+        }
+
         setContent {
             CoinMarketTheme {
 
