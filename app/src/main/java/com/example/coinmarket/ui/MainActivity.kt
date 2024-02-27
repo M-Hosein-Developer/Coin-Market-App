@@ -1,7 +1,6 @@
 package com.example.coinmarket.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -25,23 +24,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getCryptoList{
-            Log.v("testData1",it.toString())
-        }
-
-        viewModel.getCryptoListFromDb {
-            Log.v("testDataFromDb",it.toString())
-        }
-
-        viewModel.getCryptoById(1027){
-            Log.v("testDataByID",it.toString())
-
-        }
-
         setContent {
             CoinMarketTheme {
 
-                UiScreen()
+                UiScreen(viewModel)
 
             }
         }
@@ -49,21 +35,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UiScreen() {
+fun UiScreen(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = MyScreens.HomeScreen.route){
 
         composable(MyScreens.HomeScreen.route){
-            HomeScreen()
+            HomeScreen(viewModel , navController)
         }
 
         composable(MyScreens.DetailScreen.route){
-            DetailScreen()
+            DetailScreen(viewModel)
         }
 
         composable(MyScreens.SearchScreen.route){
-            SearchScreen()
+            SearchScreen(viewModel)
         }
 
     }

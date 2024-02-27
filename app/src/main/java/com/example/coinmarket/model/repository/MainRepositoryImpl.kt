@@ -11,17 +11,14 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MainRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
-    private val dao: RoomDao
-) : MainRepository {
+class MainRepositoryImpl @Inject constructor(private val apiService: ApiService, private val dao: RoomDao) : MainRepository {
 
     override val getCryptoList: Flow<List<CoinMarketResponse.Data.CryptoCurrency>> = flow {
         while (true) {
             val data = apiService.getCryptoList().data.cryptoCurrencyList
             emit(data)
             dao.insertDataFrom(data)
-            delay(5000)
+            delay(2000)
             Log.v("testData", data.toString())
         }
     }.flowOn(Dispatchers.IO)
@@ -30,7 +27,7 @@ class MainRepositoryImpl @Inject constructor(
         while (true) {
             val data = dao.getAlLCoinFromDb()
             emit(data)
-            delay(5000)
+            delay(1000)
             Log.v("testDataFromDb", data.toString())
 
         }

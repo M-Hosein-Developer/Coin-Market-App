@@ -99,7 +99,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
     //LiveData-State
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
     //Lottie
     implementation("com.airbnb.android:lottie-compose:6.3.0")

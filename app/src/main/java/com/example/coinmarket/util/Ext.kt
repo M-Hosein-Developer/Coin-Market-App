@@ -6,3 +6,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     Log.v("error" , "Error -> " + throwable.message)
 }
+
+fun imageUrl(id: Int) : String{
+    return "https://s2.coinmarketcap.com/static/img/coins/64x64/$id.png"
+}
