@@ -57,7 +57,7 @@ fun UiScreen(viewModel: MainViewModel) {
         }
 
         composable(MyScreens.SearchScreen.route){
-            SearchScreen(viewModel)
+            SearchScreen(viewModel , navController)
         }
 
     }

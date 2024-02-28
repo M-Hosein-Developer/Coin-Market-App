@@ -1,6 +1,5 @@
 package com.example.coinmarket.ui.feature
 
-import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,8 +64,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
 
+    //get data
     val getCoinList = remember { mutableStateOf(EmptyCoin) }
-
     LaunchedEffect(Unit) {
         while (true) {
             getCoinList.value = viewModel.getCryptoList.value
@@ -76,6 +74,7 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
+    //screen
     Column(
         modifier = Modifier
             .background(White)
@@ -91,6 +90,7 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
     }
 }
 
+//tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeToolbar() {
@@ -112,16 +112,14 @@ fun HomeToolbar() {
 
 }
 
+//card
 @Composable
 fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
-
-    val configuration = LocalConfiguration.current
-    val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 0.9f else 0.3f
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(fraction)
+            .fillMaxHeight(0.3f)
             .padding(horizontal = 16.dp)
             .padding(bottom = 14.dp, top = 18.dp)
             .shadow(12.dp)
@@ -247,6 +245,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 
 }
 
+//crypto list and item
 @Composable
 fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedSearch: () -> Unit, onClickedItem: (Int) -> Unit) {
 
@@ -401,6 +400,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
 
 }
 
+//loading animation
 @Composable
 fun Loader() {
 
