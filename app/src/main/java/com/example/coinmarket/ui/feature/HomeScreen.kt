@@ -1,29 +1,36 @@
 package com.example.coinmarket.ui.feature
 
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,8 +41,15 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.ui.theme.Gradient1
+import com.example.coinmarket.ui.theme.Gradient2
+import com.example.coinmarket.ui.theme.Gradient3
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.TextBlack
@@ -63,7 +77,6 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .background(White)
     ) {
 
@@ -99,86 +112,147 @@ fun HomeToolbar() {
 @Composable
 fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 
+    val configuration = LocalConfiguration.current
+    val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 0.9f else 0.3f
 
-    Box{
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(fraction)
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 14.dp, top = 18.dp)
+            .shadow(12.dp)
+            .clip(RoundedCornerShape(24.dp))
+    ) {
 
-        AsyncImage(
-            model = R.drawable.slider_card,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 18.dp, top = 18.dp)
-                .shadow(12.dp)
-                .clip(RoundedCornerShape(24.dp))
-        )
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+        Box(
+            Modifier
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Gradient1,
+                            Gradient2,
+                            Gradient3
+                        )
+                    )
+                )
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
 
-            Column(
-                Modifier
-                    .padding(top = 48.dp)
-            ) {
+            if (getCoinList.size > 3){
 
-                Text(
-                    text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(0, 10),
-                    Modifier.padding(start = 36.dp, bottom = 8.dp),
-                    style = TextStyle(
-                        color = TextBlack,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    color = White
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
 
-                Text(
-                    text = "$" + (getCoinList[0].quotes[0].volume24h.toString()).subSequence(
-                        0,
-                        10
-                    ) + "  vol",
-                    Modifier.padding(start = 36.dp, bottom = 8.dp),
-                    style = TextStyle(
-                        color = TextBlack,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light,
-                    ),
-                    color = White
-                )
+                    Column(
+                        Modifier
+                            .fillMaxHeight()
+                            .padding(bottom = 18.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly
+                    ) {
 
-                Text(
-                    text = "%" + getCoinList[0].quotes[0].percentChange24h,
-                    Modifier.padding(start = 36.dp, bottom = 8.dp),
-                    style = TextStyle(
-                        color = TextBlack,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Light,
-                    ),
-                    color = White
-                )
+                        Text(
+                            text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(0, 10),
+                            Modifier.padding(start = 24.dp, bottom = 8.dp),
+                            style = TextStyle(
+                                color = TextBlack,
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                            color = White
+                        )
+
+                        Text(
+                            text = "$" + (getCoinList[0].quotes[0].volume24h.toString()).subSequence(
+                                0,
+                                10
+                            ) + "  vol",
+                            Modifier.padding(start = 24.dp, bottom = 8.dp),
+                            style = TextStyle(
+                                color = TextBlack,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Light,
+                            ),
+                            color = White
+                        )
+
+                        if (getCoinList[0].quotes[0].percentChange24h > 0) {
+                            Text(
+                                text = "%+" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                    .subSequence(0, 4),
+                                Modifier.padding(start = 24.dp, bottom = 8.dp),
+                                style = TextStyle(
+                                    color = TextBlack,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                                color = Green
+                            )
+                        } else if (getCoinList[0].quotes[0].percentChange24h < 0) {
+                            Text(
+                                text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                    .subSequence(0, 4),
+                                Modifier.padding(start = 24.dp, bottom = 8.dp),
+                                style = TextStyle(
+                                    color = TextBlack,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                                color = Red
+                            )
+                        } else {
+                            Text(
+                                text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                    .subSequence(0, 4),
+                                Modifier.padding(start = 24.dp, bottom = 8.dp),
+                                style = TextStyle(
+                                    color = TextBlack,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                                color = TextLightGray
+                            )
+                        }
+
+                    }
+
+                    AsyncImage(
+                        model = imageUrl(1),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 16.dp, end = 24.dp)
+                            .size(50.dp),
+                    )
+                }
+
+            }else{
+                Loader()
             }
 
-            AsyncImage(
-                model = imageUrl(1),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(end = 42.dp)
-                    .size(50.dp),
-            )
+
+
+
         }
+
     }
+
+
 }
 
 @Composable
 fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 
-    Column(
+    Row(
         Modifier
             .padding(horizontal = 20.dp)
-            .fillMaxSize()
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         Text(
@@ -189,12 +263,39 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
             )
         )
 
+        TextButton(
+            onClick = { /*TODO*/ }
+        ) {
+            Text(
+                text = "See All",
+                color = Red,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                )
+            )
+        }
+
+    }
+
+    Column(
+        Modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+
         if (getCoinList.size >= 10) {
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 items(10) {
                     CoinListItem(getCoinList[it])
                 }
             }
+        } else {
+            Loader()
         }
 
     }
@@ -204,11 +305,9 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency) {
 
     Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding()
+        modifier = Modifier.fillMaxWidth()
     ) {
 
         AsyncImage(
@@ -221,7 +320,8 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency) {
 
         Column(
             Modifier.padding(start = 8.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
         ) {
 
             Text(
@@ -236,7 +336,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency) {
 
             if (coin.quotes[0].percentChange24h > 0) {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
                     color = Green
                 )
             } else if (coin.quotes[0].percentChange24h < 0) {
@@ -294,4 +394,18 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency) {
 
     }
 
+}
+
+@Composable
+fun Loader() {
+
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.loading_anime)
+    )
+
+    LottieAnimation(
+        composition = composition,
+        iterations = LottieConstants.IterateForever,
+        modifier = Modifier.size(150.dp),
+    )
 }

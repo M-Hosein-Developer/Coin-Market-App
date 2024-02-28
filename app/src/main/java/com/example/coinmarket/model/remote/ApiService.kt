@@ -9,7 +9,7 @@ interface ApiService {
     @GET("data-api/v3/cryptocurrency/listing")
     suspend fun getCryptoList(
         @Query("start") start: Int = 1,
-        @Query("limit") limit: Int = 50,
+        @Query("limit") limit: Int = 500,
         @Query("sortBy") sortBy: String = "market_cap",
         @Query("sortType") sortType: String = "desc",
         @Query("convert") convert: String = "USD",

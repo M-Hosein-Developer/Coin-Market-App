@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,6 +24,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         setContent {
             CoinMarketTheme {
