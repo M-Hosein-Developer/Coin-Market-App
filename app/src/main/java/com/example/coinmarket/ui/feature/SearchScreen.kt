@@ -84,7 +84,7 @@ fun SearchToolbar() {
     TopAppBar(
         title = {
             Text(
-                text = "Home",
+                text = "Search",
                 style = TextStyle(
                     color = TextBlack,
                     fontSize = 28.sp,
