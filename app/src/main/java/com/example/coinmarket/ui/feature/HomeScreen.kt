@@ -3,6 +3,7 @@ package com.example.coinmarket.ui.feature
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,6 +57,7 @@ import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.viewModel.MainViewModel
@@ -74,7 +76,6 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
-
     Column(
         modifier = Modifier
             .background(White)
@@ -82,11 +83,13 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
 
         HomeToolbar()
         CardSlider(getCoinList.value)
-        CoinList(getCoinList.value)
+        CoinList(
+            getCoinList.value,
+            { navController.navigate(MyScreens.SearchScreen.route) },
+            { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
+        )
     }
-
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -245,7 +248,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 }
 
 @Composable
-fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
+fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedSearch: () -> Unit, onClickedItem: (Int) -> Unit) {
 
     Row(
         Modifier
@@ -264,7 +267,7 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
         )
 
         TextButton(
-            onClick = { /*TODO*/ }
+            onClick = { onClickedSearch.invoke() }
         ) {
             Text(
                 text = "See All",
@@ -291,7 +294,7 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                     .fillMaxWidth()
             ) {
                 items(10) {
-                    CoinListItem(getCoinList[it])
+                    CoinListItem(getCoinList[it] , onClickedItem)
                 }
             }
         } else {
@@ -302,12 +305,14 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 }
 
 @Composable
-fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency) {
+fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (Int) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClickedItem.invoke(coin.id) }
     ) {
 
         AsyncImage(

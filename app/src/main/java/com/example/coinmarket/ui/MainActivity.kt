@@ -6,9 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.SearchScreen
@@ -47,8 +49,11 @@ fun UiScreen(viewModel: MainViewModel) {
             HomeScreen(viewModel , navController)
         }
 
-        composable(MyScreens.DetailScreen.route){
-            DetailScreen(viewModel)
+        composable(
+            route = MyScreens.DetailScreen.route + "/{cryptoId}",
+            arguments = listOf(navArgument("cryptoId"){type = NavType.IntType})
+            ){
+            DetailScreen(viewModel , it.arguments!!.getInt("cryptoId" , -1))
         }
 
         composable(MyScreens.SearchScreen.route){
