@@ -18,7 +18,7 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService,
             val data = apiService.getCryptoList().data.cryptoCurrencyList
             emit(data)
             dao.insertDataFrom(data)
-            delay(1000)
+            delay(3000)
             Log.v("testData", data.toString())
         }
     }.flowOn(Dispatchers.IO)

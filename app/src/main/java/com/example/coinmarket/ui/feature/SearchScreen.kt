@@ -11,7 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -21,7 +27,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +62,8 @@ import kotlinx.coroutines.delay
 fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     val getCoinList = remember { mutableStateOf(EmptyCoin) }
+    val filterList = arrayListOf<CoinMarketResponse.Data.CryptoCurrency>()
+
     LaunchedEffect(Unit) {
         while (true) {
             getCoinList.value = viewModel.getCryptoList.value
@@ -62,14 +72,38 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
+
     Column(
         modifier = Modifier
             .background(White)
     ) {
 
         SearchToolbar()
+
+        SearchBox(
+            edtValue = viewModel.search.value,
+            icon = Icons.Default.Search,
+            hint = "Search Crypto Name"
+        ) {
+            viewModel.search.value = it
+        }
+
+
+        getCoinList.value.forEach {
+            if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
+                    .contains(viewModel.search.value)
+            ) {
+                filterList.add(it)
+            }
+        }
+
+
         CryptoList(
-            getCoinList.value
+            if (viewModel.search.value == "") {
+                getCoinList.value
+            } else {
+                filterList
+            }
         ) {
             navController.navigate(MyScreens.DetailScreen.route + "/" + it)
         }
@@ -98,14 +132,38 @@ fun SearchToolbar() {
 
 }
 
+
+@Composable
+fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
+    OutlinedTextField(
+        label = { Text(hint, color = TextBlack) },
+        value = edtValue,
+        singleLine = true,
+        onValueChange = onValueChanges,
+        placeholder = { Text(hint, color = TextBlack) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(18.dp),
+        shape = ShapeDefaults.Medium,
+        leadingIcon = { Icon(imageVector = icon, contentDescription = null, tint = TextBlack) },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = TextBlack,
+            unfocusedBorderColor = TextBlack,
+            focusedTextColor = TextBlack,
+            focusedSupportingTextColor = TextBlack,
+            cursorColor = TextBlack,
+            unfocusedTrailingIconColor = Color.Black
+        )
+    )
+
+}
+
+
 //crypto list and item
 @Composable
-fun CryptoList(
-    getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>,
-    onClickedItem: (Int) -> Unit
-) {
+fun CryptoList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedItem: (Int) -> Unit) {
 
-    if (getCoinList.size >= 10) {
+    if (getCoinList.isNotEmpty()) {
 
         LazyColumn(
 
@@ -114,7 +172,6 @@ fun CryptoList(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-
         ) {
             items(getCoinList.size) {
                 CryptoListItem(getCoinList[it], onClickedItem)
@@ -122,7 +179,16 @@ fun CryptoList(
         }
 
     } else {
-        Loading()
+
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Loading()
+            Text(text = "There is no much crypto in the list")
+        }
+
     }
 
 

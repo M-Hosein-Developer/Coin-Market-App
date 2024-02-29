@@ -20,6 +20,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: MainRepository , context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoin)
+    val search = mutableStateOf("")
 
     init {
         if (NetworkChecker(context).internetConnection){
