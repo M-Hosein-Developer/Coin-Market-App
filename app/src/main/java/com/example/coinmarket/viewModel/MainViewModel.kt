@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.repository.MainRepository
-import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.NetworkChecker
 import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: MainRepository , context: Context) : ViewModel() {
 
-    val getCryptoList = mutableStateOf(EmptyCoin)
+    val getCryptoList = mutableStateOf(EmptyCoinList)
     val search = mutableStateOf("")
 
     init {
@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository ,
 
         viewModelScope.launch {
             repository.getCryptoListFromDb
-                .catch { Log.v("errordb", "Error -> " + it.message) }
+                .catch { Log.v("errorDb", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
                 }
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository ,
 
     }
 
-    fun getCryptoById(id: Int, getCryptoById: (CoinMarketResponse.Data.CryptoCurrency) -> Unit) {
+    fun getCryptoById(id: Int , getCryptoById :(CoinMarketResponse.Data.CryptoCurrency) -> Unit) {
         viewModelScope.launch(coroutineExceptionHandler) {
             while (true) {
                 getCryptoById.invoke(repository.getCryptoByIdFromDb(id))

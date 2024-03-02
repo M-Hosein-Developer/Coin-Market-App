@@ -51,7 +51,7 @@ import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.ui.theme.White
-import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
@@ -61,7 +61,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
-    val getCoinList = remember { mutableStateOf(EmptyCoin) }
+    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
     val filterList = arrayListOf<CoinMarketResponse.Data.CryptoCurrency>()
 
     LaunchedEffect(Unit) {
@@ -163,7 +163,7 @@ fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges:
 @Composable
 fun CryptoList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedItem: (Int) -> Unit) {
 
-    if (getCoinList.isNotEmpty()) {
+    if (getCoinList.size >= 1) {
 
         LazyColumn(
 

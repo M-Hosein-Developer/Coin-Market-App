@@ -52,8 +52,8 @@ fun UiScreen(viewModel: MainViewModel) {
         composable(
             route = MyScreens.DetailScreen.route + "/{cryptoId}",
             arguments = listOf(navArgument("cryptoId"){type = NavType.IntType})
-            ){
-            DetailScreen(viewModel , it.arguments!!.getInt("cryptoId" , -1))
+        ){
+            DetailScreen(viewModel , it.arguments!!.getInt("cryptoId" , 0))
         }
 
         composable(MyScreens.SearchScreen.route){

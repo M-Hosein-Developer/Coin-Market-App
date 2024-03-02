@@ -51,10 +51,11 @@ import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
+import com.example.coinmarket.ui.theme.RedShadow
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.ui.theme.White
-import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
@@ -65,7 +66,7 @@ import kotlinx.coroutines.delay
 fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     //get data
-    val getCoinList = remember { mutableStateOf(EmptyCoin) }
+    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
     LaunchedEffect(Unit) {
         while (true) {
             getCoinList.value = viewModel.getCryptoList.value
@@ -293,7 +294,7 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClicke
                     .fillMaxWidth()
             ) {
                 items(10) {
-                    CoinListItem(getCoinList[it] , onClickedItem)
+                    CoinListItem(getCoinList[it] , { onClickedItem.invoke(it) })
                 }
             }
         } else {
@@ -319,7 +320,12 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                 .data(imageUrl(coin.id))
                 .decoderFactory(SvgDecoder.Factory())
                 .build(), contentDescription = null,
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .size(55.dp)
+                .background(RedShadow)
+                .padding(4.dp)
+                .align(Alignment.CenterVertically)
         )
 
         Column(
