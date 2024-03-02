@@ -50,6 +50,7 @@ import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
 import com.example.coinmarket.ui.theme.Green
+import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
 import com.example.coinmarket.ui.theme.TextBlack
@@ -323,7 +324,13 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
             modifier = Modifier
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
-                .background(RedShadow)
+                .background(
+                    if(coin.quotes[0].percentChange24h > 0){
+                        GreenShadow
+                    }else{
+                        RedShadow
+                    }
+                )
                 .padding(4.dp)
                 .align(Alignment.CenterVertically)
         )

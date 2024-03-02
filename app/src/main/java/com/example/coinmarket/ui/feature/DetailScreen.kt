@@ -31,6 +31,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
+import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
 import com.example.coinmarket.ui.theme.TextBlack
@@ -106,7 +107,13 @@ fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
             modifier = Modifier
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
-                .background(RedShadow)
+                .background(
+                    if(data.quotes[0].percentChange24h > 0){
+                        GreenShadow
+                    }else{
+                        RedShadow
+                    }
+                )
                 .padding(4.dp)
                 .align(Alignment.CenterVertically)
         )
