@@ -20,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +41,15 @@ import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoin
 import com.example.coinmarket.util.imageUrl
+import com.example.coinmarket.util.percentToPrice
 import com.example.coinmarket.viewModel.MainViewModel
+import com.jaikeerthick.composable_graphs.composables.line.LineGraph
+import com.jaikeerthick.composable_graphs.composables.line.model.LineData
+import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphColors
+import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphFillType
+import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphStyle
+import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphVisibility
+import com.jaikeerthick.composable_graphs.style.LabelPosition
 
 @Composable
 fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
@@ -58,11 +68,13 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
             .fillMaxSize()
     ) {
 
+        
         DetailToolbar(getCoinList.value)
         Spacer(modifier = Modifier.height(16.dp))
         CoinItem(getCoinList.value)
+        Spacer(modifier = Modifier.height(32.dp))
+        Chart(getCoinList.value)
     }
-
 }
 
 //tool bar
@@ -108,9 +120,9 @@ fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
                 .background(
-                    if(data.quotes[0].percentChange24h > 0){
+                    if (data.quotes[0].percentChange24h > 0) {
                         GreenShadow
-                    }else{
+                    } else {
                         RedShadow
                     }
                 )
@@ -161,7 +173,8 @@ fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
             }
 
             Column(
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.padding(end = 8.dp)
             ) {
 
                 Text(
@@ -187,4 +200,66 @@ fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
 
         }
     }
+}
+
+@Composable
+fun Chart(data: CoinMarketResponse.Data.CryptoCurrency) {
+
+        val graphData = listOf(
+            LineData(x = "90day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange90d)),
+            LineData(x = "60day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange60d)),
+            LineData(x = "30day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange30d)),
+            LineData(x = "7day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange7d)),
+            LineData(x = "1day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange24h)),
+            LineData(x = "1hour", y = percentToPrice(data.quotes[0].price , data.quotes[0].percentChange1h))
+        )
+
+        LineGraph(
+            modifier = Modifier
+                .padding(horizontal = 32.dp, vertical = 22.dp).padding(top = 14.dp),
+            data = graphData,
+            style =
+            LineGraphStyle(
+                visibility = LineGraphVisibility(
+                    isYAxisLabelVisible = true,
+                    isCrossHairVisible = true,
+                ),
+                yAxisLabelPosition = LabelPosition.LEFT,
+                colors = LineGraphColors(
+                    lineColor =
+                    if (data.quotes[0].percentChange24h > 0) {
+                        GreenShadow
+                    } else {
+                        RedShadow
+                    },
+
+                    pointColor =
+                    if (data.quotes[0].percentChange24h > 0) {
+                        GreenShadow
+                    } else {
+                        RedShadow
+                    },
+
+                    clickHighlightColor =
+                    if (data.quotes[0].percentChange24h > 0) {
+                        GreenShadow
+                    } else {
+                        RedShadow
+                    },
+
+                    fillType = LineGraphFillType.Gradient(
+                        brush = Brush.verticalGradient(
+                            listOf(
+                                if (data.quotes[0].percentChange24h > 0) {
+                                    GreenShadow
+                                } else {
+                                    RedShadow
+                                },
+                                Color.White
+                            )
+                        )
+                    )
+                )
+            )
+        )
 }

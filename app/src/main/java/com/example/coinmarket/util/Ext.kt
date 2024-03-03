@@ -14,3 +14,14 @@ fun imageUrl(id: Int) : String{
 fun chartUrl(id: Int) : String{
     return "https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/$id.svg"
 }
+
+fun percentToPrice(originalPrice: Double, discountPercentage: Double): Number {
+    val discountAmount = originalPrice * (discountPercentage / 100)
+    if (discountPercentage >= 0){
+        return originalPrice - discountAmount
+    }else if (discountPercentage <= 0){
+        return originalPrice + discountAmount
+    }else{
+        return originalPrice
+    }
+}

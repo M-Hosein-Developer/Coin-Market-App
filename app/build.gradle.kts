@@ -99,10 +99,10 @@ dependencies {
     implementation ("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
-    //LiveData-State
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
-
     //Lottie
     implementation("com.airbnb.android:lottie-compose:6.3.0")
+
+    //Chart
+    implementation("com.github.jaikeerthick:Composable-Graphs:v1.2.3")
 
 }
