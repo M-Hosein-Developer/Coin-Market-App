@@ -1,5 +1,7 @@
 package com.example.coinmarket.ui.feature
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -58,8 +61,8 @@ import com.jaikeerthick.composable_graphs.style.LabelPosition
 fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
 
     //get data
+    val context = LocalContext.current
     val getCoinList = remember { mutableStateOf(EmptyCoin) }
-
     viewModel.getCryptoById(coinID) {
         getCoinList.value = it
     }
@@ -78,7 +81,9 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
             CoinItem(getCoinList.value)
             Spacer(modifier = Modifier.height(32.dp))
             Chart(getCoinList.value)
-            DataToShow(getCoinList.value)
+            DataToShow(getCoinList.value){
+                context.startActivity(Intent(Intent.ACTION_VIEW , Uri.parse("https://coinmarketcap.com/currencies/$it/")))
+            }
         }
     }
 }
@@ -301,7 +306,7 @@ fun Chart(data: CoinMarketResponse.Data.CryptoCurrency) {
 }
 
 @Composable
-fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency) {
+fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (String) -> Unit) {
 
 
     Column(
@@ -456,7 +461,6 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp)
             ){
                 Text(
                     text = "Last Updated:  " + (data.dateAdded).subSequence(0 , 10) + "%",
@@ -465,10 +469,30 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency) {
 
                 Text(
                     text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
-                    modifier = Modifier.padding(bottom = 8.dp),
                 )
 
             }
         }
+    }
+
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 8.dp)
+    ){
+
+        TextButton(
+            onClick = { onMoreClicked.invoke(data.name) },
+            Modifier.fillMaxWidth(),
+        ) {
+            Text(
+                text = "More Detail...",
+                color = Red,
+                style = TextStyle(
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+
     }
 }
