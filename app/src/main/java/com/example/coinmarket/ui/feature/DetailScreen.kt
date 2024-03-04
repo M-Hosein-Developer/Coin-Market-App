@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -57,23 +60,26 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
     //get data
     val getCoinList = remember { mutableStateOf(EmptyCoin) }
 
-    viewModel.getCryptoById(coinID){
+    viewModel.getCryptoById(coinID) {
         getCoinList.value = it
     }
 
     //screen
-    Column(
-        modifier = Modifier
-            .background(White)
-            .fillMaxSize()
-    ) {
+    if (getCoinList.value.lastUpdated.length > 6) {
+        Column(
+            modifier = Modifier
+                .background(White)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
 
-        
-        DetailToolbar(getCoinList.value)
-        Spacer(modifier = Modifier.height(16.dp))
-        CoinItem(getCoinList.value)
-        Spacer(modifier = Modifier.height(32.dp))
-        Chart(getCoinList.value)
+            DetailToolbar(getCoinList.value)
+            Spacer(modifier = Modifier.height(16.dp))
+            CoinItem(getCoinList.value)
+            Spacer(modifier = Modifier.height(32.dp))
+            Chart(getCoinList.value)
+            DataToShow(getCoinList.value)
+        }
     }
 }
 
@@ -100,7 +106,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency) {
 }
 
 @Composable
-fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
+fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -205,61 +211,264 @@ fun CoinItem(data : CoinMarketResponse.Data.CryptoCurrency) {
 @Composable
 fun Chart(data: CoinMarketResponse.Data.CryptoCurrency) {
 
-        val graphData = listOf(
-            LineData(x = "90day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange90d)),
-            LineData(x = "60day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange60d)),
-            LineData(x = "30day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange30d)),
-            LineData(x = "7day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange7d)),
-            LineData(x = "1day", y =  percentToPrice(data.quotes[0].price , data.quotes[0].percentChange24h)),
-            LineData(x = "1hour", y = percentToPrice(data.quotes[0].price , data.quotes[0].percentChange1h))
+    val checkData = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d).toFloat()
+    val graphData = listOf(
+        LineData(
+            x = "", y =
+            if (checkData <= 1) {
+                1
+            } else {
+                checkData
+            }
+        ),
+
+        LineData(
+            x = "90day",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d)
+        ),
+        LineData(
+            x = "60day",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange60d)
+        ),
+        LineData(
+            x = "30day",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange30d)
+        ),
+        LineData(
+            x = "7day",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange7d)
+        ),
+        LineData(
+            x = "1day",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange24h)
+        ),
+        LineData(
+            x = "1hour",
+            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange1h)
         )
+    )
 
-        LineGraph(
-            modifier = Modifier
-                .padding(horizontal = 32.dp, vertical = 22.dp).padding(top = 14.dp),
-            data = graphData,
-            style =
-            LineGraphStyle(
-                visibility = LineGraphVisibility(
-                    isYAxisLabelVisible = true,
-                    isCrossHairVisible = true,
-                ),
-                yAxisLabelPosition = LabelPosition.LEFT,
-                colors = LineGraphColors(
-                    lineColor =
-                    if (data.quotes[0].percentChange24h > 0) {
-                        GreenShadow
-                    } else {
-                        RedShadow
-                    },
+    LineGraph(
+        modifier = Modifier
+            .padding(horizontal = 32.dp, vertical = 22.dp)
+            .padding(top = 14.dp),
+        data = graphData,
+        style =
+        LineGraphStyle(
+            visibility = LineGraphVisibility(
+                isYAxisLabelVisible = true,
+                isCrossHairVisible = true,
+                isGridVisible = true,
+            ),
+            yAxisLabelPosition = LabelPosition.LEFT,
+            colors = LineGraphColors(
+                lineColor =
+                if (data.quotes[0].percentChange24h > 0) {
+                    GreenShadow
+                } else {
+                    RedShadow
+                },
 
-                    pointColor =
-                    if (data.quotes[0].percentChange24h > 0) {
-                        GreenShadow
-                    } else {
-                        RedShadow
-                    },
+                pointColor =
+                if (data.quotes[0].percentChange24h > 0) {
+                    GreenShadow
+                } else {
+                    RedShadow
+                },
 
-                    clickHighlightColor =
-                    if (data.quotes[0].percentChange24h > 0) {
-                        GreenShadow
-                    } else {
-                        RedShadow
-                    },
+                clickHighlightColor =
+                if (data.quotes[0].percentChange24h > 0) {
+                    GreenShadow
+                } else {
+                    RedShadow
+                },
 
-                    fillType = LineGraphFillType.Gradient(
-                        brush = Brush.verticalGradient(
-                            listOf(
-                                if (data.quotes[0].percentChange24h > 0) {
-                                    GreenShadow
-                                } else {
-                                    RedShadow
-                                },
-                                Color.White
-                            )
+                fillType = LineGraphFillType.Gradient(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            if (data.quotes[0].percentChange24h > 0) {
+                                GreenShadow
+                            } else {
+                                RedShadow
+                            },
+                            Color.White
                         )
                     )
                 )
             )
         )
+    )
+}
+
+@Composable
+fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency) {
+
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(horizontal = 32.dp)
+            .padding(top = 12.dp)
+    ) {
+
+        Column {
+
+            Text(
+                text = "Volume 24H:  " + (data.quotes[0].volume24h).toString().subSequence(0 , 15),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "Volume 7d:  " + (data.quotes[0].volume7d).toString().subSequence(0 , 15),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "Volume 30d:  " + (data.quotes[0].volume30d).toString().subSequence(0 , 15),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+        }
+
+        Divider(Modifier.padding(vertical = 8.dp))
+
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        ){
+            Text(
+                text = "1H:  " + (data.quotes[0].percentChange1h).toString().subSequence(0 , 5) + "%",
+                modifier = Modifier.padding(bottom = 8.dp),
+                color =  if (data.quotes[0].percentChange24h > 0) {
+                    Green
+                } else {
+                    Red
+                }
+            )
+
+            Text(
+                text = "1d:  " + (data.quotes[0].percentChange24h).toString().subSequence(0 , 5) + "%",
+                modifier = Modifier.padding(bottom = 8.dp),
+                color =  if (data.quotes[0].percentChange24h > 0) {
+                    Green
+                } else {
+                    Red
+                }
+            )
+
+            Text(
+                    text = "7d:  " + (data.quotes[0].percentChange7d).toString().subSequence(0 , 5) + "%",
+            modifier = Modifier.padding(bottom = 8.dp),
+            color =  if (data.quotes[0].percentChange24h > 0) {
+                Green
+            } else {
+                Red
+            }
+            )
+        }
+
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        ){
+            Text(
+                text = "1M:  " + (data.quotes[0].percentChange30d).toString().subSequence(0 , 5) + "%",
+                modifier = Modifier.padding(bottom = 8.dp),
+                color =  if (data.quotes[0].percentChange24h > 0) {
+                    Green
+                } else {
+                    Red
+                }
+            )
+
+            Text(
+                text = "60d:  " + (data.quotes[0].percentChange60d).toString().subSequence(0 , 5) + "%",
+                modifier = Modifier.padding(bottom = 8.dp),
+                color =  if (data.quotes[0].percentChange24h > 0) {
+                    Green
+                } else {
+                    Red
+                }
+            )
+
+            Text(
+                text = "90d:  " + (data.quotes[0].percentChange90d).toString().subSequence(0 , 5) + "%",
+                modifier = Modifier.padding(bottom = 8.dp),
+                color =  if (data.quotes[0].percentChange24h > 0) {
+                    Green
+                } else {
+                    Red
+                }
+            )
+        }
+
+        Divider(Modifier.padding(vertical = 8.dp))
+
+        Column {
+
+            Text(
+                text = "Total Supply:  " + data.totalSupply,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "Max Supply:  " + data.maxSupply,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "High24h:  " + (data.high24h).toString().subSequence(0 , 8),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
+                text = "Low24h:  " + (data.low24h).toString().subSequence(0 , 8),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+        }
+
+        Divider(Modifier.padding(vertical = 8.dp))
+
+        Column {
+
+
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            ){
+                Text(
+                    text = "Last Updated:  " + (data.lastUpdated).subSequence(0 , 10) + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+
+                Text(
+                    text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+
+            }
+
+
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            ){
+                Text(
+                    text = "Last Updated:  " + (data.dateAdded).subSequence(0 , 10) + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+
+                Text(
+                    text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+
+            }
+        }
+    }
 }
