@@ -3,6 +3,7 @@ package com.example.coinmarket.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val White = Color(0xFFFFFFFF)
+val BlurWhite = Color(0xAEA0A6E3)
 val TextLightGray = Color(0xFF9DA3B7)
 val TextBlack = Color(0xFF17171A)
 val Red = Color(0xFFF6543E)

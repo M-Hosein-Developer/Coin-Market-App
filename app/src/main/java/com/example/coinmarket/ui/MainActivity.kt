@@ -15,15 +15,18 @@ import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.IntroScreen
 import com.example.coinmarket.ui.feature.SearchScreen
+import com.example.coinmarket.ui.feature.SignInScreen
 import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.viewModel.MainViewModel
+import com.example.coinmarket.viewModel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val signInViewModel : SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoinMarketTheme {
 
-                UiScreen(viewModel)
+                UiScreen(viewModel , signInViewModel)
 
             }
         }
@@ -41,7 +44,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UiScreen(viewModel: MainViewModel) {
+fun UiScreen(viewModel: MainViewModel, signInViewModel: SignInViewModel) {
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route){
@@ -63,6 +66,10 @@ fun UiScreen(viewModel: MainViewModel) {
 
         composable(MyScreens.IntroScreen.route){
             IntroScreen(navController)
+        }
+
+        composable(MyScreens.SignInScreen.route){
+            SignInScreen(navController , signInViewModel)
         }
 
     }
