@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.coinmarket" />
+                  <option name="mobileSdkAppId" value="1:14261320478:android:b3c36620c5c51f25d6e70f" />
+                  <option name="projectId" value="coin-market-31ca2" />
+                  <option name="projectNumber" value="14261320478" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

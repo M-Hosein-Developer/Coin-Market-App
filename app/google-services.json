@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "14261320478",
+    "project_id": "coin-market-31ca2",
+    "storage_bucket": "coin-market-31ca2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14261320478:android:b3c36620c5c51f25d6e70f",
+        "android_client_info": {
+          "package_name": "com.example.coinmarket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc6wAehWLgoxxwrgr8SMDCrfbKCAxKMpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

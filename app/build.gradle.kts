@@ -105,4 +105,9 @@ dependencies {
     //Chart
     implementation("com.github.jaikeerthick:Composable-Graphs:v1.2.3")
 
+    //Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-auth")
+
+
 }

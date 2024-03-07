@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HomeScreen
+import com.example.coinmarket.ui.feature.IntroScreen
 import com.example.coinmarket.ui.feature.SearchScreen
 import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.util.MyScreens
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
 fun UiScreen(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = MyScreens.HomeScreen.route){
+    NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route){
 
         composable(MyScreens.HomeScreen.route){
             HomeScreen(viewModel , navController)
@@ -58,6 +59,10 @@ fun UiScreen(viewModel: MainViewModel) {
 
         composable(MyScreens.SearchScreen.route){
             SearchScreen(viewModel , navController)
+        }
+
+        composable(MyScreens.IntroScreen.route){
+            IntroScreen(navController)
         }
 
     }
