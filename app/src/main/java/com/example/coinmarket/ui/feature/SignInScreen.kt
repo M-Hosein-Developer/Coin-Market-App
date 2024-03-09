@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -32,15 +33,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.introTextColor
-import com.example.coinmarket.viewModel.SignInViewModel
+import com.example.coinmarket.viewModel.SignInUpViewModel
 
 @Composable
-fun SignInScreen(navController: NavHostController, viewModel: SignInViewModel) {
+fun SignInScreen(
+    viewModel: SignInUpViewModel,
+    onSignInClicked: () -> Unit
+) {
 
     Box(
         Modifier.fillMaxSize(),
@@ -67,6 +70,7 @@ fun SignInScreen(navController: NavHostController, viewModel: SignInViewModel) {
         Column(
             Modifier
                 .fillMaxWidth(0.9f)
+                .wrapContentSize()
                 .clip(RoundedCornerShape(18.dp))
                 .background(BlurWhite),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +94,9 @@ fun SignInScreen(navController: NavHostController, viewModel: SignInViewModel) {
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onSignInClicked.invoke()
+                },
                 modifier = Modifier
                     .padding(24.dp)
                     .fillMaxHeight(0.07f)
@@ -146,7 +152,13 @@ fun SignInPassword(edtValue: String, icon: ImageVector, hint: String, onValueCha
             .padding(horizontal = 18.dp),
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null, tint = TextBlack) },
-
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = TextBlack,
+            unfocusedBorderColor = TextBlack,
+            focusedTextColor = TextBlack,
+            focusedSupportingTextColor = TextBlack,
+            cursorColor = TextBlack,
+            unfocusedTrailingIconColor = Color.Black
+        )
     )
 }
-
