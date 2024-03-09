@@ -47,10 +47,10 @@ import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.viewModel.SignInUpViewModel
 
 @Composable
-fun SignInScreen(
+fun SignUpScreen(
     viewModel: SignInUpViewModel,
     navController: NavHostController,
-    onSignInClicked: () -> Unit
+    onSignUpClicked: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -87,30 +87,49 @@ fun SignInScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            SignInEmail(
-                viewModel.signInEmail.value,
+            SignUpEmail(
+                viewModel.signUpEmail.value,
                 Icons.Default.Email,
                 "Enter Your Email"
-            ){
-                viewModel.signInEmail.value = it
+            ) {
+                viewModel.signUpEmail.value = it
             }
 
-            SignInPassword(
-                viewModel.signInPassword.value,
+            SignUpPassword(
+                viewModel.signUpPassword.value,
                 Icons.Default.Lock,
                 "Enter Your Password"
-            ){
-                viewModel.signInPassword.value = it
+            ) {
+                viewModel.signUpPassword.value = it
+            }
+
+            SignUpPassword(
+                viewModel.signUpConfirmPassword.value,
+                Icons.Default.Lock,
+                "Confirm Your Password"
+            ) {
+                viewModel.signUpConfirmPassword.value = it
             }
 
             Button(
                 onClick = {
 
                     if (
-                        viewModel.signInEmail.value.isNotEmpty() &&
-                        viewModel.signInPassword.value.isNotEmpty()
-                    ){
-                        onSignInClicked.invoke()
+                        viewModel.signUpEmail.value.isNotEmpty() &&
+                        viewModel.signUpPassword.value.isNotEmpty() &&
+                        viewModel.signUpConfirmPassword.value.isNotEmpty()
+                        ){
+
+                        if ( viewModel.signUpPassword.value.isNotEmpty() == viewModel.signUpConfirmPassword.value.isNotEmpty()){
+
+                            onSignUpClicked.invoke()
+
+                        }else{
+
+                            Toast.makeText(context, "Password Are Not The same", Toast.LENGTH_SHORT).show()
+
+                        }
+
                     }else{
                         Toast.makeText(context, "Please Complete Field...", Toast.LENGTH_SHORT).show()
                     }
@@ -130,10 +149,10 @@ fun SignInScreen(
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Text(text = "Don`t have an account?")
-                
-                TextButton(onClick = { navController.navigate(MyScreens.SignUpScreen.route) }) {
-                    Text(text = "Register Here")
+                Text(text = "Already have an account?")
+
+                TextButton(onClick = { navController.navigate(MyScreens.SignInScreen.route) }) {
+                    Text(text = "Log In")
                 }
 
             }
@@ -141,12 +160,10 @@ fun SignInScreen(
         }
     }
 
-
-
 }
 
 @Composable
-fun SignInEmail(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
+fun SignUpEmail(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
     OutlinedTextField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         label = { Text(hint, color = TextBlack) },
@@ -156,7 +173,8 @@ fun SignInEmail(edtValue: String, icon: ImageVector, hint: String, onValueChange
         placeholder = { Text(hint, color = TextBlack) },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 18.dp).padding(vertical = 8.dp),
+            .padding(horizontal = 18.dp)
+            .padding(vertical = 8.dp),
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null, tint = TextBlack) },
         colors = OutlinedTextFieldDefaults.colors(
@@ -172,7 +190,7 @@ fun SignInEmail(edtValue: String, icon: ImageVector, hint: String, onValueChange
 }
 
 @Composable
-fun SignInPassword(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
+fun SignUpPassword(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
     OutlinedTextField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         label = { Text(hint) },
@@ -182,7 +200,8 @@ fun SignInPassword(edtValue: String, icon: ImageVector, hint: String, onValueCha
         placeholder = { Text(hint) },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 18.dp).padding(vertical = 8.dp),
+            .padding(horizontal = 18.dp)
+            .padding(vertical = 8.dp),
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null, tint = TextBlack) },
         visualTransformation = PasswordVisualTransformation(),

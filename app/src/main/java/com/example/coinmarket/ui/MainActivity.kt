@@ -19,6 +19,7 @@ import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.IntroScreen
 import com.example.coinmarket.ui.feature.SearchScreen
 import com.example.coinmarket.ui.feature.SignInScreen
+import com.example.coinmarket.ui.feature.SignUpScreen
 import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.viewModel.MainViewModel
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
     private fun signInUser(navHostController: NavHostController) {
         auth = Firebase.auth
 
-        auth.signInWithEmailAndPassword(signInUpViewModel.email.value, signInUpViewModel.password.value)
+        auth.signInWithEmailAndPassword(signInUpViewModel.signInEmail.value, signInUpViewModel.signInPassword.value)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
@@ -120,8 +121,14 @@ fun UiScreen(
         }
 
         composable(MyScreens.SignInScreen.route){
-            SignInScreen(signInUpViewModel) {
+            SignInScreen(signInUpViewModel , navController) {
                 onSignInClicked.invoke(navController)
+            }
+        }
+
+        composable(MyScreens.SignUpScreen.route){
+            SignUpScreen(signInUpViewModel, navController) {
+
             }
         }
 
