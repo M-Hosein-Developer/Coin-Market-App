@@ -16,4 +16,4 @@ val Gradient1 = Color(0xFF242CE7)
 val Gradient2 = Color(0xFF69B1E1)
 val Gradient3 = Color(0xFFB471B8)
 
-val introTextColor = Color(0xFF6552FE)
+val introTextColor = Color(0xFF503BFF)

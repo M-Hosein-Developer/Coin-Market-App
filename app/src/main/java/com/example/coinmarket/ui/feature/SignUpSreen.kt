@@ -35,9 +35,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.BlurBlue
@@ -87,6 +90,15 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
+            Text(
+                text = "Sign Up",
+                style = TextStyle(
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(top = 8.dp , bottom = 14.dp)
+            )
+            
             SignUpEmail(
                 viewModel.signUpEmail.value,
                 Icons.Default.Email,
@@ -136,7 +148,7 @@ fun SignUpScreen(
 
                 },
                 modifier = Modifier
-                    .padding(top = 24.dp , start = 18.dp , end = 18.dp)
+                    .padding(top = 24.dp, start = 18.dp, end = 18.dp)
                     .fillMaxHeight(0.07f)
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(introTextColor)

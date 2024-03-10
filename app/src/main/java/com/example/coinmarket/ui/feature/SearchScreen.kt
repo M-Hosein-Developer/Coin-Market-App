@@ -1,9 +1,11 @@
 package com.example.coinmarket.ui.feature
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,10 +29,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,11 +51,11 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.TextLightGray
-import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
@@ -72,43 +77,64 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
-
-    Column(
-        modifier = Modifier
-            .background(White)
+    Box(
+        Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
 
-        SearchToolbar()
-
-        SearchBox(
-            edtValue = viewModel.search.value,
-            icon = Icons.Default.Search,
-            hint = "Search Crypto Name"
+        Box(
+            Modifier
+                .fillMaxSize()
+                .blur(12.dp),
+            contentAlignment = Alignment.Center
         ) {
-            viewModel.search.value = it
+
+            Image(
+                painter = painterResource(R.drawable.backgroun2),
+                contentDescription = null,
+                Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
         }
 
+        Column(
+            modifier = Modifier
+                .background(BlurWhite)
+        ) {
 
-        getCoinList.value.forEach {
-            if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
-                    .contains(viewModel.search.value)
+            SearchToolbar()
+
+            SearchBox(
+                edtValue = viewModel.search.value,
+                icon = Icons.Default.Search,
+                hint = "Search Crypto Name"
             ) {
-                filterList.add(it)
+                viewModel.search.value = it
+            }
+
+
+            getCoinList.value.forEach {
+                if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
+                        .contains(viewModel.search.value)
+                ) {
+                    filterList.add(it)
+                }
+            }
+
+
+            CryptoList(
+                if (viewModel.search.value == "") {
+                    getCoinList.value
+                } else {
+                    filterList
+                }
+            ) {
+                navController.navigate(MyScreens.DetailScreen.route + "/" + it)
             }
         }
 
 
-        CryptoList(
-            if (viewModel.search.value == "") {
-                getCoinList.value
-            } else {
-                filterList
-            }
-        ) {
-            navController.navigate(MyScreens.DetailScreen.route + "/" + it)
-        }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
