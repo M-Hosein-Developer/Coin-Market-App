@@ -36,10 +36,11 @@ class MainActivity : ComponentActivity() {
     private val signInUpViewModel: SignInUpViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContent {
             CoinMarketTheme {
