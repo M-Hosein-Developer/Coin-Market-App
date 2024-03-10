@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
-import com.example.coinmarket.ui.theme.BlurWhite
+import com.example.coinmarket.ui.theme.BlurBlue
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.introTextColor
 import com.example.coinmarket.util.MyScreens
@@ -82,7 +82,7 @@ fun SignInScreen(
                 .fillMaxWidth(0.9f)
                 .wrapContentSize()
                 .clip(RoundedCornerShape(18.dp))
-                .background(BlurWhite),
+                .background(BlurBlue),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

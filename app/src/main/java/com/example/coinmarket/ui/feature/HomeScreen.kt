@@ -1,6 +1,7 @@
 package com.example.coinmarket.ui.feature
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,11 +27,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,6 +50,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
@@ -76,20 +81,43 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
-    //screen
-    Column(
-        modifier = Modifier
-            .background(White)
+    Box(
+        Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
 
-        HomeToolbar()
-        CardSlider(getCoinList.value)
-        CoinList(
-            getCoinList.value,
-            { navController.navigate(MyScreens.SearchScreen.route) },
-            { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
-        )
+        Box(
+            Modifier
+                .fillMaxSize()
+                .blur(12.dp),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Image(
+                painter = painterResource(R.drawable.backgroun2),
+                contentDescription = null,
+                Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+        //screen
+        Column(
+            modifier = Modifier
+                .background(BlurWhite)
+        ) {
+
+            HomeToolbar()
+            CardSlider(getCoinList.value)
+            CoinList(
+                getCoinList.value,
+                { navController.navigate(MyScreens.SearchScreen.route) },
+                { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
+            )
+        }
+
     }
+
 }
 
 //tool bar

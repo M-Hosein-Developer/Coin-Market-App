@@ -33,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-    private val signInUpViewModel : SignInUpViewModel by viewModels()
+    private val signInUpViewModel: SignInUpViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +46,8 @@ class MainActivity : ComponentActivity() {
 
                 UiScreen(viewModel, signInUpViewModel, {
                     signInUser(it)
+                }, {
+                    signUpUser(it)
                 }
                 )
 
@@ -54,11 +56,14 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    //firebase32
+    //firebase
     private fun signInUser(navHostController: NavHostController) {
         auth = Firebase.auth
 
-        auth.signInWithEmailAndPassword(signInUpViewModel.signInEmail.value, signInUpViewModel.signInPassword.value)
+        auth.signInWithEmailAndPassword(
+            signInUpViewModel.signInEmail.value,
+            signInUpViewModel.signInPassword.value
+        )
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
@@ -72,9 +77,9 @@ class MainActivity : ComponentActivity() {
                     editor.putString("signIn", "successful")
                     editor.apply()
 
-                    navHostController.navigate(MyScreens.HomeScreen.route){
+                    navHostController.navigate(MyScreens.HomeScreen.route) {
 
-                        popUpTo(MyScreens.SignInScreen.route){
+                        popUpTo(MyScreens.SignInScreen.route) {
                             inclusive = true
                         }
 
@@ -86,53 +91,84 @@ class MainActivity : ComponentActivity() {
                         .show()
 
                 }
+
             }
     }
 
+    private fun signUpUser(navHostController: NavHostController) {
+        auth = Firebase.auth
+        auth.createUserWithEmailAndPassword(
+            signInUpViewModel.signUpEmail.value, signInUpViewModel.signUpPassword.value
+        ).addOnCompleteListener(this) { task ->
+
+            if (task.isSuccessful) {
+
+                Toast.makeText(this, "Successful registration", Toast.LENGTH_SHORT).show()
+                val pref = this.getSharedPreferences(
+                    "Successful SignIn", Context.MODE_PRIVATE
+                )
+                val editor = pref.edit()
+                editor.putString("signIn", "successful")
+                editor.apply()
+
+                navHostController.navigate(MyScreens.HomeScreen.route) {
+
+                    popUpTo(MyScreens.SignInScreen.route) {
+                        inclusive = true
+                    }
+
+                }
+            } else {
+                Toast.makeText(this, "Registration not successful ", Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+    }
 }
 
 @Composable
 fun UiScreen(
     viewModel: MainViewModel,
     signInUpViewModel: SignInUpViewModel,
-    onSignInClicked: (NavHostController) -> Unit
+    onSignInClicked: (NavHostController) -> Unit,
+    onSignUpClicked: (NavHostController) -> Unit
 ) {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route){
+    NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route) {
 
-        composable(MyScreens.HomeScreen.route){
-            HomeScreen(viewModel , navController)
+        composable(MyScreens.HomeScreen.route) {
+            HomeScreen(viewModel, navController)
         }
 
         composable(
             route = MyScreens.DetailScreen.route + "/{cryptoId}",
-            arguments = listOf(navArgument("cryptoId"){type = NavType.IntType})
-        ){
-            DetailScreen(viewModel , it.arguments!!.getInt("cryptoId" , 0))
+            arguments = listOf(navArgument("cryptoId") { type = NavType.IntType })
+        ) {
+            DetailScreen(viewModel, it.arguments!!.getInt("cryptoId", 0))
         }
 
-        composable(MyScreens.SearchScreen.route){
-            SearchScreen(viewModel , navController)
+        composable(MyScreens.SearchScreen.route) {
+            SearchScreen(viewModel, navController)
         }
 
-        composable(MyScreens.IntroScreen.route){
+        composable(MyScreens.IntroScreen.route) {
             IntroScreen(navController)
         }
 
-        composable(MyScreens.SignInScreen.route){
-            SignInScreen(signInUpViewModel , navController) {
+        composable(MyScreens.SignInScreen.route) {
+            SignInScreen(signInUpViewModel, navController) {
                 onSignInClicked.invoke(navController)
             }
         }
 
-        composable(MyScreens.SignUpScreen.route){
+        composable(MyScreens.SignUpScreen.route) {
             SignUpScreen(signInUpViewModel, navController) {
-
+                onSignUpClicked.invoke(navController)
             }
         }
 
     }
-
 }
 
