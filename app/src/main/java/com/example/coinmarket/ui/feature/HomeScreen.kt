@@ -81,6 +81,8 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
+
+
     Box(
         Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -322,8 +324,8 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClicke
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                items(10) {
-                    CoinListItem(getCoinList[it] , { onClickedItem.invoke(it) })
+                items(10) { it ->
+                    CoinListItem(getCoinList[it]) { onClickedItem.invoke(it) }
                 }
             }
         } else {
@@ -353,9 +355,9 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
                 .background(
-                    if(coin.quotes[0].percentChange24h > 0){
+                    if (coin.quotes[0].percentChange24h > 0) {
                         GreenShadow
-                    }else{
+                    } else {
                         RedShadow
                     }
                 )

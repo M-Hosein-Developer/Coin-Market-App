@@ -40,7 +40,7 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService,
     override val getDollarPrice: Flow<PriceResponse> = flow {
         while (true){
             emit(apiServicePrice.getPriceDollar())
-            delay(1000)
+            delay(10000)
         }
     }.flowOn(Dispatchers.IO)
 
