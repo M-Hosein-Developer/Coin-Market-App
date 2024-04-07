@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.model.repository.MainRepository
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.NetworkChecker
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: MainRepository , context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
+    val getDollarPrice = mutableStateOf<PriceResponse?>(null)
     val search = mutableStateOf("")
 
     init {
@@ -63,5 +65,13 @@ class MainViewModel @Inject constructor(private val repository: MainRepository ,
         }
     }
 
+    fun getDollarPrice() = viewModelScope.launch {
+        repository.getDollarPrice
+            .catch {
+                Log.v("error", "Error -> " + it.message)
+            }.collect{
+                getDollarPrice.value = it
+            }
+    }
 
 }
