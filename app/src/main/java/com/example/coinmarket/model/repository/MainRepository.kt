@@ -1,6 +1,7 @@
 package com.example.coinmarket.model.repository
 
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.model.dataClass.PriceResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
@@ -12,5 +13,7 @@ interface MainRepository {
     val getCryptoListFromDb : Flow<List<CoinMarketResponse.Data.CryptoCurrency>>
 
     suspend fun getCryptoByIdFromDb(id : Int) : CoinMarketResponse.Data.CryptoCurrency
+
+    val getDollarPrice : Flow<PriceResponse>
 
 }
