@@ -3,6 +3,7 @@ package com.example.coinmarket.util
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 
 const val BASE_URL = "https://api.coinmarketcap.com/"
+const val BASE_URL_PRICE = "https://raw.githubusercontent.com/"
 
 val EmptyCoinList = listOf(
 

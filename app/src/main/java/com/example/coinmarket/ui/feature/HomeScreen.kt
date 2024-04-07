@@ -402,7 +402,8 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
             model = ImageRequest.Builder(LocalContext.current)
                 .data(chartUrl(coin.id))
                 .decoderFactory(SvgDecoder.Factory())
-                .build(), contentDescription = null,
+                .build(),
+            contentDescription = null,
             modifier = Modifier.size(120.dp),
             colorFilter =
             if (coin.quotes[0].percentChange24h > 0){
@@ -411,6 +412,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                 ColorFilter.tint(Red)
             }
         )
+
 
         Column(
             horizontalAlignment = Alignment.End
