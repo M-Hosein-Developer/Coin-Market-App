@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -50,6 +51,7 @@ import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.util.percentToPrice
 import com.example.coinmarket.viewModel.MainViewModel
@@ -62,7 +64,7 @@ import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphVisibi
 import com.jaikeerthick.composable_graphs.style.LabelPosition
 
 @Composable
-fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
+fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostController) {
 
     //get data
     val context = LocalContext.current
@@ -80,7 +82,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            DetailToolbar(getCoinList.value){  }
+            DetailToolbar(getCoinList.value){ navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) }
 
             Spacer(modifier = Modifier.height(16.dp))
             CoinItem(getCoinList.value)
@@ -96,7 +98,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Double) -> Unit) {
+fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit) {
 
     TopAppBar(
         title = {
@@ -114,7 +116,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
         actions = {
             IconButton(
                 onClick = {
-                onCalculatorClick.invoke(data.quotes[0].price)
+                onCalculatorClick.invoke(data.quotes[0].price.toFloat())
             }
             ) {
                 Icon(

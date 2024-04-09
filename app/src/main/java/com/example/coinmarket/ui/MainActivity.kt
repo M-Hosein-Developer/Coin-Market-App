@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.coinmarket.ui.feature.CalculatorScreen
 import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.IntroScreen
@@ -147,7 +148,7 @@ fun UiScreen(
             route = MyScreens.DetailScreen.route + "/{cryptoId}",
             arguments = listOf(navArgument("cryptoId") { type = NavType.IntType })
         ) {
-            DetailScreen(viewModel, it.arguments!!.getInt("cryptoId", 0))
+            DetailScreen(viewModel, it.arguments!!.getInt("cryptoId", 0) , navController)
         }
 
         composable(MyScreens.SearchScreen.route) {
@@ -169,6 +170,14 @@ fun UiScreen(
                 onSignUpClicked.invoke(navController)
             }
         }
+
+        composable(
+            route = MyScreens.CalculatorScreen.route + "/{cryptoPrice}",
+            arguments = listOf(navArgument("cryptoPrice"){ type = NavType.FloatType })
+        ) {
+            CalculatorScreen(viewModel , navController , it.arguments!!.getFloat("cryptoPrice" , -1.1f))
+        }
+
 
     }
 }
