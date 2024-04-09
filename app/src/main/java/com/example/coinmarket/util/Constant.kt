@@ -1,6 +1,7 @@
 package com.example.coinmarket.util
 
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.model.dataClass.PriceResponse
 
 const val BASE_URL = "https://api.coinmarketcap.com/"
 const val BASE_URL_PRICE = "https://raw.githubusercontent.com/"
@@ -28,4 +29,17 @@ val EmptyCoin = CoinMarketResponse.Data.CryptoCurrency(
         1000000.0000000001 , 1000000.0000000001 , 1000000.0000000001 , 1000000.0000000001 , 1000000.0000000001 , 1000000.0000000001 , 1000000.0000000001 ,
         1000000.0000000001 , 1000000.0000000001, 1000000.0000000001 , 1000000.0000000001)) ,
     1000000.0000000001 ,"null" , "null" , 1000000.0000000001
+)
+
+val EmptyDollar = PriceResponse(
+    "",
+    -1,
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
 )
