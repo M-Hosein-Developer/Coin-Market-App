@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -29,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
@@ -76,7 +80,8 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            DetailToolbar(getCoinList.value)
+            DetailToolbar(getCoinList.value){  }
+
             Spacer(modifier = Modifier.height(16.dp))
             CoinItem(getCoinList.value)
             Spacer(modifier = Modifier.height(32.dp))
@@ -91,7 +96,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int) {
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency) {
+fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Double) -> Unit) {
 
     TopAppBar(
         title = {
@@ -105,8 +110,22 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp)
             )
+        },
+        actions = {
+            IconButton(
+                onClick = {
+                onCalculatorClick.invoke(data.quotes[0].price)
+            }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.calculator),
+                    contentDescription = null,
+                    modifier = Modifier.padding(4.dp , end = 4.dp)
+                )
+            }
         }
     )
+
 
 }
 
@@ -477,7 +496,10 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
 
     Row(
         horizontalArrangement = Arrangement.End,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 8.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+            .padding(bottom = 8.dp)
     ){
 
         TextButton(
