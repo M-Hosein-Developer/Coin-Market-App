@@ -1,19 +1,28 @@
 package com.example.coinmarket.ui.feature
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -47,12 +56,13 @@ fun CalculatorScreen(
 
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
             .background(Color.White)
     ) {
 
         CalculatorToolbar()
-        
+        CryptoNumber(coinPrice)
 
     }
 
@@ -76,5 +86,81 @@ fun CalculatorToolbar() {
             )
         }
     )
+
+}
+
+@Composable
+fun CryptoNumber(coinPrice: Float) {
+
+    var counter by remember { mutableIntStateOf(1) }
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .border(1.dp , Color.Black)
+            .padding(24.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Text(
+            text = "$ " + (coinPrice * counter).toString(),
+            style = TextStyle(
+                fontSize = 24.sp
+            )
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Button(
+                onClick = {
+                    if (counter == 1) {
+                        counter = 1
+                    } else {
+                        counter--
+                    }
+                },
+                border = BorderStroke(1.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(Color.White)
+            ) {
+                Text(
+                    text = "-",
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 18.sp
+                    )
+                )
+            }
+
+            Text(
+                text = counter.toString(),
+                Modifier.padding(horizontal = 12.dp),
+                style = TextStyle(
+                    fontSize = 18.sp
+                )
+            )
+
+            Button(
+                onClick = { counter++ },
+                border = BorderStroke(1.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(Color.White),
+            ) {
+                Text(
+                    text = "+",
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 18.sp
+                    )
+                )
+            }
+
+        }
+
+
+    }
+
 
 }
