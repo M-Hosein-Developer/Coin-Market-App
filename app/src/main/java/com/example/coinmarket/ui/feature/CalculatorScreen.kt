@@ -1,9 +1,11 @@
 package com.example.coinmarket.ui.feature
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,15 +28,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.util.EmptyDollar
@@ -58,6 +64,8 @@ fun CalculatorScreen(
         }
 
     }
+
+    Log.v("testPrice", dollarPrice.toString())
 
 
     Column(
@@ -105,9 +113,9 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
             Modifier
                 .fillMaxWidth()
                 .height(150.dp)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 18.dp)
                 .shadow(4.dp)
-                .padding(12.dp)
+                .padding(8.dp)
                 .clip(RoundedCornerShape(100.dp)),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -172,80 +180,84 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
 
         }
 
-
         Spacer(modifier = Modifier.height(12.dp))
-
 
         Row(
             Modifier
                 .fillMaxWidth()
                 .height(150.dp)
-                .padding(horizontal = 24.dp)
-                .shadow(4.dp)
-                .padding(12.dp)
-                .clip(RoundedCornerShape(100.dp)),
+                .padding(horizontal = 18.dp)
+                .shadow(4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Text(
-                text = "IR " + ((coinPrice * (dollarPrice.p.toInt())) * counter).toString(),
-                style = TextStyle(
-                    fontSize = 24.sp
-                )
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                contentAlignment = Alignment.CenterStart
             ) {
 
-                Button(
-                    onClick = {
-                        if (counter == 1) {
-                            counter = 1
-                        } else {
-                            counter--
-                        }
-                    },
-                    border = BorderStroke(1.dp, Color.Black),
-                    colors = ButtonDefaults.buttonColors(Color.White)
-                ) {
-                    Text(
-                        text = "-",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 18.sp
-                        )
-                    )
-                }
+                AsyncImage(
+                    model = R.drawable.irflag,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .blur(18.dp),
+                    contentScale = ContentScale.Crop
 
-                Text(
-                    text = counter.toString(),
-                    Modifier.padding(horizontal = 12.dp),
-                    style = TextStyle(
-                        fontSize = 18.sp
-                    )
                 )
 
-                Button(
-                    onClick = { counter++ },
-                    border = BorderStroke(1.dp, Color.Black),
-                    colors = ButtonDefaults.buttonColors(Color.White),
-                ) {
-                    Text(
-                        text = "+",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 18.sp
-                        )
-                    )
-                }
+
+                Text(
+                    text = "IR " + ((coinPrice * (dollarPrice.p.filterNot { it == ',' }
+                        .toInt())) * counter).toString(),
+                    style = TextStyle(
+                        fontSize = 24.sp
+                    ),
+                    modifier = Modifier.padding(8.dp)
+                )
+
 
             }
-
-
         }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(horizontal = 18.dp)
+                .shadow(4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            Box(
+                contentAlignment = Alignment.CenterStart
+            ) {
+
+                AsyncImage(
+                    model = R.drawable.usa,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .blur(18.dp),
+                    contentScale = ContentScale.Crop
+                )
+
+
+                Text(
+                    text = "$1 = " + dollarPrice.p + " Rial",
+
+                    style = TextStyle(
+                        fontSize = 24.sp
+                    ),
+                    modifier = Modifier.padding(8.dp)
+                )
+
+            }
+        }
+
 
     }
 
