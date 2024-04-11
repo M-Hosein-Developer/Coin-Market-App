@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
@@ -65,7 +67,7 @@ fun CalculatorScreen(
     ) {
 
         CalculatorToolbar()
-        CryptoNumber(coinPrice)
+        CryptoNumber(coinPrice , dollarPrice)
 
     }
 
@@ -93,80 +95,158 @@ fun CalculatorToolbar() {
 }
 
 @Composable
-fun CryptoNumber(coinPrice: Float) {
+fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
 
     var counter by remember { mutableIntStateOf(1) }
 
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .padding(horizontal = 24.dp)
-            .shadow(4.dp)
-            .padding(12.dp)
-            .clip(RoundedCornerShape(100.dp)),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-
-        Text(
-            text = "$ " + (coinPrice * counter).toString(),
-            style = TextStyle(
-                fontSize = 24.sp
-            )
-        )
+    Column {
 
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+            Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(horizontal = 24.dp)
+                .shadow(4.dp)
+                .padding(12.dp)
+                .clip(RoundedCornerShape(100.dp)),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Button(
-                onClick = {
-                    if (counter == 1) {
-                        counter = 1
-                    } else {
-                        counter--
-                    }
-                },
-                border = BorderStroke(1.dp, Color.Black),
-                colors = ButtonDefaults.buttonColors(Color.White)
-            ) {
-                Text(
-                    text = "-",
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 18.sp
-                    )
-                )
-            }
-
             Text(
-                text = counter.toString(),
-                Modifier.padding(horizontal = 12.dp),
+                text = "$ " + (coinPrice * counter).toString(),
                 style = TextStyle(
-                    fontSize = 18.sp
+                    fontSize = 24.sp
                 )
             )
 
-            Button(
-                onClick = { counter++ },
-                border = BorderStroke(1.dp, Color.Black),
-                colors = ButtonDefaults.buttonColors(Color.White),
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
+
+                Button(
+                    onClick = {
+                        if (counter == 1) {
+                            counter = 1
+                        } else {
+                            counter--
+                        }
+                    },
+                    border = BorderStroke(1.dp, Color.Black),
+                    colors = ButtonDefaults.buttonColors(Color.White)
+                ) {
+                    Text(
+                        text = "-",
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                    )
+                }
+
                 Text(
-                    text = "+",
+                    text = counter.toString(),
+                    Modifier.padding(horizontal = 12.dp),
                     style = TextStyle(
-                        color = Color.Black,
                         fontSize = 18.sp
                     )
                 )
+
+                Button(
+                    onClick = { counter++ },
+                    border = BorderStroke(1.dp, Color.Black),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                ) {
+                    Text(
+                        text = "+",
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                    )
+                }
+
             }
+
 
         }
 
 
-    }
+        Spacer(modifier = Modifier.height(12.dp))
 
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(horizontal = 24.dp)
+                .shadow(4.dp)
+                .padding(12.dp)
+                .clip(RoundedCornerShape(100.dp)),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            Text(
+                text = "IR " + ((coinPrice * (dollarPrice.p.toInt())) * counter).toString(),
+                style = TextStyle(
+                    fontSize = 24.sp
+                )
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Button(
+                    onClick = {
+                        if (counter == 1) {
+                            counter = 1
+                        } else {
+                            counter--
+                        }
+                    },
+                    border = BorderStroke(1.dp, Color.Black),
+                    colors = ButtonDefaults.buttonColors(Color.White)
+                ) {
+                    Text(
+                        text = "-",
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                    )
+                }
+
+                Text(
+                    text = counter.toString(),
+                    Modifier.padding(horizontal = 12.dp),
+                    style = TextStyle(
+                        fontSize = 18.sp
+                    )
+                )
+
+                Button(
+                    onClick = { counter++ },
+                    border = BorderStroke(1.dp, Color.Black),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                ) {
+                    Text(
+                        text = "+",
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                    )
+                }
+
+            }
+
+
+        }
+
+    }
 
 }

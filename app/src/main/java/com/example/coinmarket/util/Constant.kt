@@ -37,7 +37,7 @@ val EmptyDollar = PriceResponse(
     "",
     "",
     "",
-    "",
+    "10",
     "",
     "",
     "",
