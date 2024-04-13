@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -72,10 +74,12 @@ fun CalculatorScreen(
         Modifier
             .fillMaxSize()
             .background(Color.White)
+            .verticalScroll(rememberScrollState())
     ) {
 
         CalculatorToolbar()
         CryptoNumber(coinPrice , dollarPrice)
+        CryptoCalculator(coinPrice , dollarPrice)
 
     }
 
@@ -252,13 +256,23 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
                     style = TextStyle(
                         fontSize = 24.sp
                     ),
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp),
+                    color = Color.White
                 )
 
             }
         }
 
 
+
+
+
     }
+
+}
+
+@Composable
+fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
+
 
 }
