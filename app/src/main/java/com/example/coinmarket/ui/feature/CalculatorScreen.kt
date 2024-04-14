@@ -469,7 +469,13 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
         ) {
 
             TextButton(
-                onClick = { text.length -= 1 },
+                onClick = {
+
+                    if (text.isNotEmpty()) {
+                        text = text.dropLast(1)
+
+                          }
+                          },
                 modifier = Modifier
 //                    .clip(RoundedCornerShape(8.dp))
                     .shadow(4.dp)
