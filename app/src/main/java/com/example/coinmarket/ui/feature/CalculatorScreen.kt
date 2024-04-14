@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -274,5 +275,250 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
 @Composable
 fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
 
+    var text by remember { mutableStateOf("") }
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(18.dp)
+            .padding(top = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(
+            text = text,
+            Modifier.fillMaxWidth(),
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End
+            )
+        )
+
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            TextButton(
+                onClick = { text += "7" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "7",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "8" },
+                modifier = Modifier
+                    .shadow(4.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "8",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "9" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "9",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+
+        }
+
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            TextButton(
+                onClick = { text += "4" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "4",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "5" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "5",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "6" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "6",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+
+        }
+
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            TextButton(
+                onClick = { text += "1" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "1",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "2" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "2",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "3" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "3",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+
+        }
+
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+
+            TextButton(
+                onClick = { text.length -= 1 },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "<-",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = { text += "0" },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "0",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+            TextButton(
+                onClick = {  },
+                modifier = Modifier
+//                    .clip(RoundedCornerShape(8.dp))
+                    .shadow(4.dp)
+                    .weight(0.33f)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "=",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                    )
+                )
+            }
+
+
+        }
+
+    }
 
 }
