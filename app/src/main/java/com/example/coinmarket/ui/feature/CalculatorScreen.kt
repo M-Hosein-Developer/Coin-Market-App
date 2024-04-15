@@ -515,7 +515,7 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             }
 
             TextButton(
-                onClick = {  },
+                onClick = { text = (coinPrice / (text.toFloat() * (dollarPrice.p.filterNot{ it == ',' }.toFloat()))).toString()  },
                 modifier = Modifier
 //                    .clip(RoundedCornerShape(8.dp))
                     .shadow(4.dp)
