@@ -17,11 +17,14 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -82,7 +85,10 @@ fun CalculatorScreen(
             .verticalScroll(rememberScrollState())
     ) {
 
-        CalculatorToolbar()
+        CalculatorToolbar{
+            navController1.popBackStack()
+        }
+
         CryptoNumber(coinPrice , dollarPrice)
 
         Divider(
@@ -101,7 +107,7 @@ fun CalculatorScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorToolbar() {
+fun CalculatorToolbar(onBackCLicked: () -> Unit) {
 
     TopAppBar(
         title = {
@@ -115,7 +121,12 @@ fun CalculatorToolbar() {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp)
             )
-        }
+        },
+        navigationIcon = {
+            IconButton(onClick = { onBackCLicked.invoke() }) {
+                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+            }
+        },
     )
 
 }
