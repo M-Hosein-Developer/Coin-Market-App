@@ -13,12 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -36,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -80,6 +84,15 @@ fun CalculatorScreen(
 
         CalculatorToolbar()
         CryptoNumber(coinPrice , dollarPrice)
+
+        Divider(
+            thickness = 2.dp ,
+            color = TextBlack,
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .padding(horizontal = 18.dp)
+        )
+
         CryptoCalculator(coinPrice , dollarPrice)
 
     }
@@ -117,7 +130,7 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .height(130.dp)
                 .padding(horizontal = 18.dp)
                 .shadow(4.dp)
                 .padding(8.dp)
@@ -190,7 +203,7 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .height(130.dp)
                 .padding(horizontal = 18.dp)
                 .shadow(4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -230,7 +243,7 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .height(130.dp)
                 .padding(horizontal = 18.dp)
                 .shadow(4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -265,9 +278,6 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
         }
 
 
-
-
-
     }
 
 }
@@ -280,19 +290,23 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(18.dp)
-            .padding(top = 24.dp),
+            .padding(start = 18.dp, end = 18.dp, bottom = 18.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Text(
             text = text,
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .height(62.dp)
+                .wrapContentHeight(Alignment.CenterVertically),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End
-            )
+                textAlign = TextAlign.Start
+            ),
+            maxLines = 1,
+
         )
 
         Row(
@@ -470,24 +484,18 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
 
             TextButton(
                 onClick = {
-
-                    if (text.isNotEmpty()) {
+                    if (text.isNotEmpty())
                         text = text.dropLast(1)
-
-                          }
                           },
                 modifier = Modifier
 //                    .clip(RoundedCornerShape(8.dp))
                     .shadow(4.dp)
                     .weight(0.33f)
                     .padding(8.dp)
+                    .align(Alignment.CenterVertically),
             ) {
-                Text(
-                    text = "<-",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                    )
-                )
+//
+                Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null)
             }
 
             TextButton(
