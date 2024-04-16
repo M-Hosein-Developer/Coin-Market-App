@@ -52,6 +52,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.PriceResponse
+import com.example.coinmarket.ui.theme.Orange
 import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
@@ -317,7 +318,7 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
     ) {
 
         Text(
-            text = text,
+            text = "$text  Rial",
             Modifier
                 .fillMaxWidth()
                 .height(62.dp)
@@ -339,10 +340,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "7" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "7",
@@ -355,10 +354,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "8" },
                 modifier = Modifier
-                    .shadow(4.dp)
-                    .clip(RoundedCornerShape(18.dp))
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "8",
@@ -371,10 +368,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "9" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "9",
@@ -395,10 +390,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "4" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "4",
@@ -411,10 +404,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "5" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "5",
@@ -427,10 +418,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "6" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "6",
@@ -451,10 +440,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "1" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "1",
@@ -467,10 +454,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "2" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "2",
@@ -483,10 +468,8 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             TextButton(
                 onClick = { text += "3" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "3",
@@ -510,23 +493,20 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
                         text = text.dropLast(1)
                           },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Orange)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
                     .align(Alignment.CenterVertically),
             ) {
-//
                 Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null)
             }
 
             TextButton(
                 onClick = { text += "0" },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "0",
@@ -537,12 +517,15 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             }
 
             TextButton(
-                onClick = { text = (text.toFloat() / (dollarPrice.p.filterNot{ it == ',' }.toFloat()) / coinPrice).toString()  },
+                onClick = {
+                    if (text != "" || text.isNotEmpty())
+                        text = (text.toFloat() / (dollarPrice.p.filterNot { it == ',' }.toFloat()) / coinPrice).toString()
+                },
                 modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-                    .shadow(4.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.Green)
                     .weight(0.33f)
-                    .padding(8.dp)
+                    .padding(4.dp)
             ) {
                 Text(
                     text = "=",
