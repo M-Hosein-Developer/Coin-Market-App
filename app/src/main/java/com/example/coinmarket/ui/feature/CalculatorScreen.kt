@@ -18,11 +18,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -82,24 +82,35 @@ fun CalculatorScreen(
         Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState())
     ) {
 
         CalculatorToolbar{
             navController1.popBackStack()
         }
 
-        CryptoNumber(coinPrice , dollarPrice)
+        Column(
+            Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .verticalScroll(rememberScrollState())
+        ) {
 
-        Divider(
-            thickness = 2.dp ,
-            color = TextBlack,
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .padding(horizontal = 18.dp)
-        )
+            CryptoNumber(coinPrice , dollarPrice)
 
-        CryptoCalculator(coinPrice , dollarPrice)
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 18.dp),
+                thickness = 2.dp,
+                color = TextBlack
+            )
+
+            CryptoCalculator(coinPrice , dollarPrice)
+
+        }
+
+
+
 
     }
 
@@ -124,7 +135,7 @@ fun CalculatorToolbar(onBackCLicked: () -> Unit) {
         },
         navigationIcon = {
             IconButton(onClick = { onBackCLicked.invoke() }) {
-                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
             }
         },
     )
@@ -526,7 +537,7 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
             }
 
             TextButton(
-                onClick = { text = (coinPrice / (text.toFloat() * (dollarPrice.p.filterNot{ it == ',' }.toFloat()))).toString()  },
+                onClick = { text = (text.toFloat() / (dollarPrice.p.filterNot{ it == ',' }.toFloat()) / coinPrice).toString()  },
                 modifier = Modifier
 //                    .clip(RoundedCornerShape(8.dp))
                     .shadow(4.dp)
