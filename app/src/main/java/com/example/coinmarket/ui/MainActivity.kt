@@ -7,6 +7,11 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -45,7 +50,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CoinMarketTheme {
-
                 UiScreen(viewModel, signInUpViewModel, {
                     signInUser(it)
                 }, {
@@ -137,47 +141,70 @@ fun UiScreen(
     onSignUpClicked: (NavHostController) -> Unit
 ) {
 
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route) {
 
-        composable(MyScreens.HomeScreen.route) {
-            HomeScreen(viewModel, navController)
-        }
+    ModalNavigationDrawer(
+        drawerContent = {
+            ModalDrawerSheet {
 
-        composable(
-            route = MyScreens.DetailScreen.route + "/{cryptoId}",
-            arguments = listOf(navArgument("cryptoId") { type = NavType.IntType })
-        ) {
-            DetailScreen(viewModel, it.arguments!!.getInt("cryptoId", 0) , navController)
-        }
-
-        composable(MyScreens.SearchScreen.route) {
-            SearchScreen(viewModel, navController)
-        }
-
-        composable(MyScreens.IntroScreen.route) {
-            IntroScreen(navController)
-        }
-
-        composable(MyScreens.SignInScreen.route) {
-            SignInScreen(signInUpViewModel, navController) {
-                onSignInClicked.invoke(navController)
+                Divider()
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                // ...other drawer items
             }
         }
+    ) {
+        // Screen content
 
-        composable(MyScreens.SignUpScreen.route) {
-            SignUpScreen(signInUpViewModel, navController) {
-                onSignUpClicked.invoke(navController)
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route) {
+
+            composable(MyScreens.HomeScreen.route) {
+                HomeScreen(viewModel, navController)
             }
-        }
 
-        composable(
-            route = MyScreens.CalculatorScreen.route + "/{cryptoPrice}",
-            arguments = listOf(navArgument("cryptoPrice"){ type = NavType.FloatType })
-        ) {
-            CalculatorScreen(viewModel , navController , it.arguments!!.getFloat("cryptoPrice" , -1.1f))
-        }
+            composable(
+                route = MyScreens.DetailScreen.route + "/{cryptoId}",
+                arguments = listOf(navArgument("cryptoId") { type = NavType.IntType })
+            ) {
+                DetailScreen(viewModel, it.arguments!!.getInt("cryptoId", 0), navController)
+            }
 
+            composable(MyScreens.SearchScreen.route) {
+                SearchScreen(viewModel, navController)
+            }
+
+            composable(MyScreens.IntroScreen.route) {
+                IntroScreen(navController)
+            }
+
+            composable(MyScreens.SignInScreen.route) {
+                SignInScreen(signInUpViewModel, navController) {
+                    onSignInClicked.invoke(navController)
+                }
+            }
+
+            composable(MyScreens.SignUpScreen.route) {
+                SignUpScreen(signInUpViewModel, navController) {
+                    onSignUpClicked.invoke(navController)
+                }
+            }
+
+            composable(
+                route = MyScreens.CalculatorScreen.route + "/{cryptoPrice}",
+                arguments = listOf(navArgument("cryptoPrice") { type = NavType.FloatType })
+            ) {
+                CalculatorScreen(
+                    viewModel,
+                    navController,
+                    it.arguments!!.getFloat("cryptoPrice", -1.1f)
+                )
+            }
+
+
+        }
 
     }
 }
