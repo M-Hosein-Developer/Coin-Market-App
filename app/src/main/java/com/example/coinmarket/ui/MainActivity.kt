@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -23,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -160,6 +165,8 @@ fun UiScreen(
     onSignUpClicked: (NavHostController) -> Unit
 ) {
 
+    val navController = rememberNavController()
+
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -196,8 +203,8 @@ fun UiScreen(
                             fontWeight = FontWeight.Bold
                         ),
                         color = Color.White ,
-                        modifier = Modifier.padding(start = 12.dp , bottom = 12.dp)
-                    )
+                        modifier = Modifier.padding(start = 12.dp , bottom = 24.dp)
+                        )
 
                     Text(
                         text = "\"With Crypto app, monitor digital currency prices and make informed decisions.\"",
@@ -212,28 +219,33 @@ fun UiScreen(
                 }
 
                 Divider()
+
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
+                    label = { Text(text = "Bookmark") },
                     selected = false,
-                    onClick = { /*TODO*/ }
+                    icon = { Icon(painter = painterResource(R.drawable.outline_bookmark_border_24), contentDescription = null) },
+                    onClick = {  }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
+                    label = { Text(text = "Setting") },
                     selected = false,
-                    onClick = { /*TODO*/ }
+                    icon = { Icon(imageVector = Icons.Outlined.Settings, contentDescription = null) },
+                    onClick = {  }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
+                    label = { Text(text = "Info") },
                     selected = false,
-                    onClick = { /*TODO*/ }
+                    icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
+                    onClick = {  }
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
+                    label = { Text(text = "Help") },
                     selected = false,
-                    onClick = { /*TODO*/ }
+                    icon = { Icon(painter = painterResource(R.drawable.outline_help_outline_24), contentDescription = null) },
+                    onClick = {  }
                 )
                 // ...other drawer items
             }
@@ -241,7 +253,6 @@ fun UiScreen(
     ) {
         // Screen content
 
-        val navController = rememberNavController()
         NavHost(navController = navController, startDestination = MyScreens.IntroScreen.route) {
 
             composable(MyScreens.HomeScreen.route) {
