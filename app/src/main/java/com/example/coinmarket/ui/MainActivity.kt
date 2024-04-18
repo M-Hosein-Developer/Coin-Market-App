@@ -7,12 +7,25 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,6 +40,9 @@ import com.example.coinmarket.ui.feature.SearchScreen
 import com.example.coinmarket.ui.feature.SignInScreen
 import com.example.coinmarket.ui.feature.SignUpScreen
 import com.example.coinmarket.ui.theme.CoinMarketTheme
+import com.example.coinmarket.ui.theme.Gradient1
+import com.example.coinmarket.ui.theme.Gradient2
+import com.example.coinmarket.ui.theme.Gradient3
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.viewModel.MainViewModel
 import com.example.coinmarket.viewModel.SignInUpViewModel
@@ -146,7 +162,65 @@ fun UiScreen(
         drawerContent = {
             ModalDrawerSheet {
 
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.3f)
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(
+                                    Gradient1,
+                                    Gradient2,
+                                    Gradient3
+                                )
+                            )
+                        ),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+
+
+
+                    Text(
+                        text = "Coin Market Cap",
+                        style = TextStyle(
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = Color.White ,
+                        modifier = Modifier.padding(start = 12.dp , bottom = 12.dp)
+                    )
+
+                    Text(
+                        text = "\"With Crypto app, monitor digital currency prices and make informed decisions.\"",
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Light
+                        ),
+                        color = Color.White ,
+                        modifier = Modifier.padding(start = 12.dp , bottom = 24.dp)
+                    )
+
+                }
+
                 Divider()
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+
                 NavigationDrawerItem(
                     label = { Text(text = "Drawer Item") },
                     selected = false,
