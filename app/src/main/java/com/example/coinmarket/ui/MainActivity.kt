@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -32,6 +33,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import coil.compose.AsyncImage
+import com.example.coinmarket.R
 import com.example.coinmarket.ui.feature.CalculatorScreen
 import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HomeScreen
@@ -178,7 +181,13 @@ fun UiScreen(
                     verticalArrangement = Arrangement.Bottom
                 ) {
 
-
+                    AsyncImage(
+                        model = R.drawable.the_crypto_app,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(start = 12.dp, bottom = 12.dp)
+                            .size(100.dp)
+                        )
 
                     Text(
                         text = "Coin Market Cap",
