@@ -312,7 +312,7 @@ fun UiScreen(
             }
 
             composable(MyScreens.HelpScreen.route){
-                HelpScreen()
+                HelpScreen(navController)
             }
 
 
