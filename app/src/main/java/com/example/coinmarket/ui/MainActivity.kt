@@ -18,12 +18,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -42,6 +45,7 @@ import coil.compose.AsyncImage
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.feature.CalculatorScreen
 import com.example.coinmarket.ui.feature.DetailScreen
+import com.example.coinmarket.ui.feature.HelpScreen
 import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.IntroScreen
 import com.example.coinmarket.ui.feature.SearchScreen
@@ -58,6 +62,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -166,9 +171,11 @@ fun UiScreen(
 ) {
 
     val navController = rememberNavController()
-
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
 
@@ -245,7 +252,14 @@ fun UiScreen(
                     label = { Text(text = "Help") },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_help_outline_24), contentDescription = null) },
-                    onClick = {  }
+                    onClick = {
+                        navController.navigate(MyScreens.HelpScreen.route)
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }
                 )
                 // ...other drawer items
             }
@@ -295,6 +309,10 @@ fun UiScreen(
                     navController,
                     it.arguments!!.getFloat("cryptoPrice", -1.1f)
                 )
+            }
+
+            composable(MyScreens.HelpScreen.route){
+                HelpScreen()
             }
 
 
