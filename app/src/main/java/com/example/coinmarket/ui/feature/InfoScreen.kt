@@ -1,12 +1,13 @@
 package com.example.coinmarket.ui.feature
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,19 +26,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.ui.theme.TextBlack
-import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.ui.theme.introTextColor
 
 @Composable
 fun InfoScreen(navController: NavHostController) {
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
             .background(Color.White)
     ) {
 
         InfoToolbar { navController.popBackStack() }
-
+        Info()
     }
 
 }
@@ -66,3 +67,176 @@ fun InfoToolbar(onBackPress :() -> Unit){
 
 }
 
+@Composable
+fun Info(){
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+
+            Row(
+                Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = "Coin Market ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 42.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(start = 32.dp, top = 42.dp)
+                )
+
+                Text(
+                    text = "Cap",
+                    color = introTextColor,
+                    style = TextStyle(
+                        fontSize = 42.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 42.dp)
+                )
+
+            }
+
+            Column {
+
+                Text(
+                    text = "Description: ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp , start = 32.dp)
+                )
+
+                Text(
+                    text = "In this application, I tried to develop an excellent viewer for cryptos that can be used online and you can instantly use its online data. You can bookmark the crypto you want. Search for the crypto you want from among 500 cryptos",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = Modifier
+                        .padding(start = 32.dp , top = 18.dp , end = 32.dp),
+                    lineHeight = 32.sp
+                )
+
+            }
+
+            Row {
+
+                Text(
+                    text = "Developer: ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp , start = 32.dp)
+                )
+
+                Text(
+                    text = " Mohammad Hosein Hajiakbari ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp)
+                )
+
+            }
+
+            Row {
+
+                Text(
+                    text = "Email: ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp , start = 32.dp)
+                )
+
+                Text(
+                    text = " m.hosein.developer@gmail.com",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp)
+                )
+
+            }
+
+            Row {
+
+                Text(
+                    text = "LinkedIn: ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp , start = 32.dp)
+                )
+
+                Text(
+                    text = " Mohammad Hosein Hajiakbari ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp)
+                )
+
+            }
+
+            Row {
+
+                Text(
+                    text = "Instagram: ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp , start = 32.dp)
+                )
+
+                Text(
+                    text = " android.coder ",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Light
+                    ),
+                    modifier = Modifier
+                        .padding(top = 32.dp)
+                )
+
+            }
+
+        }
+
+}
