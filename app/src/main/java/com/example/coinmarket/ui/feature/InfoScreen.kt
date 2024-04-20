@@ -60,6 +60,12 @@ fun InfoScreen(navController: NavHostController) {
                 intent.data = Uri.parse(linkedInProfileUrl)
                 intent.setPackage("com.linkedin.android")
                 context.startActivity(intent)
+            },
+            {
+                val instagramProfileUrl = "https://www.instagram.com/$it" // لینک حساب کاربری شما
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(instagramProfileUrl)
+                context.startActivity(intent)
             }
         )
     }
@@ -91,7 +97,7 @@ fun InfoToolbar(onBackPress :() -> Unit){
 }
 
 @Composable
-fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit) {
+fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit , onInstagramClicked: (String) -> Unit) {
 
 
         Column(
@@ -258,6 +264,7 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit)
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
+                        .clickable { onInstagramClicked.invoke("android.coder") }
                 )
 
             } // Instagram
