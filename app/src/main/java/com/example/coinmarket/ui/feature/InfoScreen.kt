@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -161,6 +162,10 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
             }
 
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 32.dp)
+            )
+
             Row {
 
                 Text(
@@ -267,6 +272,22 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
                 )
 
             } // Instagram
+
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 32.dp)
+            )
+
+            Text(
+                text = "Click on one of the IDs above to contact the developer of this application.",
+                color = Color.Black,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Light
+                ),
+                modifier = Modifier
+                    .padding(start = 32.dp , top = 32.dp , end = 32.dp),
+                lineHeight = 32.sp
+            )
 
         }
 
