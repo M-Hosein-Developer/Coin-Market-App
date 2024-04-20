@@ -1,6 +1,9 @@
 package com.example.coinmarket.ui.feature
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +35,8 @@ import com.example.coinmarket.ui.theme.introTextColor
 @Composable
 fun InfoScreen(navController: NavHostController) {
 
+    val context = LocalContext.current
+
     Column(
         Modifier
             .fillMaxSize()
@@ -38,7 +44,19 @@ fun InfoScreen(navController: NavHostController) {
     ) {
 
         InfoToolbar { navController.popBackStack() }
-        Info()
+
+        Info(
+            {
+
+                val recipientEmail = it // ایمیل شما
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:$recipientEmail")
+                intent.putExtra(Intent.EXTRA_SUBJECT, "موضوع ایمیل")
+                intent.putExtra(Intent.EXTRA_TEXT, "متن ایمیل")
+                context.startActivity(intent)
+
+            }
+        )
     }
 
 }
@@ -68,7 +86,7 @@ fun InfoToolbar(onBackPress :() -> Unit){
 }
 
 @Composable
-fun Info(){
+fun Info(onEmailClicked: (String) -> Unit) {
 
 
         Column(
@@ -90,7 +108,7 @@ fun Info(){
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(start = 32.dp, top = 42.dp)
+                        .padding(start = 32.dp, top = 12.dp)
                 )
 
                 Text(
@@ -101,7 +119,7 @@ fun Info(){
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 42.dp)
+                        .padding(top = 12.dp)
                 )
 
             }
@@ -157,7 +175,7 @@ fun Info(){
                         .padding(top = 32.dp)
                 )
 
-            }
+            } // Dev
 
             Row {
 
@@ -181,9 +199,10 @@ fun Info(){
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
+                        .clickable { onEmailClicked.invoke("m.hosein.developer@gmail.com") }
                 )
 
-            }
+            } // Email
 
             Row {
 
@@ -209,7 +228,7 @@ fun Info(){
                         .padding(top = 32.dp)
                 )
 
-            }
+            } // LinkedIn
 
             Row {
 
@@ -235,7 +254,7 @@ fun Info(){
                         .padding(top = 32.dp)
                 )
 
-            }
+            } // Instagram
 
         }
 
