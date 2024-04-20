@@ -58,7 +58,6 @@ fun InfoScreen(navController: NavHostController) {
                 val linkedInProfileUrl = "https://www.linkedin.com/in/$it" // لینک حساب کاربری شما
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(linkedInProfileUrl)
-                intent.setPackage("com.linkedin.android")
                 context.startActivity(intent)
             },
             {
