@@ -17,8 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
         setContent {
             CoinMarketTheme {
@@ -183,7 +183,7 @@ fun UiScreen(
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.3f)
+                        .fillMaxHeight(0.35f)
                         .background(
                             brush = Brush.linearGradient(
                                 colors = listOf(
@@ -207,7 +207,7 @@ fun UiScreen(
                     Text(
                         text = "Coin Market Cap",
                         style = TextStyle(
-                            fontSize = 32.sp,
+                            fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         ),
                         color = Color.White ,
@@ -217,16 +217,17 @@ fun UiScreen(
                     Text(
                         text = "\"With Crypto app, monitor digital currency prices and make informed decisions.\"",
                         style = TextStyle(
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Light
                         ),
                         color = Color.White ,
-                        modifier = Modifier.padding(start = 12.dp , bottom = 24.dp)
+                        modifier = Modifier.padding(start = 12.dp , bottom = 24.dp , end = 24.dp),
+                        lineHeight = 28.sp
                     )
 
                 }
 
-                Divider()
+                HorizontalDivider()
 
                 NavigationDrawerItem(
                     label = { Text(text = "Bookmark") },
