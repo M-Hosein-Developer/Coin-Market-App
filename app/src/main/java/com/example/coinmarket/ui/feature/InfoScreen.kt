@@ -47,14 +47,19 @@ fun InfoScreen(navController: NavHostController) {
 
         Info(
             {
-
                 val recipientEmail = it // ایمیل شما
                 val intent = Intent(Intent.ACTION_SENDTO)
                 intent.data = Uri.parse("mailto:$recipientEmail")
                 intent.putExtra(Intent.EXTRA_SUBJECT, "موضوع ایمیل")
                 intent.putExtra(Intent.EXTRA_TEXT, "متن ایمیل")
                 context.startActivity(intent)
-
+            },
+            {
+                val linkedInProfileUrl = "https://www.linkedin.com/in/$it" // لینک حساب کاربری شما
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(linkedInProfileUrl)
+                intent.setPackage("com.linkedin.android")
+                context.startActivity(intent)
             }
         )
     }
@@ -86,7 +91,7 @@ fun InfoToolbar(onBackPress :() -> Unit){
 }
 
 @Composable
-fun Info(onEmailClicked: (String) -> Unit) {
+fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit) {
 
 
         Column(
@@ -226,6 +231,7 @@ fun Info(onEmailClicked: (String) -> Unit) {
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
+                        .clickable { onLinkedInClicked.invoke("mohammad-hosein-hajiakbari-662337246") }
                 )
 
             } // LinkedIn
