@@ -50,6 +50,7 @@ import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.InfoScreen
 import com.example.coinmarket.ui.feature.IntroScreen
 import com.example.coinmarket.ui.feature.SearchScreen
+import com.example.coinmarket.ui.feature.SettingScreen
 import com.example.coinmarket.ui.feature.SignInScreen
 import com.example.coinmarket.ui.feature.SignUpScreen
 import com.example.coinmarket.ui.theme.CoinMarketTheme
@@ -240,7 +241,14 @@ fun UiScreen(
                     label = { Text(text = "Setting") },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Settings, contentDescription = null) },
-                    onClick = {  }
+                    onClick = {
+                        navController.navigate(MyScreens.SettingScreen.route)
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }
                 )
 
                 NavigationDrawerItem(
@@ -326,6 +334,10 @@ fun UiScreen(
 
             composable(MyScreens.InfoScreen.route){
                 InfoScreen(navController)
+            }
+
+            composable(MyScreens.SettingScreen.route){
+                SettingScreen(navController)
             }
 
         }
