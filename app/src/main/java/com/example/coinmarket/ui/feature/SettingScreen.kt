@@ -12,11 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -52,6 +56,10 @@ fun SettingScreen(navController: NavHostController) {
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
+    //Switch
+
+    var checked by remember { mutableStateOf(false) }
+
 
     Column(
         Modifier
@@ -64,6 +72,9 @@ fun SettingScreen(navController: NavHostController) {
 
         Language { showBottomSheet = true }
 
+        DynamicTheme(checked){
+            checked = it
+        }
 
 
         //Bottom Sheet
@@ -146,25 +157,26 @@ fun Language(onLanguageClicked : () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean ,  onDismissReques :(Boolean) -> Unit) {
+fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean ,  onDismissRequest :(Boolean) -> Unit) {
 
     if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = {
-                onDismissReques.invoke(false)
+                onDismissRequest.invoke(false)
             },
             sheetState = sheetState
         ) {
             // Sheet content
             Column(
-                Modifier.fillMaxSize()
+                Modifier
+                    .fillMaxSize()
                     .padding(18.dp)
             ) {
 
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
-                            onDismissReques.invoke(false)
+                            onDismissRequest.invoke(false)
                         }
                     }
                 }) {
@@ -174,7 +186,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
-                            onDismissReques.invoke(false)
+                            onDismissRequest.invoke(false)
                         }
                     }
                 }) {
@@ -189,3 +201,48 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
 
 }
 
+@Composable
+fun DynamicTheme(checked: Boolean , onChangeClicked :(Boolean) -> Unit) {
+
+    Row(
+        Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+
+        Text(
+            text = "Dynamic Theme",
+            modifier = Modifier
+                .padding(start = 12.dp),
+            style = TextStyle(
+                fontSize = 18.sp
+            )
+        )
+
+
+        Switch(
+            checked = checked,
+            onCheckedChange = {
+                onChangeClicked.invoke(it)
+                              },
+            thumbContent = if (checked) {
+                {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = null,
+                        modifier = Modifier.size(SwitchDefaults.IconSize),
+                    )
+                }
+            } else {
+                null
+            },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = Gradient2,
+                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
+        )
+
+    }
+}
