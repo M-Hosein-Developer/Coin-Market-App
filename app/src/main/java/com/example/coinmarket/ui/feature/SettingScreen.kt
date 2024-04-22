@@ -7,17 +7,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,24 +40,34 @@ import androidx.navigation.NavHostController
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.TextBlack
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(navController: NavHostController) {
+
+    //Bottom Sheet state
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
 
     Column(
         Modifier
             .fillMaxSize()
             .background(Color.White)
+            .padding(horizontal = 18.dp)
     ) {
 
-        SettingToolbar {
-            navController.popBackStack()
-        }
+        SettingToolbar { navController.popBackStack() }
 
-        Language(){
+        Language { showBottomSheet = true }
 
-        }
 
+
+        //Bottom Sheet
+        LanguageBottomSheet(sheetState , scope , showBottomSheet){ showBottomSheet = it }
     }
 
 
@@ -85,9 +104,8 @@ fun Language(onLanguageClicked : () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(18.dp)
-            .clickable { },
+            .height(100.dp)
+            .clickable { onLanguageClicked.invoke() },
         verticalAlignment = Alignment.CenterVertically ,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -125,3 +143,49 @@ fun Language(onLanguageClicked : () -> Unit) {
     }
 
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean ,  onDismissReques :(Boolean) -> Unit) {
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                onDismissReques.invoke(false)
+            },
+            sheetState = sheetState
+        ) {
+            // Sheet content
+            Column(
+                Modifier.fillMaxSize()
+                    .padding(18.dp)
+            ) {
+
+                TextButton(onClick = {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            onDismissReques.invoke(false)
+                        }
+                    }
+                }) {
+                    Text("English")
+                }
+
+                TextButton(onClick = {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            onDismissReques.invoke(false)
+                        }
+                    }
+                }) {
+                    Text("New languages will be added to this section soon!")
+                }
+
+            }
+
+
+        }
+    }
+
+}
+
