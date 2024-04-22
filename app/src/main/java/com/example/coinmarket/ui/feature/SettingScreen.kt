@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,7 +45,9 @@ fun SettingScreen(navController: NavHostController) {
             navController.popBackStack()
         }
 
-        Language()
+        Language(){
+
+        }
 
     }
 
@@ -79,7 +80,7 @@ fun SettingToolbar(onBackClicked :() -> Unit){
 }
 
 @Composable
-fun Language() {
+fun Language(onLanguageClicked : () -> Unit) {
 
     Row(
         Modifier
@@ -91,23 +92,30 @@ fun Language() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
-        Icon(
-            painter = painterResource(R.drawable.baseline_language_24),
-            contentDescription = null,
-            modifier = Modifier.size(25.dp).wrapContentWidth(),
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically ,
+        ) {
 
-        Text(
-            text = "Language",
-            modifier = Modifier.padding(start = 12.dp).fillMaxWidth(0.7f),
-            style = TextStyle(
-                fontSize = 18.sp
+            Icon(
+                painter = painterResource(R.drawable.baseline_language_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(25.dp),
             )
-        )
+
+            Text(
+                text = "Language",
+                modifier = Modifier
+                    .padding(start = 12.dp),
+                style = TextStyle(
+                    fontSize = 18.sp
+                )
+            )
+
+        }
 
         Text(
-            text = "Language",
-            modifier = Modifier.wrapContentWidth(),
+            text = "English",
             style = TextStyle(
                 fontSize = 18.sp
             ),
