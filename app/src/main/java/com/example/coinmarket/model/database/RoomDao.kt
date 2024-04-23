@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.model.dataClass.DynamicTheme
 
 @Dao
 interface RoomDao {
@@ -17,5 +18,14 @@ interface RoomDao {
 
     @Query("SELECT * FROM CryptoCurrency WHERE id = :id ")
     suspend fun getCoinById(id : Int) : CoinMarketResponse.Data.CryptoCurrency
+
+    //Dynamic Theme
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDynamicTheme(state : DynamicTheme)
+
+    @Query("SELECT * FROM DynamicTheme")
+    suspend fun getDynamicThemeState() : DynamicTheme
+
+
 
 }
