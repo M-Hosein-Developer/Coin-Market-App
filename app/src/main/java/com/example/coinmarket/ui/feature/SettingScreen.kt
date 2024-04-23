@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.TextBlack
 import kotlinx.coroutines.CoroutineScope
@@ -59,6 +60,11 @@ fun SettingScreen(navController: NavHostController) {
     //Switch
 
     var checked by remember { mutableStateOf(false) }
+
+    if (checked)
+        CoinMarketTheme(dynamicColor = true){}
+    else
+        CoinMarketTheme (dynamicColor = false){}
 
 
     Column(
