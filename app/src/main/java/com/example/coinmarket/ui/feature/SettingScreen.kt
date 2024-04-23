@@ -42,15 +42,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
-import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.TextBlack
+import com.example.coinmarket.viewModel.ThemeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(navController: NavHostController) {
+fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
 
     //Bottom Sheet state
     val sheetState = rememberModalBottomSheetState()
@@ -60,12 +60,6 @@ fun SettingScreen(navController: NavHostController) {
     //Switch
 
     var checked by remember { mutableStateOf(false) }
-
-    if (checked)
-        CoinMarketTheme(dynamicColor = true){}
-    else
-        CoinMarketTheme (dynamicColor = false){}
-
 
     Column(
         Modifier
@@ -78,15 +72,16 @@ fun SettingScreen(navController: NavHostController) {
 
         Language { showBottomSheet = true }
 
-        DynamicTheme(checked){
-            checked = it
+        DynamicTheme(viewModel){
+            viewModel.switchState = it
+            viewModel.insertDynamicThemeStateRep()
         }
-
 
         //Bottom Sheet
         LanguageBottomSheet(sheetState , scope , showBottomSheet){ showBottomSheet = it }
     }
 
+    checked = viewModel.themeState.dynamicThemeState
 
 }
 
@@ -208,7 +203,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
 }
 
 @Composable
-fun DynamicTheme(checked: Boolean , onChangeClicked :(Boolean) -> Unit) {
+fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
 
     Row(
         Modifier.fillMaxWidth(),
@@ -227,11 +222,11 @@ fun DynamicTheme(checked: Boolean , onChangeClicked :(Boolean) -> Unit) {
 
 
         Switch(
-            checked = checked,
+            checked = viewModel.switchState,
             onCheckedChange = {
                 onChangeClicked.invoke(it)
                               },
-            thumbContent = if (checked) {
+            thumbContent = if (viewModel.switchState) {
                 {
                     Icon(
                         imageVector = Icons.Filled.Check,

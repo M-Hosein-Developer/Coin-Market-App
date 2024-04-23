@@ -3,6 +3,7 @@ package com.example.coinmarket.ui
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -60,6 +61,7 @@ import com.example.coinmarket.ui.theme.Gradient3
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.viewModel.MainViewModel
 import com.example.coinmarket.viewModel.SignInUpViewModel
+import com.example.coinmarket.viewModel.ThemeViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -71,6 +73,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val signInUpViewModel: SignInUpViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
 
@@ -79,13 +82,16 @@ class MainActivity : ComponentActivity() {
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
+        Log.v("testTheme" , themeViewModel.themeState.dynamicThemeState.toString())
+
         setContent {
-            CoinMarketTheme {
+            CoinMarketTheme(dynamicColor = themeViewModel.themeState.dynamicThemeState) {
                 UiScreen(viewModel, signInUpViewModel, {
                     signInUser(it)
                 }, {
                     signUpUser(it)
-                }
+                },
+                    themeViewModel
                 )
 
             }
@@ -169,7 +175,8 @@ fun UiScreen(
     viewModel: MainViewModel,
     signInUpViewModel: SignInUpViewModel,
     onSignInClicked: (NavHostController) -> Unit,
-    onSignUpClicked: (NavHostController) -> Unit
+    onSignUpClicked: (NavHostController) -> Unit,
+    themeViewModel: ThemeViewModel
 ) {
 
     val navController = rememberNavController()
@@ -337,7 +344,7 @@ fun UiScreen(
             }
 
             composable(MyScreens.SettingScreen.route){
-                SettingScreen(navController)
+                SettingScreen(navController , themeViewModel)
             }
 
         }
