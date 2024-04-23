@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.repository
+package com.example.coinmarket.model.repository.mainRepo
 
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.PriceResponse

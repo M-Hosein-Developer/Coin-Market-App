@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.repository
+package com.example.coinmarket.model.repository.mainRepo
 
 import android.util.Log
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MainRepositoryImpl @Inject constructor(private val apiService: ApiService, private val apiServicePrice: ApiServicePrice, private val dao: RoomDao) : MainRepository {
+class MainRepositoryImpl @Inject constructor(private val apiService: ApiService, private val apiServicePrice: ApiServicePrice, private val dao: RoomDao) :
+    MainRepository {
 
     override val getCryptoList: Flow<List<CoinMarketResponse.Data.CryptoCurrency>> = flow {
         while (true) {

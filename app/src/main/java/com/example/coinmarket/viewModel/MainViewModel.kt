@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.PriceResponse
-import com.example.coinmarket.model.repository.MainRepository
+import com.example.coinmarket.model.repository.mainRepo.MainRepository
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.NetworkChecker
 import com.example.coinmarket.util.coroutineExceptionHandler
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: MainRepository , context: Context) : ViewModel() {
+class MainViewModel @Inject constructor(private val repository: MainRepository, context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getDollarPrice = MutableStateFlow<PriceResponse?>(null)
