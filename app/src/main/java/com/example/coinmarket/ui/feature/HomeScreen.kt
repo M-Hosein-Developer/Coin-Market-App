@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -192,6 +193,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                                 fontSize = 28.sp,
                                 fontWeight = FontWeight.Bold,
                             ),
+                            color = Color.White
                         )
 
                         Text(
@@ -204,6 +206,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Light,
                             ),
+                            color = Color.White
                         )
 
                         if (getCoinList[0].quotes[0].percentChange24h > 0) {
