@@ -20,7 +20,7 @@ class ThemeViewModel @Inject constructor(private val repository: ThemeRepository
     var switchState by mutableStateOf(false)
 
     init {
-        getDynamicThemeState()
+//        getDynamicThemeState()
     }
 
     fun insertDynamicThemeStateRep() {
@@ -29,14 +29,14 @@ class ThemeViewModel @Inject constructor(private val repository: ThemeRepository
         }
     }
 
-    private fun getDynamicThemeState() = viewModelScope.launch {
+    fun getDynamicThemeState() = viewModelScope.launch {
         while (true) {
             themeState = repository.getDynamicThemeState()
             switchState = if (repository.getDynamicThemeState().dynamicThemeState)
                 true
             else
                 false
-            delay(100)
+            delay(1000)
         }
 
     }

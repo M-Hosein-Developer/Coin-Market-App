@@ -2,7 +2,6 @@ package com.example.coinmarket.ui.feature
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.ui.theme.introTextColor
 
 @Composable
@@ -41,7 +39,6 @@ fun InfoScreen(navController: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
 
         InfoToolbar { navController.popBackStack() }
@@ -80,7 +77,6 @@ fun InfoToolbar(onBackPress :() -> Unit){
         title = { Text(
             text = "Info",
             style = TextStyle(
-                color = TextBlack,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
             ),

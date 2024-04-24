@@ -58,9 +58,6 @@ import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
-import com.example.coinmarket.ui.theme.TextBlack
-import com.example.coinmarket.ui.theme.TextLightGray
-import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
@@ -132,7 +129,6 @@ fun HomeToolbar() {
             Text(
                 text = "Home",
                 style = TextStyle(
-                    color = TextBlack,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -193,11 +189,9 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                             text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(0, 10),
                             Modifier.padding(start = 24.dp, bottom = 8.dp),
                             style = TextStyle(
-                                color = TextBlack,
                                 fontSize = 28.sp,
                                 fontWeight = FontWeight.Bold,
                             ),
-                            color = White
                         )
 
                         Text(
@@ -207,11 +201,9 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                             ) + "  vol",
                             Modifier.padding(start = 24.dp, bottom = 8.dp),
                             style = TextStyle(
-                                color = TextBlack,
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Light,
                             ),
-                            color = White
                         )
 
                         if (getCoinList[0].quotes[0].percentChange24h > 0) {
@@ -220,7 +212,6 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = TextStyle(
-                                    color = TextBlack,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
                                 ),
@@ -232,7 +223,6 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = TextStyle(
-                                    color = TextBlack,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
                                 ),
@@ -244,11 +234,9 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = TextStyle(
-                                    color = TextBlack,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
                                 ),
-                                color = TextLightGray
                             )
                         }
 
@@ -291,7 +279,6 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClicke
 
         Text(
             text = "Charts",
-            color = TextLightGray,
             style = TextStyle(
                 fontSize = 18.sp,
             )
@@ -378,7 +365,6 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                     fontWeight = FontWeight.Bold
                 ),
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = TextBlack
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
@@ -394,8 +380,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
             } else {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = TextLightGray
-                )
+                                    )
             }
 
         }
@@ -426,16 +411,14 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = TextBlack
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
-                ),
-                color = TextLightGray
+                )
             )
 
 

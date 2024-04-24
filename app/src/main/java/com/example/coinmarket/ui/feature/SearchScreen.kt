@@ -2,7 +2,6 @@ package com.example.coinmarket.ui.feature
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +17,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -51,11 +48,8 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
-import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
-import com.example.coinmarket.ui.theme.TextBlack
-import com.example.coinmarket.ui.theme.TextLightGray
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
@@ -99,7 +93,6 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
         Column(
             modifier = Modifier
-                .background(BlurWhite)
         ) {
 
             SearchToolbar()
@@ -146,7 +139,6 @@ fun SearchToolbar() {
             Text(
                 text = "Search",
                 style = TextStyle(
-                    color = TextBlack,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -162,24 +154,17 @@ fun SearchToolbar() {
 @Composable
 fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
     OutlinedTextField(
-        label = { Text(hint, color = TextBlack) },
+        label = { Text(hint) },
         value = edtValue,
         singleLine = true,
         onValueChange = onValueChanges,
-        placeholder = { Text(hint, color = TextBlack) },
+        placeholder = { Text(hint) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(18.dp),
         shape = ShapeDefaults.Medium,
-        leadingIcon = { Icon(imageVector = icon, contentDescription = null, tint = TextBlack) },
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = TextBlack,
-            unfocusedBorderColor = TextBlack,
-            focusedTextColor = TextBlack,
-            focusedSupportingTextColor = TextBlack,
-            cursorColor = TextBlack,
-            unfocusedTrailingIconColor = Color.Black
-        )
+        leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
+
     )
 
 }
@@ -251,8 +236,7 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = TextBlack
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
@@ -267,9 +251,7 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                 )
             } else {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = TextLightGray
-                )
+                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4))
             }
 
         }
@@ -298,16 +280,14 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = TextBlack
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
-                ),
-                color = TextLightGray
+                )
             )
 
 

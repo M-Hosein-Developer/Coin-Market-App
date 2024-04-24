@@ -1,6 +1,5 @@
 package com.example.coinmarket.ui.feature
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -43,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.Gradient2
-import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.viewModel.ThemeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -58,14 +55,14 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
     var showBottomSheet by remember { mutableStateOf(false) }
 
     //Switch
-
     var checked by remember { mutableStateOf(false) }
+
+
+    viewModel.getDynamicThemeState()
 
     Column(
         Modifier
             .fillMaxSize()
-            .background(Color.White)
-            .padding(horizontal = 18.dp)
     ) {
 
         SettingToolbar { navController.popBackStack() }
@@ -93,7 +90,6 @@ fun SettingToolbar(onBackClicked :() -> Unit){
         title = { Text(
             text = "Setting",
             style = TextStyle(
-                color = TextBlack,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
             ),
@@ -117,6 +113,7 @@ fun Language(onLanguageClicked : () -> Unit) {
         Modifier
             .fillMaxWidth()
             .height(100.dp)
+            .padding(horizontal = 18.dp)
             .clickable { onLanguageClicked.invoke() },
         verticalAlignment = Alignment.CenterVertically ,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -206,7 +203,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
 fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
 
     Row(
-        Modifier.fillMaxWidth(),
+        Modifier.fillMaxWidth().padding(horizontal = 18.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -238,8 +235,8 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
                 null
             },
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
-                checkedTrackColor = Gradient2,
+                checkedThumbColor =MaterialTheme.colorScheme.primary,
+                checkedTrackColor =  MaterialTheme.colorScheme.primaryContainer,
                 uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
                 uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
             )

@@ -53,7 +53,6 @@ import coil.compose.AsyncImage
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.ui.theme.Orange
-import com.example.coinmarket.ui.theme.TextBlack
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
 
@@ -103,7 +102,6 @@ fun CalculatorScreen(
                     .padding(top = 12.dp)
                     .padding(horizontal = 18.dp),
                 thickness = 2.dp,
-                color = TextBlack
             )
 
             CryptoCalculator(coinPrice , dollarPrice)
@@ -126,7 +124,6 @@ fun CalculatorToolbar(onBackCLicked: () -> Unit) {
             Text(
                 text = "Calculator",
                 style = TextStyle(
-                    color = TextBlack,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                 ),

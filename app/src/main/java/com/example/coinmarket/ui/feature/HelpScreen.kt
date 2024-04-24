@@ -1,6 +1,5 @@
 package com.example.coinmarket.ui.feature
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,14 +15,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.coinmarket.ui.theme.TextBlack
 
 @Composable
 fun HelpScreen(navController: NavHostController) {
@@ -59,7 +56,6 @@ fun HelpScreen(navController: NavHostController) {
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .background(Color.White)
     ) {
 
         HelpToolbar {
@@ -88,7 +84,6 @@ fun HelpToolbar(onBackPress :() -> Unit ){
         title = { Text(
             text = "Help",
             style = TextStyle(
-                color = TextBlack,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
             ),

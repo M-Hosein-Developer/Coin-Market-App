@@ -47,9 +47,6 @@ import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
-import com.example.coinmarket.ui.theme.TextBlack
-import com.example.coinmarket.ui.theme.TextLightGray
-import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.util.EmptyCoin
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.imageUrl
@@ -77,7 +74,6 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
     if (getCoinList.value.lastUpdated.length > 6) {
         Column(
             modifier = Modifier
-                .background(White)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
@@ -105,7 +101,6 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
             Text(
                 text = data.name,
                 style = TextStyle(
-                    color = TextBlack,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -182,7 +177,6 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = TextBlack
                 )
 
                 if (data.quotes[0].percentChange24h > 0) {
@@ -198,7 +192,6 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
                 } else {
                     Text(
                         text = "%" + data.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                        color = TextLightGray
                     )
                 }
 
@@ -216,15 +209,13 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = TextBlack
                 )
 
                 Text(
                     text = data.ath.toString().subSequence(0, 7).toString() + " " + data.symbol,
                     style = TextStyle(
                         fontSize = 14.sp,
-                    ),
-                    color = TextLightGray
+                    )
                 )
 
 

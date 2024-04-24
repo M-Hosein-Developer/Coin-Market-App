@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -25,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
-import com.example.coinmarket.ui.theme.White
 import com.example.coinmarket.ui.theme.introTextColor
 import com.example.coinmarket.util.MyScreens
 
@@ -71,13 +71,13 @@ fun IntroScreen(navController: NavHostController) {
 
                     Text(
                         text = "Coin Market ",
-                        color = White,
                         style = TextStyle(
                             fontSize = 42.sp,
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier
-                            .padding(start = 32.dp, top = 42.dp)
+                            .padding(start = 32.dp, top = 42.dp),
+                        color = Color.White
                     )
 
                     Text(
@@ -98,14 +98,14 @@ fun IntroScreen(navController: NavHostController) {
 
                     Text(
                         text = "Monitor, buy and profit from cryptocurrencies !!",
-                        color = White,
                         style = TextStyle(
                             fontSize = 36.sp,
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
-                            .padding(32.dp)
+                            .padding(32.dp),
+                        color = Color.White
                     )
 
                     Button(
