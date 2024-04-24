@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -78,7 +80,11 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
                 .verticalScroll(rememberScrollState())
         ) {
 
-            DetailToolbar(getCoinList.value){ navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) }
+            DetailToolbar(
+                getCoinList.value,
+                { navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) },
+                { navController.popBackStack() }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
             CoinItem(getCoinList.value)
@@ -94,7 +100,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit) {
+fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit) {
 
     TopAppBar(
         title = {
@@ -107,6 +113,11 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp)
             )
+        },
+        navigationIcon = {
+            IconButton(onClick = { onBackPress.invoke() }) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
+            }
         },
         actions = {
             IconButton(
