@@ -1,6 +1,7 @@
 package com.example.coinmarket.model.repository.mainRepo
 
 import android.util.Log
+import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.model.database.RoomDao
@@ -42,6 +43,19 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService,
         while (true){
             emit(apiServicePrice.getPriceDollar())
             delay(10000)
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    //Bookmark
+    override suspend fun insertBookmark(data: BookmarkResponse.Data.CryptoCurrency) {
+        dao.insertDataBookmark(data)
+    }
+
+    override val getBookmarkList: Flow<List<BookmarkResponse.Data.CryptoCurrency>> = flow {
+        while (true){
+            emit(dao.getAlLBookmark())
+            delay(5000)
         }
     }.flowOn(Dispatchers.IO)
 
