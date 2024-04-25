@@ -81,8 +81,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        themeViewModel.getDynamicThemeState()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+
+        initTheme()
 
         setContent {
             CoinMarketTheme(dynamicColor = themeViewModel.themeState.dynamicThemeState) {
@@ -96,6 +97,19 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+
+    }
+
+    //init theme
+    private fun initTheme() {
+
+        val pref = getSharedPreferences("Successful SignIn", Context.MODE_PRIVATE)
+        val signIn = pref.getString("signIn" , "null")
+
+        if (signIn != "successful"){
+            themeViewModel.insertDynamicThemeStateRep()
+        }
+        themeViewModel.getDynamicThemeState()
 
     }
 
