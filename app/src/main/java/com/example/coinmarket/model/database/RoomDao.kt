@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.DynamicTheme
 
@@ -26,6 +27,11 @@ interface RoomDao {
     @Query("SELECT * FROM DynamicTheme")
     suspend fun getDynamicThemeState() : DynamicTheme
 
+    //Bookmark
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDataBookmark(data: List<BookmarkResponse.Data.CryptoCurrency>)
 
+    @Query("SELECT * FROM bookmarkTable")
+    suspend fun getAlLBookmark(): List<BookmarkResponse.Data.CryptoCurrency>
 
 }
