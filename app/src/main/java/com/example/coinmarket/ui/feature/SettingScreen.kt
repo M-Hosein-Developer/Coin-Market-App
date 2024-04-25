@@ -202,45 +202,62 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
 @Composable
 fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
 
-    Row(
-        Modifier.fillMaxWidth().padding(horizontal = 18.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 18.dp),
     ) {
 
+        Row(
+            Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+
+            Text(
+                text = "Dynamic Theme",
+                modifier = Modifier
+                    .padding(start = 12.dp),
+                style = TextStyle(
+                    fontSize = 18.sp
+                )
+            )
+
+            Switch(
+                checked = viewModel.switchState,
+                onCheckedChange = {
+                    onChangeClicked.invoke(it)
+                },
+                thumbContent = if (viewModel.switchState) {
+                    {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(SwitchDefaults.IconSize),
+                        )
+                    }
+                } else {
+                    null
+                },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                    uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                )
+            )
+
+        }
+
         Text(
-            text = "Dynamic Theme",
+            text = "Using the dynamic theme, you can match the theme of your app with the theme of your mobile phone. By changing the theme in your mobile phone, the theme in the application will change.",
             modifier = Modifier
-                .padding(start = 12.dp),
+                .padding(start = 12.dp, top = 8.dp , end = 42.dp),
             style = TextStyle(
-                fontSize = 18.sp
+                fontSize = 14.sp
             )
         )
-
-
-        Switch(
-            checked = viewModel.switchState,
-            onCheckedChange = {
-                onChangeClicked.invoke(it)
-                              },
-            thumbContent = if (viewModel.switchState) {
-                {
-                    Icon(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = null,
-                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                    )
-                }
-            } else {
-                null
-            },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor =MaterialTheme.colorScheme.primary,
-                checkedTrackColor =  MaterialTheme.colorScheme.primaryContainer,
-                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-            )
-        )
-
     }
 }
