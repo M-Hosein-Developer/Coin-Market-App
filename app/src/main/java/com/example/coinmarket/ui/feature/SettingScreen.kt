@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -69,10 +70,18 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
 
         Language { showBottomSheet = true }
 
+        HorizontalDivider(
+            Modifier.padding(vertical = 12.dp)
+        )
+
         DynamicTheme(viewModel){
             viewModel.switchState = it
             viewModel.insertDynamicThemeStateRep()
         }
+
+        HorizontalDivider(
+            Modifier.padding(vertical = 12.dp)
+        )
 
         //Bottom Sheet
         LanguageBottomSheet(sheetState , scope , showBottomSheet){ showBottomSheet = it }
