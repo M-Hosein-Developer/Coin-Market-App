@@ -44,6 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.feature.BookmarkScreen
 import com.example.coinmarket.ui.feature.CalculatorScreen
 import com.example.coinmarket.ui.feature.DetailScreen
 import com.example.coinmarket.ui.feature.HelpScreen
@@ -240,7 +241,8 @@ fun UiScreen(
                     label = { Text(text = "Home") },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Home, contentDescription = null) },
-                    onClick = { navController.navigate(MyScreens.HomeScreen.route){
+                    onClick = {
+                        navController.navigate(MyScreens.HomeScreen.route){
                         popUpTo(MyScreens.HomeScreen.route)
                     }
                         scope.launch {
@@ -255,7 +257,14 @@ fun UiScreen(
                     label = { Text(text = "Bookmark") },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_bookmark_border_24), contentDescription = null) },
-                    onClick = {  }
+                    onClick = {
+                        navController.navigate(MyScreens.BookmarkScreen.route)
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }
                 )
 
                 NavigationDrawerItem(
@@ -359,6 +368,10 @@ fun UiScreen(
 
             composable(MyScreens.SettingScreen.route){
                 SettingScreen(navController , themeViewModel)
+            }
+
+            composable(MyScreens.BookmarkScreen.route){
+                BookmarkScreen(navController)
             }
 
         }
