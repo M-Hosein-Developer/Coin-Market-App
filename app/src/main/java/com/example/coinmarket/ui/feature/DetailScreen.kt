@@ -44,12 +44,14 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.coinmarket.R
+import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
 import com.example.coinmarket.util.EmptyCoin
+import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.util.percentToPrice
@@ -83,7 +85,9 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
             DetailToolbar(
                 getCoinList.value,
                 { navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) },
-                { navController.popBackStack() }
+                { navController.popBackStack() },
+                { },
+                { }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -100,7 +104,10 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit) {
+fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit ,  onAddBookmarkClick :(BookmarkResponse.Data.CryptoCurrency) -> Unit ,  onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit) {
+
+    val bookmarkBtn = remember { mutableStateOf(false) }
+    var bookmarkBtnDb = false
 
     TopAppBar(
         title = {
@@ -130,6 +137,148 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
                     contentDescription = null,
                     modifier = Modifier.padding(4.dp , end = 4.dp)
                 )
+            }
+
+            IconButton(
+                onClick = {
+
+                    bookmarkBtn.value = !bookmarkBtn.value
+
+                    if (bookmarkBtn.value) {
+
+                        onAddBookmarkClick.invoke(
+                            BookmarkResponse.Data.CryptoCurrency(
+                                data.ath,
+                                data.atl,
+                                data.badges,
+                                data.circulatingSupply,
+                                data.cmcRank,
+                                data.dateAdded,
+                                data.high24h,
+                                data.id,
+                                data.isActive,
+                                data.isAudited,
+                                data.lastUpdated,
+                                data.low24h,
+                                data.marketPairCount,
+                                data.maxSupply,
+                                data.name,
+                                listOf(BookmarkResponse.Data.CryptoCurrency.Quote(
+                                    data.quotes[0].dominance  ,
+                                    data.quotes[0].fullyDilluttedMarketCap  ,
+                                    data.quotes[0].lastUpdated  ,
+                                    data.quotes[0].marketCap  ,
+                                    data.quotes[0].marketCapByTotalSupply  ,
+                                    data.quotes[0].name  ,
+                                    data.quotes[0].percentChange1h  ,
+                                    data.quotes[0]. percentChange1y ,
+                                    data.quotes[0].percentChange24h  ,
+                                    data.quotes[0].percentChange30d  ,
+                                    data.quotes[0].percentChange60d  ,
+                                    data.quotes[0].percentChange7d  ,
+                                    data.quotes[0].percentChange90d  ,
+                                    data.quotes[0].price  ,
+                                    data.quotes[0].selfReportedMarketCap  ,
+                                    data.quotes[0].turnover ,
+                                    data.quotes[0].tvl  ,
+                                    data.quotes[0].volume24h  ,
+                                    data.quotes[0].volume30d  ,
+                                    data.quotes[0].volume7d  ,
+                                    data.quotes[0].ytdPriceChangePercentage
+                                )),
+                                data.selfReportedCirculatingSupply,
+                                data.slug,
+                                data.symbol,
+                                data.totalSupply
+                            )
+                        )
+
+                    }else {
+
+                        onDeleteBookmarkClicked.invoke(
+                            BookmarkResponse.Data.CryptoCurrency(
+                                data.ath,
+                                data.atl,
+                                data.badges,
+                                data.circulatingSupply,
+                                data.cmcRank,
+                                data.dateAdded,
+                                data.high24h,
+                                data.id,
+                                data.isActive,
+                                data.isAudited,
+                                data.lastUpdated,
+                                data.low24h,
+                                data.marketPairCount,
+                                data.maxSupply,
+                                data.name,
+                                listOf(BookmarkResponse.Data.CryptoCurrency.Quote(
+                                    data.quotes[0].dominance  ,
+                                    data.quotes[0].fullyDilluttedMarketCap  ,
+                                    data.quotes[0].lastUpdated  ,
+                                    data.quotes[0].marketCap  ,
+                                    data.quotes[0].marketCapByTotalSupply  ,
+                                    data.quotes[0].name  ,
+                                    data.quotes[0].percentChange1h  ,
+                                    data.quotes[0]. percentChange1y ,
+                                    data.quotes[0].percentChange24h  ,
+                                    data.quotes[0].percentChange30d  ,
+                                    data.quotes[0].percentChange60d  ,
+                                    data.quotes[0].percentChange7d  ,
+                                    data.quotes[0].percentChange90d  ,
+                                    data.quotes[0].price  ,
+                                    data.quotes[0].selfReportedMarketCap  ,
+                                    data.quotes[0].turnover ,
+                                    data.quotes[0].tvl  ,
+                                    data.quotes[0].volume24h  ,
+                                    data.quotes[0].volume30d  ,
+                                    data.quotes[0].volume7d  ,
+                                    data.quotes[0].ytdPriceChangePercentage
+                                )),
+                                data.selfReportedCirculatingSupply,
+                                data.slug,
+                                data.symbol,
+                                data.totalSupply
+                            )
+                        )
+
+                    }
+
+
+                }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.outline_bookmark_border_24),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp)
+                )
+
+                dataBookmark.forEach {
+                    if (data.id == it.id) {
+                        bookmarkBtnDb = true
+                    }
+                }
+
+                if (bookmarkBtn.value)
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_bookmark_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(35.dp)
+                    )
+                else if (bookmarkBtnDb)
+                    Icon(
+                        painter = painterResource(R.drawable.outline_bookmark_border_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(35.dp)
+                    )
+                else
+                    Icon(
+                        painter = painterResource(R.drawable.outline_bookmark_border_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(35.dp)
+                    )
+
+
             }
         }
     )
