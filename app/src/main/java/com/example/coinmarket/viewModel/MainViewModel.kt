@@ -5,10 +5,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.PriceResponse
 import com.example.coinmarket.model.repository.mainRepo.MainRepository
 import com.example.coinmarket.util.EmptyCoinList
+import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.NetworkChecker
 import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +24,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: MainRepository, context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
+    val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
     val getDollarPrice = MutableStateFlow<PriceResponse?>(null)
     val search = mutableStateOf("")
 
@@ -33,6 +36,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
         }
         getCryptoById(-1){}
         getDollarPrice()
+        getCryptoBookmarkList()
     }
 
     private fun getCryptoList() {
@@ -76,5 +80,20 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
                 Log.v("testPrice1" , it.toString())
             }
     }
+
+    fun insertBookmark(data: BookmarkResponse.Data.CryptoCurrency) = viewModelScope.launch(
+        coroutineExceptionHandler) {
+        repository.insertBookmark(data)
+    }
+
+    private fun getCryptoBookmarkList() = viewModelScope.launch(coroutineExceptionHandler) {
+        repository.getBookmarkList
+            .catch {
+                Log.v("error", "Error -> " + it.message)
+            }.collect{
+                getCryptoBookmarkList.value = it
+            }
+    }
+
 
 }
