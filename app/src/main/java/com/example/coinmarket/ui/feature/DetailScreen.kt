@@ -2,7 +2,6 @@ package com.example.coinmarket.ui.feature
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -76,8 +75,6 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 
     viewModel.getCryptoById(coinID) { getCoinList.value = it }
 
-
-    Log.v("testBookData" , getCoinBookmarkList.value.toString())
 
 
     //screen
@@ -512,7 +509,7 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
 
         }
 
-        Divider(Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(Modifier.padding(vertical = 8.dp))
 
         Row (
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -588,7 +585,7 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
             )
         }
 
-        Divider(Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(Modifier.padding(vertical = 8.dp))
 
         Column {
 
@@ -612,7 +609,7 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
 
         }
 
-        Divider(Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(Modifier.padding(vertical = 8.dp))
 
         Column {
 
