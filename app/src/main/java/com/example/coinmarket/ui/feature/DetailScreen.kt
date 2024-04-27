@@ -2,6 +2,7 @@ package com.example.coinmarket.ui.feature
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -51,7 +53,6 @@ import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
 import com.example.coinmarket.util.EmptyCoin
-import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.util.percentToPrice
@@ -69,10 +70,15 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 
     //get data
     val context = LocalContext.current
+
     val getCoinList = remember { mutableStateOf(EmptyCoin) }
-    viewModel.getCryptoById(coinID) {
-        getCoinList.value = it
-    }
+    val getCoinBookmarkList by remember { mutableStateOf(viewModel.getCryptoBookmarkList) }
+
+    viewModel.getCryptoById(coinID) { getCoinList.value = it }
+
+
+    Log.v("testBookData" , getCoinBookmarkList.value.toString())
+
 
     //screen
     if (getCoinList.value.lastUpdated.length > 6) {
@@ -84,10 +90,11 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 
             DetailToolbar(
                 getCoinList.value,
+                getCoinBookmarkList.value,
                 { navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) },
                 { navController.popBackStack() },
-                { },
-                { }
+                { viewModel.insertBookmark(it) },
+                {  }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +111,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit ,  onAddBookmarkClick :(BookmarkResponse.Data.CryptoCurrency) -> Unit ,  onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit) {
+fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: List<BookmarkResponse.Data.CryptoCurrency> , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit ,  onAddBookmarkClick :(BookmarkResponse.Data.CryptoCurrency) -> Unit ,  onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit) {
 
     val bookmarkBtn = remember { mutableStateOf(false) }
     var bookmarkBtnDb = false
@@ -253,7 +260,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
                     modifier = Modifier.size(35.dp)
                 )
 
-                dataBookmark.forEach {
+                bookmarkData.forEach {
                     if (data.id == it.id) {
                         bookmarkBtnDb = true
                     }
@@ -267,7 +274,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , onCalculatorCli
                     )
                 else if (bookmarkBtnDb)
                     Icon(
-                        painter = painterResource(R.drawable.outline_bookmark_border_24),
+                        painter = painterResource(R.drawable.baseline_bookmark_24),
                         contentDescription = null,
                         modifier = Modifier.size(35.dp)
                     )
