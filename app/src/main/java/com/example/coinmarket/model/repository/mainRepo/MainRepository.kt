@@ -21,5 +21,7 @@ interface MainRepository {
 
     val getBookmarkList : Flow<List<BookmarkResponse.Data.CryptoCurrency>>
 
+    suspend fun deleteBookmark(id : Int)
+
 
 }

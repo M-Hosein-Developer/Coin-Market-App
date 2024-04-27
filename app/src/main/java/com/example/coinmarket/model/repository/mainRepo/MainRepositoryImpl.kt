@@ -60,4 +60,9 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService,
     }.flowOn(Dispatchers.IO)
 
 
+    override suspend fun deleteBookmark(id: Int) {
+        dao.deleteBookmarkListById(id)
+    }
+
+
 }
