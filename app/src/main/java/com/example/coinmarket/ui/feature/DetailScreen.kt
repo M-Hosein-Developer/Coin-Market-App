@@ -91,7 +91,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
                 { navController.navigate(MyScreens.CalculatorScreen.route + "/" + it) },
                 { navController.popBackStack() },
                 { viewModel.insertBookmark(it) },
-                {  }
+                { viewModel.deleteBookmark(it.id) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -251,11 +251,6 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
 
                 }
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.outline_bookmark_border_24),
-                    contentDescription = null,
-                    modifier = Modifier.size(35.dp)
-                )
 
                 bookmarkData.forEach {
                     if (data.id == it.id) {
