@@ -34,4 +34,8 @@ interface RoomDao {
     @Query("SELECT * FROM bookmarkTable")
     suspend fun getAlLBookmark(): List<BookmarkResponse.Data.CryptoCurrency>
 
+    @Query("DELETE FROM bookmarkTable WHERE id = :id")
+    suspend fun deleteBookmarkListById( id : Int)
+
+
 }
