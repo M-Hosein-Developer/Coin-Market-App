@@ -95,5 +95,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
             }
     }
 
+    fun deleteBookmark(id: Int) = viewModelScope.launch(coroutineExceptionHandler) {
+        repository.deleteBookmark(id)
+    }
 
 }
