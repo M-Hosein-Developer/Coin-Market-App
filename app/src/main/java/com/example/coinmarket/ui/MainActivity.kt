@@ -385,7 +385,7 @@ fun UiScreen(
             }
 
             composable(MyScreens.BookmarkScreen.route){
-                BookmarkScreen(navController)
+                BookmarkScreen(navController , viewModel)
             }
 
         }
