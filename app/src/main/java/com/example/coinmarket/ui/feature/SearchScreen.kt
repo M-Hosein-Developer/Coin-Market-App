@@ -2,6 +2,7 @@ package com.example.coinmarket.ui.feature
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,6 +49,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.EmptyCoinList
@@ -93,6 +95,7 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
         Column(
             modifier = Modifier
+                .background(BlurWhite)
         ) {
 
             SearchToolbar()
@@ -182,7 +185,6 @@ fun CryptoList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClic
                 .padding(horizontal = 20.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
             items(getCoinList.size) {
                 CryptoListItem(getCoinList[it], onClickedItem)
