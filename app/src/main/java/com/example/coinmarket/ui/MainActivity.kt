@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -67,6 +69,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -78,10 +81,11 @@ class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         initTheme()
 
@@ -109,7 +113,10 @@ class MainActivity : ComponentActivity() {
         if (signIn != "successful"){
             themeViewModel.insertDynamicThemeStateRep()
         }
-        themeViewModel.getDynamicThemeState()
+        lifecycleScope.launch {
+            delay(1000)
+            themeViewModel.getDynamicThemeState()
+        }
 
     }
 
