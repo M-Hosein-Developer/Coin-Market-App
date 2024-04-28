@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -183,7 +184,10 @@ fun SignUpEmail(edtValue: String, icon: ImageVector, hint: String, onValueChange
             .padding(horizontal = 18.dp)
             .padding(vertical = 8.dp),
         shape = ShapeDefaults.Medium,
-        leadingIcon = { Icon(imageVector = icon, contentDescription = null) }
+        leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
+        textStyle = TextStyle(
+            color = Color.White
+        )
     )
 
 }
@@ -203,6 +207,9 @@ fun SignUpPassword(edtValue: String, icon: ImageVector, hint: String, onValueCha
             .padding(vertical = 8.dp),
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = PasswordVisualTransformation(),
+        textStyle = TextStyle(
+            color = Color.White
+        )
     )
 }

@@ -169,6 +169,9 @@ fun SignInEmail(edtValue: String, icon: ImageVector, hint: String, onValueChange
             .padding(horizontal = 18.dp).padding(vertical = 8.dp),
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
+        textStyle = TextStyle(
+            color = Color.White
+        )
     )
 
 }
@@ -188,5 +191,8 @@ fun SignInPassword(edtValue: String, icon: ImageVector, hint: String, onValueCha
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
         visualTransformation = PasswordVisualTransformation(),
+        textStyle = TextStyle(
+            color = Color.White
+        )
     )
 }
