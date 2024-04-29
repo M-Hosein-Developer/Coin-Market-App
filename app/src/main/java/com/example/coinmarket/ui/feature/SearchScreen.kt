@@ -253,9 +253,12 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                 )
             } else {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4))
+                    text =  if (coin.quotes[0].percentChange24h.toString().length > 4)
+                        "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4)
+                    else
+                        "%" + coin.quotes[0].percentChange24h.toString()
+                )
             }
-
         }
 
         AsyncImage(
@@ -285,8 +288,13 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
+
+
             Text(
-                text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
+                text = if (coin.ath.toString().length > 7)
+                    coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol
+                else
+                    coin.ath.toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
                 )
