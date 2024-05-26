@@ -233,7 +233,7 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
         ) {
 
             Text(
-                text = coin.name,
+                text = if(coin.name.length > 7) coin.name.subSequence(0 , 7).toString() else coin.name,
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
