@@ -117,6 +117,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
         title = {
             Text(
                 text = data.name,
+                maxLines = 1,
                 style = TextStyle(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
