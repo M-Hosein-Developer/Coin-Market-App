@@ -2,6 +2,7 @@ package com.example.coinmarket.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Toast
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
@@ -80,6 +82,7 @@ class MainActivity : ComponentActivity() {
     private val signInUpViewModel: SignInUpViewModel by viewModels()
     private val themeViewModel: ThemeViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
+    private lateinit var sharedPref : SharedPreferences
 
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -87,6 +90,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        sharedPref = getSharedPreferences("Successful SignIn", Context.MODE_PRIVATE)
 
         initTheme()
 
@@ -97,7 +101,7 @@ class MainActivity : ComponentActivity() {
                 }, {
                     signUpUser(it)
                 },
-                    themeViewModel
+                    themeViewModel , sharedPref
                 )
 
             }
@@ -198,7 +202,8 @@ fun UiScreen(
     signInUpViewModel: SignInUpViewModel,
     onSignInClicked: (NavHostController) -> Unit,
     onSignUpClicked: (NavHostController) -> Unit,
-    themeViewModel: ThemeViewModel
+    themeViewModel: ThemeViewModel,
+    sharedPref: SharedPreferences
 ) {
 
     val navController = rememberNavController()
@@ -330,14 +335,35 @@ fun UiScreen(
                         }
                     }
                 )
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Log out") },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.ExitToApp,
+                            contentDescription = null
+                        )
+                    },
+                    onClick = {
+                        sharedPref.edit().remove("signIn").apply()
+                        Firebase.auth.signOut()
+                        navController.navigate(MyScreens.IntroScreen.route)
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }
+                )
                 // ...other drawer items
             }
         }
     ) {
         // Screen content
         val context = LocalContext.current
-        val pref = context.getSharedPreferences("Successful SignIn", Context.MODE_PRIVATE)
-        val signIn = pref.getString("signIn" , "null")
+
+        val signIn = sharedPref.getString("signIn" , "null")
 
         NavHost(navController = navController, startDestination = if (signIn != "successful") MyScreens.IntroScreen.route else MyScreens.HomeScreen.route) {
 
