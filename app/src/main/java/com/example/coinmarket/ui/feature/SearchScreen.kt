@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -98,7 +100,7 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
                 .background(BlurWhite)
         ) {
 
-            SearchToolbar()
+            SearchToolbar{ navController.popBackStack() }
 
             SearchBox(
                 edtValue = viewModel.search.value,
@@ -135,7 +137,7 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchToolbar() {
+fun SearchToolbar(onBackPress :() -> Unit) {
 
     TopAppBar(
         title = {
@@ -148,6 +150,11 @@ fun SearchToolbar() {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp)
             )
+        },
+        navigationIcon = {
+            IconButton(onClick = { onBackPress.invoke() }) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
+            }
         }
     )
 
