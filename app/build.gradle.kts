@@ -9,13 +9,13 @@ plugins {
 
 android {
     namespace = "com.example.coinmarket"
-    compileSdk = 34
+    compileSdkPreview = "VanillaIceCream"
 
     defaultConfig {
         applicationId = "com.example.coinmarket"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
+        targetSdkPreview = "VanillaIceCream"
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
