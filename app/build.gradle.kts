@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.example.coinmarket"
-    compileSdkPreview = "VanillaIceCream"
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.coinmarket"
         minSdk = 24
-        targetSdkPreview = "VanillaIceCream"
+        targetSdk = 35
         versionCode = 2
         versionName = "1.0"
 
@@ -51,6 +51,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    
 }
 
 dependencies {
