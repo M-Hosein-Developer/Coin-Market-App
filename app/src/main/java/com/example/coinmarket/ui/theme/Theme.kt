@@ -91,7 +91,6 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
-
 @Composable
 fun CoinMarketTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -104,7 +103,7 @@ fun CoinMarketTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> lightScheme
+        darkTheme -> darkScheme
         else -> lightScheme
     }
     val view = LocalView.current
