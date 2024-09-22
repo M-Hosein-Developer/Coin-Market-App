@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -82,6 +83,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
         ) {
 
@@ -337,6 +339,7 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 if (data.quotes[0].percentChange24h > 0) {
@@ -369,13 +372,15 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = data.ath.toString().subSequence(0, 7).toString() + " " + data.symbol,
                     style = TextStyle(
                         fontSize = 14.sp,
-                    )
+                    ),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
 
@@ -492,15 +497,18 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
 
             Text(
                 text = "Volume 24H:  " + (data.quotes[0].volume24h).toString().subSequence(0 , 15),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 text = "Volume 7d:  " + (data.quotes[0].volume7d).toString().subSequence(0 , 15),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 text = "Volume 30d:  " + (data.quotes[0].volume30d).toString().subSequence(0 , 15),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
         }
@@ -587,20 +595,24 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
 
             Text(
                 text = "Total Supply:  " + data.totalSupply,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 text = "Max Supply:  " + data.maxSupply,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
                 text = "High24h:  " + (data.high24h).toString().subSequence(0 , 8),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
                 text = "Low24h:  " + (data.low24h).toString().subSequence(0 , 8),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
         }
@@ -619,11 +631,13 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
                 Text(
                     text = "Last Updated:  " + (data.lastUpdated).subSequence(0 , 10) + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             }
@@ -637,10 +651,12 @@ fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (St
                 Text(
                     text = "Last Updated:  " + (data.dateAdded).subSequence(0 , 10) + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             }
