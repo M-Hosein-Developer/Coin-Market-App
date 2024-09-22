@@ -1,7 +1,6 @@
 package com.example.coinmarket.ui.feature
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -27,15 +27,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +48,6 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
-import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
@@ -80,45 +76,24 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController) {
     }
 
 
-
-    Box(
-        Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    //screen
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
-        Box(
-            Modifier
-                .fillMaxSize()
-                .blur(12.dp),
-            contentAlignment = Alignment.Center
-        ) {
-
-            Image(
-                painter = painterResource(R.drawable.backgroun2),
-                contentDescription = null,
-                Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
-
-        //screen
-        Column(
-            modifier = Modifier
-                .background(BlurWhite)
-        ) {
-
-            HomeToolbar()
-            CardSlider(getCoinList.value)
-            CoinList(
-                getCoinList.value,
-                { navController.navigate(MyScreens.SearchScreen.route) },
-                { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
-            )
-        }
-
+        HomeToolbar()
+        CardSlider(getCoinList.value)
+        CoinList(
+            getCoinList.value,
+            { navController.navigate(MyScreens.SearchScreen.route) },
+            { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
+        )
     }
 
 }
+
 
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
@@ -161,9 +136,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            Gradient1,
-                            Gradient2,
-                            Gradient3
+                            Gradient1, Gradient2, Gradient3
                         )
                     )
                 )
@@ -171,7 +144,7 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
             contentAlignment = Alignment.Center
         ) {
 
-            if (getCoinList.size > 3){
+            if (getCoinList.size > 3) {
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -187,7 +160,10 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                     ) {
 
                         Text(
-                            text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(0, 10),
+                            text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(
+                                0,
+                                10
+                            ),
                             Modifier.padding(start = 24.dp, bottom = 8.dp),
                             style = TextStyle(
                                 fontSize = 28.sp,
@@ -254,11 +230,9 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
                     )
                 }
 
-            }else{
+            } else {
                 Loader()
             }
-
-
 
 
         }
@@ -270,7 +244,11 @@ fun CardSlider(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>) {
 
 //crypto list and item
 @Composable
-fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedSearch: () -> Unit, onClickedItem: (Int) -> Unit) {
+fun CoinList(
+    getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>,
+    onClickedSearch: () -> Unit,
+    onClickedItem: (Int) -> Unit
+) {
 
     Row(
         Modifier
@@ -284,7 +262,8 @@ fun CoinList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClicke
             text = "Charts",
             style = TextStyle(
                 fontSize = 18.sp,
-            )
+            ),
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         TextButton(
@@ -368,6 +347,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                     fontWeight = FontWeight.Bold
                 ),
                 modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
@@ -383,7 +363,7 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
             } else {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                                    )
+                )
             }
 
         }
@@ -396,9 +376,9 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
             contentDescription = null,
             modifier = Modifier.size(120.dp),
             colorFilter =
-            if (coin.quotes[0].percentChange24h > 0){
+            if (coin.quotes[0].percentChange24h > 0) {
                 ColorFilter.tint(Green)
-            }else{
+            } else {
                 ColorFilter.tint(Red)
             }
         )
@@ -414,14 +394,16 @@ fun CoinListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (I
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
 
