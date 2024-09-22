@@ -1,11 +1,9 @@
 package com.example.coinmarket.ui.feature
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +17,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -30,12 +29,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +47,6 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
-import com.example.coinmarket.ui.theme.BlurWhite
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.EmptyCoinList
@@ -75,69 +70,46 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
         }
     }
 
-    Box(
-        Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
-        Box(
-            Modifier
-                .fillMaxSize()
-                .blur(12.dp),
-            contentAlignment = Alignment.Center
-        ) {
+        SearchToolbar { navController.popBackStack() }
 
-            Image(
-                painter = painterResource(R.drawable.backgroun2),
-                contentDescription = null,
-                Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+        SearchBox(
+            edtValue = viewModel.search.value,
+            icon = Icons.Default.Search,
+            hint = "Search Crypto Name"
+        ) {
+            viewModel.search.value = it
         }
 
-        Column(
-            modifier = Modifier
-                .background(BlurWhite)
-        ) {
 
-            SearchToolbar{ navController.popBackStack() }
-
-            SearchBox(
-                edtValue = viewModel.search.value,
-                icon = Icons.Default.Search,
-                hint = "Search Crypto Name"
+        getCoinList.value.forEach {
+            if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
+                    .contains(viewModel.search.value)
             ) {
-                viewModel.search.value = it
-            }
-
-
-            getCoinList.value.forEach {
-                if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
-                        .contains(viewModel.search.value)
-                ) {
-                    filterList.add(it)
-                }
-            }
-
-
-            CryptoList(
-                if (viewModel.search.value == "") {
-                    getCoinList.value
-                } else {
-                    filterList
-                }
-            ) {
-                navController.navigate(MyScreens.DetailScreen.route + "/" + it)
+                filterList.add(it)
             }
         }
 
 
+        CryptoList(
+            if (viewModel.search.value == "") {
+                getCoinList.value
+            } else {
+                filterList
+            }
+        ) {
+            navController.navigate(MyScreens.DetailScreen.route + "/" + it)
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchToolbar(onBackPress :() -> Unit) {
+fun SearchToolbar(onBackPress: () -> Unit) {
 
     TopAppBar(
         title = {
@@ -153,7 +125,10 @@ fun SearchToolbar(onBackPress :() -> Unit) {
         },
         navigationIcon = {
             IconButton(onClick = { onBackPress.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = null
+                )
             }
         }
     )
@@ -175,14 +150,17 @@ fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges:
         shape = ShapeDefaults.Medium,
         leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
 
-    )
+        )
 
 }
 
 
 //crypto list and item
 @Composable
-fun CryptoList(getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>, onClickedItem: (Int) -> Unit) {
+fun CryptoList(
+    getCoinList: List<CoinMarketResponse.Data.CryptoCurrency>,
+    onClickedItem: (Int) -> Unit
+) {
 
     if (getCoinList.size >= 1) {
 
@@ -240,12 +218,14 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
         ) {
 
             Text(
-                text = if(coin.name.length > 7) coin.name.subSequence(0 , 7).toString() else coin.name,
+                text = if (coin.name.length > 7) coin.name.subSequence(0, 7)
+                    .toString() else coin.name,
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
@@ -260,7 +240,7 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                 )
             } else {
                 Text(
-                    text =  if (coin.quotes[0].percentChange24h.toString().length > 4)
+                    text = if (coin.quotes[0].percentChange24h.toString().length > 4)
                         "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4)
                     else
                         "%" + coin.quotes[0].percentChange24h.toString()
@@ -292,7 +272,8 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
 
@@ -304,7 +285,8 @@ fun CryptoListItem(coin: CoinMarketResponse.Data.CryptoCurrency, onClickedItem: 
                     coin.ath.toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
 
