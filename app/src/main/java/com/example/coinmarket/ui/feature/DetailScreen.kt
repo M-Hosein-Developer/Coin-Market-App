@@ -297,6 +297,7 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp)
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
         AsyncImage(

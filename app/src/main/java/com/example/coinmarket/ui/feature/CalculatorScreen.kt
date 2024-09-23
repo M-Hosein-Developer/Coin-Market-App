@@ -25,6 +25,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -82,6 +83,8 @@ fun CalculatorScreen(
         Modifier
             .fillMaxSize()
             .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
+
     ) {
 
         CalculatorToolbar{
@@ -91,7 +94,7 @@ fun CalculatorScreen(
         Column(
             Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
         ) {
 
@@ -163,7 +166,8 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
                 text = "$ " + (coinPrice * counter).toString(),
                 style = TextStyle(
                     fontSize = 24.sp
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Row(
@@ -196,7 +200,8 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
                     Modifier.padding(horizontal = 12.dp),
                     style = TextStyle(
                         fontSize = 18.sp
-                    )
+                    ),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Button(
@@ -326,7 +331,7 @@ fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
                 textAlign = TextAlign.Start
             ),
             maxLines = 1,
-
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Row(
