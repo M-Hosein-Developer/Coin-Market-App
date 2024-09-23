@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui.feature
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -53,6 +55,7 @@ fun BookmarkScreen(navController: NavHostController, viewModel: MainViewModel) {
 
     Column(
         Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
         BookmarkToolbar{ navController.popBackStack() }
@@ -116,7 +119,11 @@ fun CryptoBookmarkList(getCoinList: List<BookmarkResponse.Data.CryptoCurrency>, 
             verticalArrangement = Arrangement.Center
         ) {
             BookmarkLoading()
-            Text(text = "There is no much crypto in the list")
+            Text(
+                text = "There is no much crypto in the list",
+                color = MaterialTheme.colorScheme.onBackground
+
+            )
         }
 
     }
@@ -155,7 +162,8 @@ fun CryptoBookmarkListItem(coin: BookmarkResponse.Data.CryptoCurrency, onClicked
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
@@ -199,14 +207,16 @@ fun CryptoBookmarkListItem(coin: BookmarkResponse.Data.CryptoCurrency, onClicked
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
                 style = TextStyle(
                     fontSize = 14.sp,
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
 
