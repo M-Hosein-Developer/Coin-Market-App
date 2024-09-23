@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui.feature
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -64,6 +65,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
     Column(
         Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
         SettingToolbar { navController.popBackStack() }
@@ -145,7 +147,8 @@ fun Language(onLanguageClicked : () -> Unit) {
                     .padding(start = 12.dp),
                 style = TextStyle(
                     fontSize = 18.sp
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
         }
@@ -231,7 +234,8 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
                     .padding(start = 12.dp),
                 style = TextStyle(
                     fontSize = 18.sp
-                )
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Switch(
@@ -266,7 +270,8 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
                 .padding(start = 12.dp, top = 8.dp , end = 42.dp),
             style = TextStyle(
                 fontSize = 14.sp
-            )
+            ),
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
