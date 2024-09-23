@@ -2,6 +2,7 @@ package com.example.coinmarket.ui.feature
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,12 +17,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +40,7 @@ fun InfoScreen(navController: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
 
         InfoToolbar { navController.popBackStack() }
@@ -109,13 +111,13 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Coin Market ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 42.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(start = 32.dp, top = 12.dp)
+                        .padding(start = 32.dp, top = 12.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
@@ -135,25 +137,25 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Description: ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp)
+                        .padding(top = 32.dp , start = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = "In this application, I tried to develop an excellent viewer for cryptos that can be used online and you can instantly use its online data. You can bookmark the crypto you want. Search for the crypto you want from among 500 cryptos",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
                         .padding(start = 32.dp , top = 18.dp , end = 32.dp),
-                    lineHeight = 32.sp
+                    lineHeight = 32.sp,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             }
@@ -166,24 +168,24 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Developer: ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp)
+                        .padding(top = 32.dp , start = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = " Mohammad Hosein Hajiakbari ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp)
+                        .padding(top = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             } // Dev
@@ -192,25 +194,25 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Email: ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp)
+                        .padding(top = 32.dp , start = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = " m.hosein.developer@gmail.com",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .clickable { onEmailClicked.invoke("m.hosein.developer@gmail.com") }
+                        .clickable { onEmailClicked.invoke("m.hosein.developer@gmail.com") },
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             } // Email
@@ -219,25 +221,25 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "LinkedIn: ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp)
+                        .padding(top = 32.dp , start = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = " Mohammad Hosein Hajiakbari ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .clickable { onLinkedInClicked.invoke("mohammad-hosein-hajiakbari-662337246") }
+                        .clickable { onLinkedInClicked.invoke("mohammad-hosein-hajiakbari-662337246") },
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             } // LinkedIn
@@ -246,25 +248,25 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Instagram: ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp)
+                        .padding(top = 32.dp , start = 32.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = " android.coder ",
-                    color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .clickable { onInstagramClicked.invoke("android.coder") }
+                        .clickable { onInstagramClicked.invoke("android.coder") },
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             } // Instagram
@@ -275,14 +277,14 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
             Text(
                 text = "Click on one of the IDs above to contact the developer of this application.",
-                color = Color.Black,
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Light
                 ),
                 modifier = Modifier
                     .padding(start = 32.dp , top = 32.dp , end = 32.dp),
-                lineHeight = 32.sp
+                lineHeight = 32.sp,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
         }
