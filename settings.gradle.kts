@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "CoinMarket"
 include(":app")
 include(":data")
+include(":domain")
