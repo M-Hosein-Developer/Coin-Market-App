@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.dataClass
+package ir.androidcoder.local.dataClass
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

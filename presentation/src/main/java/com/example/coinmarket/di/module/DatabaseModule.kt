@@ -2,8 +2,8 @@ package com.example.coinmarket.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.coinmarket.model.database.MyDatabase
-import com.example.coinmarket.model.database.RoomDao
+import ir.androidcoder.local.MyDatabase
+import ir.androidcoder.local.RoomDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,15 +18,15 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context) : MyDatabase{
-        return Room.databaseBuilder(context , MyDatabase::class.java , "databse.db")
+    fun provideDatabase(@ApplicationContext context: Context) : ir.androidcoder.local.MyDatabase {
+        return Room.databaseBuilder(context , ir.androidcoder.local.MyDatabase::class.java , "databse.db")
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideDao(database: MyDatabase) : RoomDao {
+    fun provideDao(database: ir.androidcoder.local.MyDatabase) : ir.androidcoder.local.RoomDao {
         return database.roomDao()
     }
 

@@ -1,6 +1,6 @@
-package com.example.coinmarket.model.remote
+package ir.androidcoder.remote
 
-import com.example.coinmarket.model.dataClass.PriceResponse
+import ir.androidcoder.local.dataClass.PriceResponse
 import retrofit2.http.GET
 
 interface ApiServicePrice {

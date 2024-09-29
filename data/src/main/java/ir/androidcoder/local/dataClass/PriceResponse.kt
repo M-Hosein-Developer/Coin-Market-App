@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.dataClass
+package ir.androidcoder.local.dataClass
 
 data class PriceResponse(
     val d: String,

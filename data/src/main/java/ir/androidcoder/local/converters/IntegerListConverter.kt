@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.database.converters
+package ir.androidcoder.local.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

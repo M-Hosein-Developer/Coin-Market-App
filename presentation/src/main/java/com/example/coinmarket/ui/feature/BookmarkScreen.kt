@@ -40,7 +40,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
-import com.example.coinmarket.model.dataClass.BookmarkResponse
+import ir.androidcoder.local.dataClass.BookmarkResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.MyScreens
@@ -95,7 +95,7 @@ fun BookmarkToolbar(onBackPress :() -> Unit){
 }
 
 @Composable
-fun CryptoBookmarkList(getCoinList: List<BookmarkResponse.Data.CryptoCurrency>, onClickedItem: (Int) -> Unit) {
+fun CryptoBookmarkList(getCoinList: List<ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency>, onClickedItem: (Int) -> Unit) {
 
     if (getCoinList.size >= 1) {
 
@@ -132,7 +132,7 @@ fun CryptoBookmarkList(getCoinList: List<BookmarkResponse.Data.CryptoCurrency>, 
 }
 
 @Composable
-fun CryptoBookmarkListItem(coin: BookmarkResponse.Data.CryptoCurrency, onClickedItem: (Int) -> Unit) {
+fun CryptoBookmarkListItem(coin: ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency, onClickedItem: (Int) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

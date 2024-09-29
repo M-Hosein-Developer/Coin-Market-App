@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.database.converters.bookmark
+package ir.androidcoder.local.converters.bookmark
 
 import androidx.room.TypeConverter
 import com.example.coinmarket.model.dataClass.BookmarkResponse

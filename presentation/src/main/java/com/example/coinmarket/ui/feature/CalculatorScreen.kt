@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.coinmarket.R
-import com.example.coinmarket.model.dataClass.PriceResponse
+import ir.androidcoder.local.dataClass.PriceResponse
 import com.example.coinmarket.ui.theme.Orange
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
@@ -144,7 +144,7 @@ fun CalculatorToolbar(onBackCLicked: () -> Unit) {
 }
 
 @Composable
-fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
+fun CryptoNumber(coinPrice: Float, dollarPrice: ir.androidcoder.local.dataClass.PriceResponse) {
 
     var counter by remember { mutableIntStateOf(1) }
 
@@ -308,7 +308,7 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: PriceResponse) {
 }
 
 @Composable
-fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceResponse) {
+fun CryptoCalculator(coinPrice: Float, dollarPrice: ir.androidcoder.local.dataClass.PriceResponse) {
 
     var text by remember { mutableStateOf("") }
 

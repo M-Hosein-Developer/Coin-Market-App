@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.database
+package ir.androidcoder.local
 
 import androidx.room.Dao
 import androidx.room.Insert

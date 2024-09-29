@@ -1,7 +1,7 @@
 package com.example.coinmarket.di.module
 
-import com.example.coinmarket.model.remote.ApiService
-import com.example.coinmarket.model.remote.ApiServicePrice
+import ir.androidcoder.remote.ApiService
+import ir.androidcoder.remote.ApiServicePrice
 import com.example.coinmarket.util.BASE_URL
 import com.example.coinmarket.util.BASE_URL_PRICE
 import dagger.Module
@@ -39,14 +39,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(@Named("CoinMarket") retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(@Named("CoinMarket") retrofit: Retrofit): ir.androidcoder.remote.ApiService {
+        return retrofit.create(ir.androidcoder.remote.ApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideApiServicePrice(@Named("Price") retrofit: Retrofit): ApiServicePrice {
-        return retrofit.create(ApiServicePrice::class.java)
+    fun provideApiServicePrice(@Named("Price") retrofit: Retrofit): ir.androidcoder.remote.ApiServicePrice {
+        return retrofit.create(ir.androidcoder.remote.ApiServicePrice::class.java)
     }
 
 }

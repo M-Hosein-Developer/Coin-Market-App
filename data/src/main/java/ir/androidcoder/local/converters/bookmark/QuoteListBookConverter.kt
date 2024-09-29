@@ -1,9 +1,9 @@
-package com.example.coinmarket.model.database.converters.bookmark
+package ir.androidcoder.local.converters.bookmark
 
 import androidx.room.TypeConverter
-import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ir.androidcoder.local.dataClass.BookmarkResponse
 
 class QuoteListBookConverter {
 

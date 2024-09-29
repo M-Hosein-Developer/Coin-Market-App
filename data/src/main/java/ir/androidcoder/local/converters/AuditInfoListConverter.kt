@@ -1,9 +1,9 @@
-package com.example.coinmarket.model.database.converters
+package ir.androidcoder.local.converters
 
 import androidx.room.TypeConverter
-import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ir.androidcoder.local.dataClass.CoinMarketResponse
 
 class AuditInfoListConverter {
 

@@ -46,8 +46,8 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.coinmarket.R
-import com.example.coinmarket.model.dataClass.BookmarkResponse
-import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import ir.androidcoder.local.dataClass.BookmarkResponse
+import ir.androidcoder.local.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
@@ -110,7 +110,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: List<BookmarkResponse.Data.CryptoCurrency> , onCalculatorClick :(Float) -> Unit , onBackPress :() -> Unit ,  onAddBookmarkClick :(BookmarkResponse.Data.CryptoCurrency) -> Unit ,  onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit) {
+fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, bookmarkData: List<ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency>, onCalculatorClick :(Float) -> Unit, onBackPress :() -> Unit, onAddBookmarkClick :(ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) -> Unit, onDeleteBookmarkClicked: (ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) -> Unit) {
 
     val bookmarkBtn = remember { mutableStateOf(false) }
     var bookmarkBtnDb = false
@@ -154,7 +154,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
                     if (bookmarkBtn.value) {
 
                         onAddBookmarkClick.invoke(
-                            BookmarkResponse.Data.CryptoCurrency(
+                            ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency(
                                 data.ath,
                                 data.atl,
                                 data.badges,
@@ -170,7 +170,8 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
                                 data.marketPairCount,
                                 data.maxSupply,
                                 data.name,
-                                listOf(BookmarkResponse.Data.CryptoCurrency.Quote(
+                                listOf(
+                                    ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency.Quote(
                                     data.quotes[0].dominance  ,
                                     data.quotes[0].fullyDilluttedMarketCap  ,
                                     data.quotes[0].lastUpdated  ,
@@ -203,7 +204,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
                     }else {
 
                         onDeleteBookmarkClicked.invoke(
-                            BookmarkResponse.Data.CryptoCurrency(
+                            ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency(
                                 data.ath,
                                 data.atl,
                                 data.badges,
@@ -219,7 +220,8 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
                                 data.marketPairCount,
                                 data.maxSupply,
                                 data.name,
-                                listOf(BookmarkResponse.Data.CryptoCurrency.Quote(
+                                listOf(
+                                    ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency.Quote(
                                     data.quotes[0].dominance  ,
                                     data.quotes[0].fullyDilluttedMarketCap  ,
                                     data.quotes[0].lastUpdated  ,
@@ -289,7 +291,7 @@ fun DetailToolbar(data: CoinMarketResponse.Data.CryptoCurrency , bookmarkData: L
 }
 
 @Composable
-fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
+fun CoinItem(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -392,7 +394,7 @@ fun CoinItem(data: CoinMarketResponse.Data.CryptoCurrency) {
 }
 
 @Composable
-fun Chart(data: CoinMarketResponse.Data.CryptoCurrency) {
+fun Chart(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) {
 
     val checkData = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d).toFloat()
     val graphData = listOf(
@@ -484,7 +486,7 @@ fun Chart(data: CoinMarketResponse.Data.CryptoCurrency) {
 }
 
 @Composable
-fun DataToShow(data : CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (String) -> Unit) {
+fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (String) -> Unit) {
 
 
     Column(

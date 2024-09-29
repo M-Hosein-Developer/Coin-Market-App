@@ -1,11 +1,11 @@
 package com.example.coinmarket.model.repository.themeRepo
 
-import com.example.coinmarket.model.dataClass.DynamicTheme
+import ir.androidcoder.local.dataClass.DynamicTheme
 
 interface ThemeRepository {
 
-    suspend fun insertDynamicThemeStateRep(state : DynamicTheme)
+    suspend fun insertDynamicThemeStateRep(state : ir.androidcoder.local.dataClass.DynamicTheme)
 
-    suspend fun getDynamicThemeState() : DynamicTheme
+    suspend fun getDynamicThemeState() : ir.androidcoder.local.dataClass.DynamicTheme
 
 }

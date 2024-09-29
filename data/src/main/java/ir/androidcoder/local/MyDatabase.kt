@@ -1,4 +1,4 @@
-package com.example.coinmarket.model.database
+package ir.androidcoder.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -6,11 +6,11 @@ import androidx.room.TypeConverters
 import com.example.coinmarket.model.dataClass.BookmarkResponse
 import com.example.coinmarket.model.dataClass.CoinMarketResponse
 import com.example.coinmarket.model.dataClass.DynamicTheme
-import com.example.coinmarket.model.database.converters.AuditInfoListConverter
-import com.example.coinmarket.model.database.converters.IntegerListConverter
-import com.example.coinmarket.model.database.converters.QuoteListConverter
-import com.example.coinmarket.model.database.converters.bookmark.AuditInfoListBookConverter
-import com.example.coinmarket.model.database.converters.bookmark.QuoteListBookConverter
+import ir.androidcoder.local.converters.AuditInfoListConverter
+import ir.androidcoder.local.converters.IntegerListConverter
+import ir.androidcoder.local.converters.QuoteListConverter
+import ir.androidcoder.local.converters.bookmark.AuditInfoListBookConverter
+import ir.androidcoder.local.converters.bookmark.QuoteListBookConverter
 
 @Database(entities = [CoinMarketResponse.Data.CryptoCurrency::class , DynamicTheme::class , BookmarkResponse.Data.CryptoCurrency::class] , version = 1 , exportSchema = false)
 @TypeConverters(

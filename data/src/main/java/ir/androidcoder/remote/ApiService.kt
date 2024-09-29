@@ -1,6 +1,6 @@
-package com.example.coinmarket.model.remote
+package ir.androidcoder.remote
 
-import com.example.coinmarket.model.dataClass.CoinMarketResponse
+import ir.androidcoder.local.dataClass.CoinMarketResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

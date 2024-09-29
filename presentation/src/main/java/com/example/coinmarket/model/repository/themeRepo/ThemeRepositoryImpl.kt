@@ -1,15 +1,15 @@
 package com.example.coinmarket.model.repository.themeRepo
 
-import com.example.coinmarket.model.dataClass.DynamicTheme
-import com.example.coinmarket.model.database.RoomDao
+import ir.androidcoder.local.dataClass.DynamicTheme
+import ir.androidcoder.local.RoomDao
 import javax.inject.Inject
 
-class ThemeRepositoryImpl @Inject constructor(private val myDao: RoomDao) : ThemeRepository {
+class ThemeRepositoryImpl @Inject constructor(private val myDao: ir.androidcoder.local.RoomDao) : ThemeRepository {
 
 
-    override suspend fun insertDynamicThemeStateRep(state: DynamicTheme) = myDao.insertDynamicTheme(state)
+    override suspend fun insertDynamicThemeStateRep(state: ir.androidcoder.local.dataClass.DynamicTheme) = myDao.insertDynamicTheme(state)
 
-    override suspend fun getDynamicThemeState(): DynamicTheme = myDao.getDynamicThemeState()
+    override suspend fun getDynamicThemeState(): ir.androidcoder.local.dataClass.DynamicTheme = myDao.getDynamicThemeState()
 
 
 }

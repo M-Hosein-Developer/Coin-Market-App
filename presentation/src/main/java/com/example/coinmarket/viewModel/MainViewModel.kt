@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinmarket.model.dataClass.BookmarkResponse
-import com.example.coinmarket.model.dataClass.CoinMarketResponse
-import com.example.coinmarket.model.dataClass.PriceResponse
+import ir.androidcoder.local.dataClass.BookmarkResponse
+import ir.androidcoder.local.dataClass.CoinMarketResponse
+import ir.androidcoder.local.dataClass.PriceResponse
 import com.example.coinmarket.model.repository.mainRepo.MainRepository
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.EmptyCoinListBook
@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
-    val getDollarPrice = MutableStateFlow<PriceResponse?>(null)
+    val getDollarPrice = MutableStateFlow<ir.androidcoder.local.dataClass.PriceResponse?>(null)
     val search = mutableStateOf("")
 
     init {
@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
 
     }
 
-    fun getCryptoById(id: Int , getCryptoById :(CoinMarketResponse.Data.CryptoCurrency) -> Unit) {
+    fun getCryptoById(id: Int , getCryptoById :(ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) -> Unit) {
         viewModelScope.launch(coroutineExceptionHandler) {
             while (true) {
                 getCryptoById.invoke(repository.getCryptoByIdFromDb(id))
@@ -81,7 +81,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
             }
     }
 
-    fun insertBookmark(data: BookmarkResponse.Data.CryptoCurrency) = viewModelScope.launch(
+    fun insertBookmark(data: ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) = viewModelScope.launch(
         coroutineExceptionHandler) {
         repository.insertBookmark(data)
     }
