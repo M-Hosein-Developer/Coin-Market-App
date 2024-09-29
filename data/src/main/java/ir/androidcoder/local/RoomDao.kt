@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.coinmarket.model.dataClass.BookmarkResponse
-import com.example.coinmarket.model.dataClass.CoinMarketResponse
-import com.example.coinmarket.model.dataClass.DynamicTheme
+import ir.androidcoder.local.dataClass.BookmarkResponse
+import ir.androidcoder.local.dataClass.CoinMarketResponse
+import ir.androidcoder.local.dataClass.DynamicTheme
 
 @Dao
 interface RoomDao {
