@@ -1,23 +1,26 @@
 package com.example.coinmarket.di.module
 
-import com.example.coinmarket.model.repository.mainRepo.MainRepository
-import com.example.coinmarket.model.repository.mainRepo.MainRepositoryImpl
-import com.example.coinmarket.model.repository.themeRepo.ThemeRepository
-import com.example.coinmarket.model.repository.themeRepo.ThemeRepositoryImpl
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.androidcoder.local.RoomDao
+import ir.androidcoder.remote.ApiService
+import ir.androidcoder.remote.ApiServicePrice
+import ir.androidcoder.repositoriesImpl.MainRepositoryImpl
+import ir.androidcoder.repositoriesImpl.ThemeRepositoryImpl
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class RepositoryModule {
+class RepositoryModule {
 
-    @Binds
-    abstract fun mainRepository(repository : MainRepositoryImpl) : MainRepository
+    @Provides
+    @Singleton
+    fun mainRepository(apiService: ApiService , apiServicePrice: ApiServicePrice , dao : RoomDao) : MainRepositoryImpl = MainRepositoryImpl(apiService , apiServicePrice , dao)
 
-    @Binds
-    abstract fun themeRepository(repository : ThemeRepositoryImpl) : ThemeRepository
-
+    @Provides
+    @Singleton
+    fun themeRepository(dao: RoomDao) : ThemeRepositoryImpl = ThemeRepositoryImpl(dao)
 
 }
