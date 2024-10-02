@@ -52,10 +52,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.coinmarket.R
-import ir.androidcoder.local.dataClass.PriceResponse
 import com.example.coinmarket.ui.theme.Orange
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
+import ir.androidcoder.entities.PriceEntity
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -144,7 +144,7 @@ fun CalculatorToolbar(onBackCLicked: () -> Unit) {
 }
 
 @Composable
-fun CryptoNumber(coinPrice: Float, dollarPrice: ir.androidcoder.local.dataClass.PriceResponse) {
+fun CryptoNumber(coinPrice: Float, dollarPrice: PriceEntity) {
 
     var counter by remember { mutableIntStateOf(1) }
 
@@ -308,7 +308,7 @@ fun CryptoNumber(coinPrice: Float, dollarPrice: ir.androidcoder.local.dataClass.
 }
 
 @Composable
-fun CryptoCalculator(coinPrice: Float, dollarPrice: ir.androidcoder.local.dataClass.PriceResponse) {
+fun CryptoCalculator(coinPrice: Float, dollarPrice: PriceEntity) {
 
     var text by remember { mutableStateOf("") }
 

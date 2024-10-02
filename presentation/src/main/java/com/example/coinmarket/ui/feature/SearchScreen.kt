@@ -46,7 +46,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
-import ir.androidcoder.local.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.EmptyCoinList
@@ -54,13 +53,14 @@ import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.viewModel.MainViewModel
+import ir.androidcoder.entities.CryptoCurrencyEntity
 import kotlinx.coroutines.delay
 
 @Composable
 fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     val getCoinList = remember { mutableStateOf(EmptyCoinList) }
-    val filterList = arrayListOf<ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency>()
+    val filterList = arrayListOf<CryptoCurrencyEntity>()
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -158,7 +158,7 @@ fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges:
 //crypto list and item
 @Composable
 fun CryptoList(
-    getCoinList: List<ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency>,
+    getCoinList: List<CryptoCurrencyEntity>,
     onClickedItem: (Int) -> Unit
 ) {
 
@@ -193,7 +193,7 @@ fun CryptoList(
 }
 
 @Composable
-fun CryptoListItem(coin: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (Int) -> Unit) {
+fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -56,6 +56,8 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecase, contex
                 .catch { Log.v("errorDb", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
+                    Log.v("testDataFromVar12" , it.toString())
+
                 }
         }
 

@@ -47,7 +47,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
-import ir.androidcoder.local.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
@@ -60,6 +59,7 @@ import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.viewModel.MainViewModel
+import ir.androidcoder.entities.CryptoCurrencyEntity
 import kotlinx.coroutines.delay
 
 @Composable
@@ -118,7 +118,7 @@ fun HomeToolbar() {
 
 //card
 @Composable
-fun CardSlider(getCoinList: List<ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency>) {
+fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
 
     Card(
         modifier = Modifier
@@ -245,7 +245,7 @@ fun CardSlider(getCoinList: List<ir.androidcoder.local.dataClass.CoinMarketRespo
 //crypto list and item
 @Composable
 fun CoinList(
-    getCoinList: List<ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency>,
+    getCoinList: List<CryptoCurrencyEntity>,
     onClickedSearch: () -> Unit,
     onClickedItem: (Int) -> Unit
 ) {
@@ -305,7 +305,7 @@ fun CoinList(
 }
 
 @Composable
-fun CoinListItem(coin: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, onClickedItem: (Int) -> Unit) {
+fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -46,8 +46,6 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.coinmarket.R
-import ir.androidcoder.local.dataClass.BookmarkResponse
-import ir.androidcoder.local.dataClass.CoinMarketResponse
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
@@ -64,6 +62,8 @@ import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphFillTy
 import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphStyle
 import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphVisibility
 import com.jaikeerthick.composable_graphs.style.LabelPosition
+import ir.androidcoder.entities.CryptoCurrencyEntity
+import ir.androidcoder.local.dataClass.BookmarkResponse
 
 @Composable
 fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostController) {
@@ -110,7 +110,14 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
 //tool bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, bookmarkData: List<ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency>, onCalculatorClick :(Float) -> Unit, onBackPress :() -> Unit, onAddBookmarkClick :(ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) -> Unit, onDeleteBookmarkClicked: (ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) -> Unit) {
+fun DetailToolbar(
+    data: CryptoCurrencyEntity,
+    bookmarkData: List<CryptoCurrencyEntity>,
+    onCalculatorClick: (Float) -> Unit,
+    onBackPress: () -> Unit,
+    onAddBookmarkClick: (CryptoCurrencyEntity) -> Unit,
+    onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit
+) {
 
     val bookmarkBtn = remember { mutableStateOf(false) }
     var bookmarkBtnDb = false
@@ -154,7 +161,7 @@ fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.
                     if (bookmarkBtn.value) {
 
                         onAddBookmarkClick.invoke(
-                            ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency(
+                            CryptoCurrencyEntity(
                                 data.ath,
                                 data.atl,
                                 data.badges,
@@ -171,7 +178,7 @@ fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.
                                 data.maxSupply,
                                 data.name,
                                 listOf(
-                                    ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency.Quote(
+                                    CryptoCurrencyEntity.Quote(
                                     data.quotes[0].dominance  ,
                                     data.quotes[0].fullyDilluttedMarketCap  ,
                                     data.quotes[0].lastUpdated  ,
@@ -204,7 +211,7 @@ fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.
                     }else {
 
                         onDeleteBookmarkClicked.invoke(
-                            ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency(
+                            BookmarkResponse.Data.CryptoCurrency(
                                 data.ath,
                                 data.atl,
                                 data.badges,
@@ -221,7 +228,7 @@ fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.
                                 data.maxSupply,
                                 data.name,
                                 listOf(
-                                    ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency.Quote(
+                                    BookmarkResponse.Data.CryptoCurrency.Quote(
                                     data.quotes[0].dominance  ,
                                     data.quotes[0].fullyDilluttedMarketCap  ,
                                     data.quotes[0].lastUpdated  ,
@@ -291,7 +298,7 @@ fun DetailToolbar(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.
 }
 
 @Composable
-fun CoinItem(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) {
+fun CoinItem(data: CryptoCurrencyEntity) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -394,7 +401,7 @@ fun CoinItem(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Crypt
 }
 
 @Composable
-fun Chart(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) {
+fun Chart(data: CryptoCurrencyEntity) {
 
     val checkData = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d).toFloat()
     val graphData = listOf(
@@ -486,7 +493,7 @@ fun Chart(data: ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCu
 }
 
 @Composable
-fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency, onMoreClicked: (String) -> Unit) {
+fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
 
 
     Column(
@@ -499,17 +506,26 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
         Column {
 
             Text(
-                text = "Volume 24H:  " + (data.quotes[0].volume24h).toString().subSequence(0 , 15),
+                text = "Volume 24H:  " + if (data.quotes[0].volume24h.toString().length > 15)
+                    (data.quotes[0].volume24h).toString().subSequence(0, 15)
+                else
+                    data.quotes[0].volume24h.toString(),
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "Volume 7d:  " + (data.quotes[0].volume7d).toString().subSequence(0 , 15),
+                text = "Volume 7d:  " + if (data.quotes[0].volume7d.toString().length > 15)
+                    (data.quotes[0].volume7d).toString().subSequence(0, 15)
+                else
+                    data.quotes[0].volume7d.toString(),
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "Volume 30d:  " + (data.quotes[0].volume30d).toString().subSequence(0 , 15),
+                text = "Volume 30d:  " + if (data.quotes[0].volume30d.toString().length > 15)
+                    (data.quotes[0].volume30d).toString().subSequence(0, 15)
+                else
+                    data.quotes[0].volume30d.toString(),
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -525,7 +541,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
                 .padding(bottom = 8.dp)
         ){
             Text(
-                text = "1H:  " + (data.quotes[0].percentChange1h).toString().subSequence(0 , 5) + "%",
+                text = "1H:  " + if (data.quotes[0].percentChange1h.toString().length > 5)
+                    "" + (data.quotes[0].percentChange1h).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange1h.toString() + "%",
                 modifier = Modifier.padding(bottom = 8.dp),
                 color =  if (data.quotes[0].percentChange24h > 0) {
                     Green
@@ -535,7 +554,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
             )
 
             Text(
-                text = "1d:  " + (data.quotes[0].percentChange24h).toString().subSequence(0 , 5) + "%",
+                text = "1d:  " + if (data.quotes[0].percentChange24h.toString().length > 5)
+                    "" + (data.quotes[0].percentChange24h).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange24h.toString() + "%",
                 modifier = Modifier.padding(bottom = 8.dp),
                 color =  if (data.quotes[0].percentChange24h > 0) {
                     Green
@@ -545,7 +567,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
             )
 
             Text(
-                    text = "7d:  " + (data.quotes[0].percentChange7d).toString().subSequence(0 , 5) + "%",
+                text = "7d:  " + if (data.quotes[0].percentChange7d.toString().length > 5)
+                    "" + (data.quotes[0].percentChange7d).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange7d.toString() + "%",
             modifier = Modifier.padding(bottom = 8.dp),
             color =  if (data.quotes[0].percentChange24h > 0) {
                 Green
@@ -562,7 +587,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
                 .padding(bottom = 8.dp)
         ){
             Text(
-                text = "1M:  " + (data.quotes[0].percentChange30d).toString().subSequence(0 , 5) + "%",
+                text = "1M:  " + if (data.quotes[0].percentChange30d.toString().length > 5)
+                    "" + (data.quotes[0].percentChange30d).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange30d.toString() + "%",
                 modifier = Modifier.padding(bottom = 8.dp),
                 color =  if (data.quotes[0].percentChange24h > 0) {
                     Green
@@ -572,7 +600,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
             )
 
             Text(
-                text = "60d:  " + (data.quotes[0].percentChange60d).toString().subSequence(0 , 5) + "%",
+                text = "60d:  " + if (data.quotes[0].percentChange60d.toString().length > 5)
+                    "" + (data.quotes[0].percentChange60d).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange60d.toString() + "%",
                 modifier = Modifier.padding(bottom = 8.dp),
                 color =  if (data.quotes[0].percentChange24h > 0) {
                     Green
@@ -582,7 +613,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
             )
 
             Text(
-                text = "90d:  " + (data.quotes[0].percentChange90d).toString().subSequence(0 , 5) + "%",
+                text = "90d:  " + if (data.quotes[0].percentChange90d.toString().length > 5)
+                    "" + (data.quotes[0].percentChange90d).toString().subSequence(0, 5) + "%"
+                else
+                    data.quotes[0].percentChange90d.toString() + "%",
                 modifier = Modifier.padding(bottom = 8.dp),
                 color =  if (data.quotes[0].percentChange24h > 0) {
                     Green
@@ -607,13 +641,19 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "High24h:  " + (data.high24h).toString().subSequence(0 , 8),
+                text = "High24h:  " + if (data.high24h > 6)
+                    (data.high24h).toString().subSequence(0, 7)
+                else
+                    data.high24h.toString(),
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
-                text = "Low24h:  " + (data.low24h).toString().subSequence(0 , 8),
+                text = "Low24h:  " + if (data.low24h > 7)
+                    (data.low24h).toString().subSequence(0, 7)
+                else
+                    data.low24h.toString(),
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -637,11 +677,11 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
-                Text(
-                    text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+//                Text(
+//                    text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
+//                    modifier = Modifier.padding(bottom = 8.dp),
+//                    color = MaterialTheme.colorScheme.onBackground
+//                )
 
             }
 
@@ -657,10 +697,10 @@ fun DataToShow(data : ir.androidcoder.local.dataClass.CoinMarketResponse.Data.Cr
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
-                Text(
-                    text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+//                Text(
+//                    text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
+//                    color = MaterialTheme.colorScheme.onBackground
+//                )
 
             }
         }
