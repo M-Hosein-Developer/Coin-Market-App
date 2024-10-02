@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.androidcoder.repositories.mainRepo.MainRepository
 import ir.androidcoder.repositories.themeRepo.ThemeRepository
-import ir.androidcoder.usecases.mainUsecase.ThemeUsecaseImpl
-import ir.androidcoder.usecases.themeUsecase.MainUsecaseImpl
+import ir.androidcoder.usecases.themeUsecase.ThemeUsecaseImpl
+import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
 import javax.inject.Singleton
 
 @Module

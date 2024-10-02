@@ -1,4 +1,4 @@
-package ir.androidcoder.usecases.themeUsecase
+package ir.androidcoder.usecases.mainUsecase
 
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
@@ -6,7 +6,7 @@ import ir.androidcoder.repositories.mainRepo.MainRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase  {
+class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase {
 
     override val getCryptoList: Flow<List<CryptoCurrencyEntity>> = repository.getCryptoList.map { it }
 

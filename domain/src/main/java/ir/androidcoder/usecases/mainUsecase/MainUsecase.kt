@@ -1,4 +1,4 @@
-package ir.androidcoder.usecases.themeUsecase
+package ir.androidcoder.usecases.mainUsecase
 
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity

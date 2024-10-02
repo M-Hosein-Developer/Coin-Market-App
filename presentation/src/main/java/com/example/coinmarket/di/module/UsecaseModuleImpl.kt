@@ -4,10 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.androidcoder.usecases.mainUsecase.ThemeUsecase
-import ir.androidcoder.usecases.mainUsecase.ThemeUsecaseImpl
-import ir.androidcoder.usecases.themeUsecase.MainUsecase
-import ir.androidcoder.usecases.themeUsecase.MainUsecaseImpl
+import ir.androidcoder.usecases.themeUsecase.ThemeUsecase
+import ir.androidcoder.usecases.themeUsecase.ThemeUsecaseImpl
+import ir.androidcoder.usecases.mainUsecase.MainUsecase
+import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

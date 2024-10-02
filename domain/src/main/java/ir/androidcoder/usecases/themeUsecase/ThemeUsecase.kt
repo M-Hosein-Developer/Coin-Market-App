@@ -1,4 +1,4 @@
-package ir.androidcoder.usecases.mainUsecase
+package ir.androidcoder.usecases.themeUsecase
 
 import ir.androidcoder.entities.DynamicThemeEntity
 
