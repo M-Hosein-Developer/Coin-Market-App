@@ -5,18 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.androidcoder.local.dataClass.DynamicTheme
-import com.example.coinmarket.model.repository.themeRepo.ThemeRepository
 import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.androidcoder.entities.DynamicThemeEntity
+import ir.androidcoder.usecases.themeUsecase.ThemeUsecase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ThemeViewModel @Inject constructor(private val repository: ThemeRepository) : ViewModel() {
+class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase) : ViewModel() {
 
-    var themeState by mutableStateOf(ir.androidcoder.local.dataClass.DynamicTheme(1, false))
+    var themeState by mutableStateOf(DynamicThemeEntity(1, false))
     var switchState by mutableStateOf(false)
 
     init {
@@ -25,8 +25,8 @@ class ThemeViewModel @Inject constructor(private val repository: ThemeRepository
 
     fun insertDynamicThemeStateRep() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            repository.insertDynamicThemeStateRep(
-                ir.androidcoder.local.dataClass.DynamicTheme(
+            usecase.insertDynamicThemeStateRep(
+                DynamicThemeEntity(
                     1,
                     switchState
                 )
@@ -36,8 +36,8 @@ class ThemeViewModel @Inject constructor(private val repository: ThemeRepository
 
     fun getDynamicThemeState() = viewModelScope.launch {
         while (true) {
-            themeState = repository.getDynamicThemeState()
-            switchState = if (repository.getDynamicThemeState().dynamicThemeState)
+            themeState = usecase.getDynamicThemeState()
+            switchState = if (usecase.getDynamicThemeState().dynamicThemeState)
                 true
             else
                 false

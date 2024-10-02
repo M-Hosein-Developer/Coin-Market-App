@@ -5,15 +5,14 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.androidcoder.local.dataClass.BookmarkResponse
-import ir.androidcoder.local.dataClass.CoinMarketResponse
-import ir.androidcoder.local.dataClass.PriceResponse
-import com.example.coinmarket.model.repository.mainRepo.MainRepository
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.NetworkChecker
 import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.androidcoder.entities.CryptoCurrencyEntity
+import ir.androidcoder.entities.PriceEntity
+import ir.androidcoder.usecases.mainUsecase.MainUsecase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -21,11 +20,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: MainRepository, context: Context) : ViewModel() {
+class MainViewModel @Inject constructor(private val usecase: MainUsecase, context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
-    val getDollarPrice = MutableStateFlow<ir.androidcoder.local.dataClass.PriceResponse?>(null)
+    val getDollarPrice = MutableStateFlow<PriceEntity?>(null)
     val search = mutableStateOf("")
 
     init {
@@ -41,7 +40,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
 
     private fun getCryptoList() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            repository.getCryptoList
+            usecase.getCryptoList
                 .catch { Log.v("error", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
@@ -53,7 +52,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
     private fun getCryptoListFromDb() {
 
         viewModelScope.launch {
-            repository.getCryptoListFromDb
+            usecase.getCryptoListFromDb
                 .catch { Log.v("errorDb", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
@@ -62,17 +61,17 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
 
     }
 
-    fun getCryptoById(id: Int , getCryptoById :(ir.androidcoder.local.dataClass.CoinMarketResponse.Data.CryptoCurrency) -> Unit) {
+    fun getCryptoById(id: Int , getCryptoById :(CryptoCurrencyEntity) -> Unit) {
         viewModelScope.launch(coroutineExceptionHandler) {
             while (true) {
-                getCryptoById.invoke(repository.getCryptoByIdFromDb(id))
+                getCryptoById.invoke(usecase.getCryptoByIdFromDb(id))
                 delay(4000)
             }
         }
     }
 
     private fun getDollarPrice() = viewModelScope.launch {
-        repository.getDollarPrice
+        usecase.getDollarPrice
             .catch {
                 Log.v("error", "Error -> " + it.message)
             }.collect{
@@ -81,13 +80,13 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
             }
     }
 
-    fun insertBookmark(data: ir.androidcoder.local.dataClass.BookmarkResponse.Data.CryptoCurrency) = viewModelScope.launch(
+    fun insertBookmark(data: CryptoCurrencyEntity) = viewModelScope.launch(
         coroutineExceptionHandler) {
-        repository.insertBookmark(data)
+        usecase.insertBookmark(data)
     }
 
     private fun getCryptoBookmarkList() = viewModelScope.launch(coroutineExceptionHandler) {
-        repository.getBookmarkList
+        usecase.getBookmarkList
             .catch {
                 Log.v("error", "Error -> " + it.message)
             }.collect{
@@ -96,7 +95,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository, 
     }
 
     fun deleteBookmark(id: Int) = viewModelScope.launch(coroutineExceptionHandler) {
-        repository.deleteBookmark(id)
+        usecase.deleteBookmark(id)
     }
 
 }
