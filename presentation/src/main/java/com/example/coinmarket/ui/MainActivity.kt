@@ -368,7 +368,11 @@ fun UiScreen(
         NavHost(navController = navController, startDestination = if (signIn != "successful") MyScreens.IntroScreen.route else MyScreens.HomeScreen.route) {
 
             composable(MyScreens.HomeScreen.route) {
-                HomeScreen(viewModel, navController)
+                HomeScreen(viewModel, navController){
+                    scope.launch {
+                        drawerState.open()
+                    }
+                }
             }
 
             composable(
