@@ -1,13 +1,11 @@
-package com.example.coinmarket.di.module
+package ir.androidcoder.di
 
-import ir.androidcoder.remote.ApiService
-import ir.androidcoder.remote.ApiServicePrice
-import com.example.coinmarket.util.BASE_URL
-import com.example.coinmarket.util.BASE_URL_PRICE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ir.androidcoder.util.Constants.BASE_URL
+import ir.androidcoder.util.Constants.BASE_URL_PRICE
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named

@@ -1,4 +1,4 @@
-package com.example.coinmarket.di.module
+package ir.androidcoder.di
 
 import android.content.Context
 import androidx.room.Room
