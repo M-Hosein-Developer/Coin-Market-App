@@ -3,8 +3,6 @@ package com.example.coinmarket.util
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
 
-const val BASE_URL = "https://api.coinmarketcap.com/"
-const val BASE_URL_PRICE = "https://raw.githubusercontent.com/"
 
 val EmptyCoinList = listOf(
     CryptoCurrencyEntity(
