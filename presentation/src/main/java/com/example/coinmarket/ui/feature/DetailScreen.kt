@@ -63,7 +63,6 @@ import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphStyle
 import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphVisibility
 import com.jaikeerthick.composable_graphs.style.LabelPosition
 import ir.androidcoder.entities.CryptoCurrencyEntity
-import ir.androidcoder.local.dataClass.BookmarkResponse
 
 @Composable
 fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostController) {
@@ -116,7 +115,7 @@ fun DetailToolbar(
     onCalculatorClick: (Float) -> Unit,
     onBackPress: () -> Unit,
     onAddBookmarkClick: (CryptoCurrencyEntity) -> Unit,
-    onDeleteBookmarkClicked: (BookmarkResponse.Data.CryptoCurrency) -> Unit
+    onDeleteBookmarkClicked: (CryptoCurrencyEntity) -> Unit
 ) {
 
     val bookmarkBtn = remember { mutableStateOf(false) }
@@ -211,7 +210,7 @@ fun DetailToolbar(
                     }else {
 
                         onDeleteBookmarkClicked.invoke(
-                            BookmarkResponse.Data.CryptoCurrency(
+                            CryptoCurrencyEntity(
                                 data.ath,
                                 data.atl,
                                 data.badges,
@@ -228,7 +227,7 @@ fun DetailToolbar(
                                 data.maxSupply,
                                 data.name,
                                 listOf(
-                                    BookmarkResponse.Data.CryptoCurrency.Quote(
+                                    CryptoCurrencyEntity.Quote(
                                     data.quotes[0].dominance  ,
                                     data.quotes[0].fullyDilluttedMarketCap  ,
                                     data.quotes[0].lastUpdated  ,
