@@ -1,4 +1,4 @@
-package com.example.coinmarket.di.module
+package ir.androidcoder.di
 
 import dagger.Module
 import dagger.Provides
