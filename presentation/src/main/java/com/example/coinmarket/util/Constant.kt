@@ -152,14 +152,8 @@ val EmptyCoin = CryptoCurrencyEntity(
 )
 
 val EmptyDollar = PriceEntity(
-    "",
-    -1,
-    "",
-    "",
-    "",
     "10",
-    "",
-    "",
-    "",
-    ""
+    "10",
+    "10",
+    "10",
 )

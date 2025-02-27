@@ -12,7 +12,7 @@ import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
-import ir.androidcoder.usecases.mainUsecase.MainUsecase
+import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val usecase: MainUsecase, context: Context) : ViewModel() {
+class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
