@@ -56,6 +56,7 @@ import com.example.coinmarket.ui.feature.HelpScreen
 import com.example.coinmarket.ui.feature.HomeScreen
 import com.example.coinmarket.ui.feature.InfoScreen
 import com.example.coinmarket.ui.feature.IntroScreen
+import com.example.coinmarket.ui.feature.MoreDetailScreen
 import com.example.coinmarket.ui.feature.SearchScreen
 import com.example.coinmarket.ui.feature.SettingScreen
 import com.example.coinmarket.ui.feature.SignInScreen
@@ -427,6 +428,13 @@ fun UiScreen(
 
             composable(MyScreens.BookmarkScreen.route){
                 BookmarkScreen(navController , viewModel)
+            }
+
+            composable(
+                route = MyScreens.MoreDetailScreen.route + "/{Id}",
+                arguments = listOf(navArgument("Id") { type = NavType.StringType })
+            ){
+                MoreDetailScreen(navController , it.arguments!!.getString("Id" , ""))
             }
 
         }

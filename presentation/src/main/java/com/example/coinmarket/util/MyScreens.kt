@@ -13,5 +13,6 @@ sealed class MyScreens(val route : String){
     object InfoScreen : MyScreens("infoScreen")
     object SettingScreen : MyScreens("settingScreen")
     object BookmarkScreen : MyScreens("bookmarkScreen")
+    object MoreDetailScreen : MyScreens("moreDetailScreen")
 
 }

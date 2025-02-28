@@ -100,7 +100,7 @@ fun DetailScreen(viewModel: MainViewModel, coinID: Int, navController: NavHostCo
             Spacer(modifier = Modifier.height(32.dp))
             Chart(getCoinList.value)
             DataToShow(getCoinList.value){
-                context.startActivity(Intent(Intent.ACTION_VIEW , Uri.parse("https://coinmarketcap.com/currencies/$it/")))
+                navController.navigate(MyScreens.MoreDetailScreen.route + "/" + it)
             }
         }
     }
