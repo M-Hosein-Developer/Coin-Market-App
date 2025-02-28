@@ -44,7 +44,6 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
                 .catch { Log.v("error", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
-                    Log.v("testDataFromVar1" , it.toString())
                 }
         }
     }
@@ -56,8 +55,6 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
                 .catch { Log.v("errorDb", "Error -> " + it.message) }
                 .collect {
                     getCryptoList.value = it
-                    Log.v("testDataFromVar12" , it.toString())
-
                 }
         }
 
@@ -78,7 +75,6 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
                 Log.v("error", "Error -> " + it.message)
             }.collect{
                 getDollarPrice.value = it
-                Log.v("testPrice1" , it.toString())
             }
     }
 
