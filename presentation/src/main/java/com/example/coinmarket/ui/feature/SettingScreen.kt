@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -86,7 +87,16 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
         )
 
         //Bottom Sheet
-        LanguageBottomSheet(sheetState , scope , showBottomSheet){ showBottomSheet = it }
+        LanguageBottomSheet(
+            sheetState = sheetState ,
+            scope = scope ,
+            showBottomSheet = showBottomSheet,
+            onLanguageClicked = {
+
+            }
+        ){
+            showBottomSheet = it
+        }
     }
 
     checked = viewModel.themeState.dynamicThemeState
@@ -99,7 +109,7 @@ fun SettingToolbar(onBackClicked :() -> Unit){
 
     TopAppBar(
         title = { Text(
-            text = "Setting",
+            text = stringResource(R.string.setting),
             style = TextStyle(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -142,7 +152,7 @@ fun Language(onLanguageClicked : () -> Unit) {
             )
 
             Text(
-                text = "Language",
+                text = stringResource(R.string.language),
                 modifier = Modifier
                     .padding(start = 12.dp),
                 style = TextStyle(
@@ -154,7 +164,7 @@ fun Language(onLanguageClicked : () -> Unit) {
         }
 
         Text(
-            text = "English",
+            text = stringResource(R.string.english),
             style = TextStyle(
                 fontSize = 18.sp
             ),
@@ -167,7 +177,7 @@ fun Language(onLanguageClicked : () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean ,  onDismissRequest :(Boolean) -> Unit) {
+fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean , onLanguageClicked: (Int) -> Unit,  onDismissRequest :(Boolean) -> Unit) {
 
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -186,29 +196,27 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
+                            onLanguageClicked(R.string.english)
                             onDismissRequest.invoke(false)
                         }
                     }
                 }) {
-                    Text("English")
+                    Text(stringResource(R.string.english))
                 }
 
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
+                            onLanguageClicked(R.string.persian)
                             onDismissRequest.invoke(false)
                         }
                     }
                 }) {
-                    Text("New languages will be added to this section soon!")
+                    Text(stringResource(R.string.persian))
                 }
-
             }
-
-
         }
     }
-
 }
 
 @Composable
@@ -229,7 +237,7 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
 
 
             Text(
-                text = "Dynamic Theme",
+                text = stringResource(R.string.dynamic_Theme),
                 modifier = Modifier
                     .padding(start = 12.dp),
                 style = TextStyle(
@@ -265,7 +273,7 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
         }
 
         Text(
-            text = "Using the dynamic theme, you can match the theme of your app with the theme of your mobile phone. By changing the theme in your mobile phone, the theme in the application will change.",
+            text = stringResource(R.string.dynamic_Theme_text),
             modifier = Modifier
                 .padding(start = 12.dp, top = 8.dp , end = 42.dp),
             style = TextStyle(

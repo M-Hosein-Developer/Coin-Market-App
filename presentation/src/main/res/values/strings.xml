@@ -1,3 +1,63 @@
 <resources>
     <string name="app_name">CoinMarket</string>
+
+    <string name="bookmark">Bookmark</string>
+    <string name="no_crypto">There is no much crypto in the list</string>
+    <string name="calculator">Calculator</string>
+    <string name="last_update">Last Updated</string>
+    <string name="more_detail_btn_text">More Detail...</string>
+    <string name="help">FAQ</string>
+    <string name="faq_title_1">What is "Market Capitalization" and how is it calculated?</string>
+    <string name="faq_title_2">What is the difference between "Circulating Supply", "Total Supply", and "Max Supply"?</string>
+    <string name="faq_title_3">Why are markets with no fees excluded from the price average and total trading volume?</string>
+    <string name="faq_title_4">At what time is the 24 hour % change based?</string>
+    <string name="faq_title_5">Why does a question mark sometimes show up for the circulating supply and market cap of a cryptocurrency?</string>
+    <string name="faq_title_6">In what time zone is the site based?</string>
+    <string name="faq_desc_1">Market Capitalization is one way to rank the relative size of a cryptocurrency. Its calculated by multiplying the Price by the Circulating Supply.Market Cap = Price X Circulating Supply.</string>
+    <string name="faq_desc_2">Circulating Supply is the best approximation of the number of coins that are circulating in the market and in the general public\'s hands.
+                Total Supply is the total amount of coins in existence right now (minus any coins that have been verifiably burned).
+                Max Supply is the best approximation of the maximum amount of coins that will ever exist in the lifetime of the cryptocurrency.</string>
+    <string name="faq_desc_3">When no fees are being charged at the exchange, it is possible for a trader (or bot) to trade back and forth with themselves and generate a lot of "fake" volume without penalty. Its impossible to determine how much of the volume is fake so we exclude it entirely from the calculations.</string>
+    <string name="faq_desc_4">Its based on the current time. Its a rolling 24 hour period.</string>
+    <string name="faq_desc_5">In order to ensure accurate market cap rankings, we work closely with teams and developers to verify supply details on their respective blockchains. If a question mark shows up, it means that we have not sufficiently verified the circulating supply and resulting market cap yet.</string>
+    <string name="faq_desc_6">Data is collected, recorded, and reported in UTC time unless otherwise specified.</string>
+    <string name="home">Home</string>
+    <string name="charts">Charts</string>
+    <string name="see_all">See All</string>
+    <string name="info">Info</string>
+    <string name="description">Description</string>
+    <string name="desc_text">In this application, I tried to develop an excellent viewer for cryptos that can be used online and you can instantly use its online data. You can bookmark the crypto you want. Search for the crypto you want from among 1000 cryptos</string>
+    <string name="developer">Developer</string>
+    <string name="developer_name"> Mohammad Hosein Hajiakbari </string>
+    <string name="email"> Email </string>
+    <string name="email_address"> m.hosein.developer@gmail.com </string>
+    <string name="linkedIn"> LinkedIn </string>
+    <string name="linkedIn_address"> Mohammad Hosein Hajiakbari </string>
+    <string name="coin_market">Coin Market </string>
+    <string name="cap">Cap</string>
+    <string name="desc_intro">Monitor, buy and profit from cryptocurrencies !!</string>
+    <string name="hint_search_box">Search Crypto Name</string>
+    <string name="search">Search</string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="persian">Persian</string>
+    <string name="dynamic_Theme">Dynamic Theme</string>
+    <string name="dynamic_Theme_text">Using the dynamic theme, you can match the theme of your app with the theme of your mobile phone. By changing the theme in your mobile phone, the theme in the application will change.</string>
+    <string name="signin">Sign In</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log Out</string>
+    <string name="enter_email_text">Enter Your Email</string>
+    <string name="enter_pass_text">Enter Your Password</string>
+    <string name="enter_conf_pass_text">Confirm Your Password</string>
+    <string name="dont_account">Don`t have an account?</string>
+    <string name="register_here">Register Here</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="coin_market_drawer">Coin Market Cap</string>
+    <string name="coin_market_drawer_desc">"With Crypto app, monitor digital currency prices and make informed decisions."</string>
+
+
+
+
 </resources>

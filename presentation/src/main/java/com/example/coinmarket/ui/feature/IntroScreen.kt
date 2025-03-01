@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,13 +53,13 @@ fun IntroScreen(navController: NavHostController) {
             ) {
 
                 Text(
-                    text = "Coin Market ", style = TextStyle(
+                    text = stringResource(R.string.coin_market), style = TextStyle(
                         fontSize = 42.sp, fontWeight = FontWeight.Bold
                     ), modifier = Modifier.padding(start = 32.dp, top = 42.dp), color = Color.White
                 )
 
                 Text(
-                    text = "Cap", color = introTextColor, style = TextStyle(
+                    text = stringResource(R.string.cap), color = introTextColor, style = TextStyle(
                         fontSize = 42.sp, fontWeight = FontWeight.Bold
                     ), modifier = Modifier.padding(top = 42.dp)
                 )
@@ -69,7 +70,7 @@ fun IntroScreen(navController: NavHostController) {
 
 
                 Text(
-                    text = "Monitor, buy and profit from cryptocurrencies !!", style = TextStyle(
+                    text = stringResource(R.string.desc_intro), style = TextStyle(
                         fontSize = 36.sp, fontWeight = FontWeight.Bold
                     ), modifier = Modifier
                         .fillMaxWidth(0.9f)

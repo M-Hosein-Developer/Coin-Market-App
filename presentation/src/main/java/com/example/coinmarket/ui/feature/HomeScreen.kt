@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -109,7 +110,7 @@ fun HomeToolbar(onHamburgerClick :() -> Unit) {
     TopAppBar(
         title = {
             Text(
-                text = "Home",
+                text = stringResource(R.string.home),
                 style = TextStyle(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
@@ -272,7 +273,7 @@ fun CoinList(
     ) {
 
         Text(
-            text = "Charts",
+            text = stringResource(R.string.charts),
             style = TextStyle(
                 fontSize = 18.sp,
             ),
@@ -283,7 +284,7 @@ fun CoinList(
             onClick = { onClickedSearch.invoke() }
         ) {
             Text(
-                text = "See All",
+                text = stringResource(R.string.see_all),
                 color = Red,
                 style = TextStyle(
                     fontSize = 18.sp,

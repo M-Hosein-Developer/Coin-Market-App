@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -80,7 +81,7 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
         SearchBox(
             edtValue = viewModel.search.value,
             icon = Icons.Default.Search,
-            hint = "Search Crypto Name"
+            hint = stringResource(R.string.hint_search_box)
         ) {
             viewModel.search.value = it
         }
@@ -114,7 +115,7 @@ fun SearchToolbar(onBackPress: () -> Unit) {
     TopAppBar(
         title = {
             Text(
-                text = "Search",
+                text = stringResource(R.string.search),
                 style = TextStyle(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
@@ -184,7 +185,7 @@ fun CryptoList(
             verticalArrangement = Arrangement.Center
         ) {
             Loading()
-            Text(text = "There is no much crypto in the list")
+            Text(text = stringResource(R.string.no_crypto))
         }
 
     }

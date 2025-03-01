@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -87,7 +88,7 @@ fun SignUpScreen(
         ) {
 
             Text(
-                text = "Sign Up",
+                text = stringResource(R.string.signup),
                 style = TextStyle(
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold
@@ -98,7 +99,7 @@ fun SignUpScreen(
             SignUpEmail(
                 viewModel.signUpEmail.value,
                 Icons.Default.Email,
-                "Enter Your Email"
+                stringResource(R.string.enter_email_text)
             ) {
                 viewModel.signUpEmail.value = it
             }
@@ -106,7 +107,7 @@ fun SignUpScreen(
             SignUpPassword(
                 viewModel.signUpPassword.value,
                 Icons.Default.Lock,
-                "Enter Your Password"
+                stringResource(R.string.enter_email_text)
             ) {
                 viewModel.signUpPassword.value = it
             }
@@ -114,7 +115,7 @@ fun SignUpScreen(
             SignUpPassword(
                 viewModel.signUpConfirmPassword.value,
                 Icons.Default.Lock,
-                "Confirm Your Password"
+                stringResource(R.string.enter_conf_pass_text)
             ) {
                 viewModel.signUpConfirmPassword.value = it
             }
@@ -149,7 +150,7 @@ fun SignUpScreen(
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(introTextColor)
             ) {
-                Text(text = "SIGN In")
+                Text(text = stringResource(R.string.signin))
             }
 
             Row (
@@ -157,10 +158,10 @@ fun SignUpScreen(
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Text(text = "Already have an account?")
+                Text(text = stringResource(R.string.have_account))
 
                 TextButton(onClick = { navController.navigate(MyScreens.SignInScreen.route) }) {
-                    Text(text = "Log In")
+                    Text(text = stringResource(R.string.login))
                 }
 
             }

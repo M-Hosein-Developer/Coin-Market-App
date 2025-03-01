@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -671,7 +672,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     .padding(bottom = 8.dp)
             ){
                 Text(
-                    text = "Last Updated:  " + (data.lastUpdated).subSequence(0 , 10) + "%",
+                    text = "${stringResource(R.string.last_update)}:  " + (data.lastUpdated).subSequence(0 , 10) + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -691,7 +692,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     .fillMaxWidth()
             ){
                 Text(
-                    text = "Last Updated:  " + (data.dateAdded).subSequence(0 , 10) + "%",
+                    text = "${stringResource(R.string.last_update)}:  " + (data.dateAdded).subSequence(0 , 10) + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -718,7 +719,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
             Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = "More Detail...",
+                text = stringResource(R.string.more_detail_btn_text),
                 color = Red,
                 style = TextStyle(
                     fontSize = 18.sp

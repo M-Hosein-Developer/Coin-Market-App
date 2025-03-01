@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -76,7 +77,7 @@ fun BookmarkToolbar(onBackPress :() -> Unit){
 
     TopAppBar(
         title = { Text(
-            text = "Bookmark",
+            text = stringResource(R.string.bookmark),
             style = TextStyle(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -120,7 +121,7 @@ fun CryptoBookmarkList(getCoinList: List<CryptoCurrencyEntity>, onClickedItem: (
         ) {
             BookmarkLoading()
             Text(
-                text = "There is no much crypto in the list",
+                text = stringResource(R.string.no_crypto),
                 color = MaterialTheme.colorScheme.onBackground
 
             )

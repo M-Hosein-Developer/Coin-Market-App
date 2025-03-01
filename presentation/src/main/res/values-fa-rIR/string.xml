@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CoinMarket</string>
+
+    <string name="bookmark">ذخیره</string>
+    <string name="no_crypto">رمزارزی در این لیست وجود ندارد</string>
+    <string name="calculator">ماشین حساب</string>
+    <string name="last_update">آخرین آپدیت</string>
+    <string name="more_detail_btn_text">اطلاعات بیشتر ...</string>
+    <string name="help">سوالات متداول</string>
+    <string name="faq_title_1">"سرمایه بازار" چیست و چگونه محاسبه می شود؟</string>
+    <string name="faq_title_2">تفاوت بین "تامین در گردش"، "تامین کل" و "حداکثر عرضه" چیست؟</string>
+    <string name="faq_title_3">چرا بازارهای بدون کارمزد از میانگین قیمت و حجم کل معاملات خارج می شوند؟</string>
+    <string name="faq_title_4">درصد تغییرات 24 ساعته در چه زمانی است؟</string>
+    <string name="faq_title_5">چرا گاهی اوقات علامت سوال برای عرضه در گردش و ارزش بازار یک ارز دیجیتال ظاهر می شود؟</string>
+    <string name="faq_title_6">سایت در چه منطقه زمانی است؟</string>
+    <string name="faq_desc_1">سرمایه گذاری بازار یکی از راه های رتبه بندی اندازه نسبی یک ارز دیجیتال است. با ضرب قیمت در عرضه در گردش محاسبه می شود.
+ارزش بازار = قیمت X عرضه در گردش.</string>
+    <string name="faq_desc_2">عرضه در گردش بهترین تقریب تعداد سکه هایی است که در بازار و در دستان عموم در گردش است.
+ تامین کل مجموع سکه هایی است که در حال حاضر وجود دارد (منهای سکه هایی که به طور قابل تایید سوزانده شده اند).
+ Max Supply بهترین تقریب از حداکثر مقدار سکه‌هایی است که در طول عمر ارز دیجیتال وجود دارد.</string>
+    <string name="faq_desc_3">زمانی که هیچ کارمزدی در صرافی دریافت نمی‌شود، ممکن است یک معامله‌گر (یا ربات) با خودش معامله کند و حجم زیادی «جعلی» بدون جریمه تولید کند. تعیین اینکه چه مقدار از حجم تقلبی است غیرممکن است، بنابراین ما آن را به طور کامل از محاسبات حذف می کنیم.</string>
+    <string name="faq_desc_4">بر اساس زمان فعلی است. این یک دوره 24 ساعته است.</string>
+    <string name="faq_desc_5">به منظور اطمینان از رتبه بندی دقیق ارزش بازار، ما از نزدیک با تیم ها و توسعه دهندگان همکاری می کنیم تا جزئیات عرضه در بلاک چین مربوطه آنها را تأیید کنیم. اگر علامت سوال ظاهر شود، به این معنی است که ما هنوز به اندازه کافی عرضه در گردش و ارزش بازار حاصله را تأیید نکرده ایم.</string>
+    <string name="faq_desc_6">داده ها در زمان UTC جمع آوری، ثبت و گزارش می شوند مگر اینکه طور دیگری مشخص شده باشد.</string>
+    <string name="home">خانه</string>
+    <string name="charts">چارت</string>
+    <string name="see_all">دیدن همه</string>
+    <string name="info">اطلاعات</string>
+    <string name="description">توضیحات</string>
+    <string name="desc_text">در این برنامه سعی کردم یک نمایشگر عالی برای کریپتوها ایجاد کنم که به صورت آنلاین قابل استفاده باشد و شما فوراً از داده های آنلاین آن استفاده کنید. می توانید رمز ارز مورد نظر خود را نشانه گذاری کنید. رمز ارز مورد نظر خود را از بین 1000 رمزارز جستجو کنید</string>
+    <string name="developer">توسعه دهنده</string>
+    <string name="developer_name"> محمدحسین حاجی اکبری </string>
+    <string name="email"> ایمیل </string>
+    <string name="email_address"> m.hosein.developer@gmail.com </string>
+    <string name="linkedIn"> لینکدین </string>
+    <string name="linkedIn_address"> Mohammad Hosein Hajiakbari </string>
+    <string name="coin_market">Coin Market </string>
+    <string name="cap">Cap</string>
+    <string name="desc_intro">ببینید، بخرید و سود کنید !!</string>
+    <string name="hint_search_box">اسم کریپتوی مورد نظرتان را وارد کنید</string>
+    <string name="search">جستجو</string>
+    <string name="setting">تنظیمات</string>
+    <string name="language">زبان</string>
+    <string name="english">English</string>
+    <string name="persian">فارسی</string>
+    <string name="dynamic_Theme">تم داینامیک</string>
+    <string name="dynamic_Theme_text">با استفاده از تم پویا می توانید تم اپلیکیشن خود را با تم گوشی موبایل خود مطابقت دهید. با تغییر تم در تلفن همراه، تم در برنامه تغییر می کند.</string>
+    <string name="signin">ورود</string>
+    <string name="signup">ثبت نام</string>
+    <string name="login">ورود</string>
+    <string name="logout">خروج</string>
+    <string name="enter_email_text">ایمیل خود را وارد کنید</string>
+    <string name="enter_pass_text">رمز عبور خود را وارد کنید</string>
+    <string name="enter_conf_pass_text">رمز عبور خود را دوباره وارد کنید</string>
+    <string name="dont_account">حساب کاربری ندارید؟</string>
+    <string name="register_here">اینجا ثبت نام کنید</string>
+    <string name="have_account">قبلا حساب کاربری ایجاد کرده اید؟</string>
+    <string name="coin_market_drawer">Coin Market Cap</string>
+    <string name="coin_market_drawer_desc">"با اپلیکیشن کریپتو، قیمت ارزهای دیجیتال را رصد کنید و آگاهانه تصمیم بگیرید."</string>
+
+
+
+</resources>

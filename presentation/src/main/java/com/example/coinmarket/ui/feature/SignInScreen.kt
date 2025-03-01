@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -87,7 +88,7 @@ fun SignInScreen(
         ) {
 
             Text(
-                text = "Sign In",
+                text = stringResource(R.string.signin),
                 style = TextStyle(
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold
@@ -99,7 +100,7 @@ fun SignInScreen(
             SignInEmail(
                 viewModel.signInEmail.value,
                 Icons.Default.Email,
-                "Enter Your Email"
+                stringResource(R.string.enter_email_text)
             ){
                 viewModel.signInEmail.value = it
             }
@@ -107,7 +108,7 @@ fun SignInScreen(
             SignInPassword(
                 viewModel.signInPassword.value,
                 Icons.Default.Lock,
-                "Enter Your Password"
+                stringResource(R.string.enter_pass_text)
             ){
                 viewModel.signInPassword.value = it
             }
@@ -131,7 +132,7 @@ fun SignInScreen(
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(introTextColor)
             ) {
-                Text(text = "SIGN In")
+                Text(text = stringResource(R.string.signin))
             }
 
             Row (
@@ -139,11 +140,11 @@ fun SignInScreen(
                 verticalAlignment = Alignment.CenterVertically
             ){
 
-                Text(text = "Don`t have an account?",
+                Text(text = stringResource(R.string.dont_account),
                     color = Color.White)
                 
                 TextButton(onClick = { navController.navigate(MyScreens.SignUpScreen.route) }) {
-                    Text(text = "Register Here")
+                    Text(text = stringResource(R.string.register_here))
                 }
 
             }

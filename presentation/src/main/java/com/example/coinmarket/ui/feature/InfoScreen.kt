@@ -24,12 +24,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.introTextColor
 
 @Composable
@@ -77,7 +79,7 @@ fun InfoToolbar(onBackPress :() -> Unit){
 
     TopAppBar(
         title = { Text(
-            text = "Info",
+            text = stringResource(R.string.info),
             style = TextStyle(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -136,24 +138,24 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
             Column {
 
                 Text(
-                    text = "Description: ",
+                    text = "${stringResource(R.string.description)}: ",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp),
+                        .padding(top = 32.dp, start = 32.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
-                    text = "In this application, I tried to develop an excellent viewer for cryptos that can be used online and you can instantly use its online data. You can bookmark the crypto you want. Search for the crypto you want from among 500 cryptos",
+                    text = stringResource(R.string.desc_text),
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
                     ),
                     modifier = Modifier
-                        .padding(start = 32.dp , top = 18.dp , end = 32.dp),
+                        .padding(start = 32.dp, top = 18.dp, end = 32.dp),
                     lineHeight = 32.sp,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -167,44 +169,18 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
             Row {
 
                 Text(
-                    text = "Developer: ",
+                    text = "${stringResource(R.string.email)}: ",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp),
+                        .padding(top = 32.dp, start = 32.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
-                    text = " Mohammad Hosein Hajiakbari ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light
-                    ),
-                    modifier = Modifier
-                        .padding(top = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-            } // Dev
-
-            Row {
-
-                Text(
-                    text = "Email: ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-                Text(
-                    text = " m.hosein.developer@gmail.com",
+                    text = stringResource(R.string.email_address),
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
@@ -220,18 +196,18 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
             Row {
 
                 Text(
-                    text = "LinkedIn: ",
+                    text = "${stringResource(R.string.linkedIn)}: ",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp),
+                        .padding(top = 32.dp, start = 32.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
-                    text = " Mohammad Hosein Hajiakbari ",
+                    text = stringResource(R.string.linkedIn_address),
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Light
@@ -243,50 +219,5 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
                 )
 
             } // LinkedIn
-
-            Row {
-
-                Text(
-                    text = "Instagram: ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier
-                        .padding(top = 32.dp , start = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-                Text(
-                    text = " android.coder ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light
-                    ),
-                    modifier = Modifier
-                        .padding(top = 32.dp)
-                        .clickable { onInstagramClicked.invoke("android.coder") },
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-
-            } // Instagram
-
-            HorizontalDivider(
-                modifier = Modifier.padding(top = 32.dp)
-            )
-
-            Text(
-                text = "Click on one of the IDs above to contact the developer of this application.",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Light
-                ),
-                modifier = Modifier
-                    .padding(start = 32.dp , top = 32.dp , end = 32.dp),
-                lineHeight = 32.sp,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-
         }
-
 }

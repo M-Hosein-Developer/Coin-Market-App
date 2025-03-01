@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -241,7 +242,7 @@ fun UiScreen(
                         )
 
                     Text(
-                        text = "Coin Market Cap",
+                        text = stringResource(R.string.coin_market_drawer),
                         style = TextStyle(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
@@ -251,7 +252,7 @@ fun UiScreen(
                         )
 
                     Text(
-                        text = "\"With Crypto app, monitor digital currency prices and make informed decisions.\"",
+                        text = stringResource(R.string.coin_market_drawer_desc),
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Light
@@ -266,7 +267,7 @@ fun UiScreen(
                 HorizontalDivider()
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Home") },
+                    label = { Text(text = stringResource(R.string.home)) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Home, contentDescription = null) },
                     onClick = {
@@ -282,7 +283,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Bookmark") },
+                    label = { Text(text = stringResource(R.string.bookmark)) },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_bookmark_border_24), contentDescription = null) },
                     onClick = {
@@ -296,7 +297,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Setting") },
+                    label = { Text(text = stringResource(R.string.setting)) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Settings, contentDescription = null) },
                     onClick = {
@@ -310,7 +311,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Info") },
+                    label = { Text(text = stringResource(R.string.info)) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
                     onClick = {
@@ -324,7 +325,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Help") },
+                    label = { Text(text = stringResource(R.string.help)) },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_help_outline_24), contentDescription = null) },
                     onClick = {
@@ -338,7 +339,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Log out") },
+                    label = { Text(text = stringResource(R.string.logout)) },
                     selected = false,
                     icon = {
                         Icon(
