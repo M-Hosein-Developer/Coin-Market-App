@@ -1,5 +1,8 @@
 package com.example.coinmarket.viewModel
 
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase) : ViewModel() {
+class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase , private val prefs: SharedPreferences) : ViewModel() {
 
     var themeState by mutableStateOf(DynamicThemeEntity(1, false))
     var switchState by mutableStateOf(false)
@@ -45,6 +48,14 @@ class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase) : Vi
         }
 
     }
+
+    fun saveLanguagePreference(activity : Activity ,language: String) {
+        prefs.edit().putString("language", language).apply()
+        activity.recreate()
+    }
+
+    fun getSavedLanguage(): String =
+        prefs.getString("language", "fa") ?: "fa"
 
 
 }

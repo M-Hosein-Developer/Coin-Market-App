@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -76,6 +77,7 @@ import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -113,6 +115,8 @@ class MainActivity : ComponentActivity() {
 
     //init theme
     private fun initTheme() {
+
+        changeAppLanguage(this, themeViewModel.getSavedLanguage())
 
         val pref = getSharedPreferences("Successful SignIn", Context.MODE_PRIVATE)
         val signIn = pref.getString("signIn" , "null")
@@ -195,6 +199,17 @@ class MainActivity : ComponentActivity() {
 
 
         }
+    }
+
+    fun changeAppLanguage(context: Context, language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+
+        val resources = context.resources
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }
 

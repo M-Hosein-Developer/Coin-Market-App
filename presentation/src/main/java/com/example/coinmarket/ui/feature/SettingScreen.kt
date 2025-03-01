@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui.feature
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +32,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -56,10 +59,14 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
+    var language by rememberSaveable { mutableStateOf(R.string.english) }
 
     //Switch
     var checked by remember { mutableStateOf(false) }
+    val context = LocalContext.current as? Activity ?: return
 
+    if (viewModel.getSavedLanguage() == "en") language = R.string.english
+    else language = R.string.persian
 
     viewModel.getDynamicThemeState()
 
@@ -71,7 +78,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
 
         SettingToolbar { navController.popBackStack() }
 
-        Language { showBottomSheet = true }
+        Language(language) { showBottomSheet = true }
 
         HorizontalDivider(
             Modifier.padding(vertical = 12.dp)
@@ -92,11 +99,14 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
             scope = scope ,
             showBottomSheet = showBottomSheet,
             onLanguageClicked = {
-
+                viewModel.saveLanguagePreference(context , it)
+                if (it == "en") language = R.string.english
+                else language = R.string.persian
+            },
+            onDismissRequest = {
+                showBottomSheet = it
             }
-        ){
-            showBottomSheet = it
-        }
+        )
     }
 
     checked = viewModel.themeState.dynamicThemeState
@@ -128,7 +138,7 @@ fun SettingToolbar(onBackClicked :() -> Unit){
 }
 
 @Composable
-fun Language(onLanguageClicked : () -> Unit) {
+fun Language(language: Int, onLanguageClicked: () -> Unit) {
 
     Row(
         Modifier
@@ -164,7 +174,7 @@ fun Language(onLanguageClicked : () -> Unit) {
         }
 
         Text(
-            text = stringResource(R.string.english),
+            text = stringResource(language),
             style = TextStyle(
                 fontSize = 18.sp
             ),
@@ -177,7 +187,7 @@ fun Language(onLanguageClicked : () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean , onLanguageClicked: (Int) -> Unit,  onDismissRequest :(Boolean) -> Unit) {
+fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBottomSheet: Boolean , onLanguageClicked: (String) -> Unit,  onDismissRequest :(Boolean) -> Unit) {
 
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -196,7 +206,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
-                            onLanguageClicked(R.string.english)
+                            onLanguageClicked("en")
                             onDismissRequest.invoke(false)
                         }
                     }
@@ -207,7 +217,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                 TextButton(onClick = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) {
-                            onLanguageClicked(R.string.persian)
+                            onLanguageClicked("fa")
                             onDismissRequest.invoke(false)
                         }
                     }
