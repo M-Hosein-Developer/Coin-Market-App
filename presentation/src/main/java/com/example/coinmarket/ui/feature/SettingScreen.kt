@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.viewModel.ThemeViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +78,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
             .background(MaterialTheme.colorScheme.background)
     ) {
 
-        SettingToolbar { navController.popBackStack() }
+        MainToolbar(stringResource(R.string.setting)){ navController.popBackStack() }
 
         Language(language) { showBottomSheet = true }
 
@@ -99,9 +101,10 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
             scope = scope ,
             showBottomSheet = showBottomSheet,
             onLanguageClicked = {
-                viewModel.saveLanguagePreference(context , it)
+                viewModel.saveLanguagePreference(it)
                 if (it == "en") language = R.string.english
                 else language = R.string.persian
+                context.recreate()
             },
             onDismissRequest = {
                 showBottomSheet = it
@@ -110,30 +113,6 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
     }
 
     checked = viewModel.themeState.dynamicThemeState
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SettingToolbar(onBackClicked :() -> Unit){
-
-    TopAppBar(
-        title = { Text(
-            text = stringResource(R.string.setting),
-            style = TextStyle(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 8.dp)
-        ) },
-        navigationIcon = {
-            IconButton(onClick = { onBackClicked.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-            }
-        }
-    )
-
 
 }
 
@@ -165,20 +144,14 @@ fun Language(language: Int, onLanguageClicked: () -> Unit) {
                 text = stringResource(R.string.language),
                 modifier = Modifier
                     .padding(start = 12.dp),
-                style = TextStyle(
-                    fontSize = 18.sp
-                ),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.xNormalTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
 
         }
 
         Text(
             text = stringResource(language),
-            style = TextStyle(
-                fontSize = 18.sp
-            ),
-            color = Gradient2
+            style = Style.xNormalTextStyle.copy(Gradient2)
         )
 
     }
@@ -211,7 +184,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                         }
                     }
                 }) {
-                    Text(stringResource(R.string.english))
+                    Text(stringResource(R.string.english) , style = Style.baseTextStyle)
                 }
 
                 TextButton(onClick = {
@@ -222,7 +195,7 @@ fun LanguageBottomSheet(sheetState: SheetState, scope: CoroutineScope, showBotto
                         }
                     }
                 }) {
-                    Text(stringResource(R.string.persian))
+                    Text(stringResource(R.string.persian) , style = Style.baseTextStyle)
                 }
             }
         }
@@ -250,10 +223,7 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
                 text = stringResource(R.string.dynamic_Theme),
                 modifier = Modifier
                     .padding(start = 12.dp),
-                style = TextStyle(
-                    fontSize = 18.sp
-                ),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.xNormalTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
 
             Switch(
@@ -286,10 +256,7 @@ fun DynamicTheme(viewModel: ThemeViewModel, onChangeClicked:(Boolean) -> Unit) {
             text = stringResource(R.string.dynamic_Theme_text),
             modifier = Modifier
                 .padding(start = 12.dp, top = 8.dp , end = 42.dp),
-            style = TextStyle(
-                fontSize = 14.sp
-            ),
-            color = MaterialTheme.colorScheme.onBackground
+            style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
         )
     }
 }

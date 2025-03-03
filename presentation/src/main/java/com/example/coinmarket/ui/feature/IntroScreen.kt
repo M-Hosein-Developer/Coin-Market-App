@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.introTextColor
 import com.example.coinmarket.util.MyScreens
 
@@ -53,15 +54,15 @@ fun IntroScreen(navController: NavHostController) {
             ) {
 
                 Text(
-                    text = stringResource(R.string.coin_market), style = TextStyle(
-                        fontSize = 42.sp, fontWeight = FontWeight.Bold
-                    ), modifier = Modifier.padding(start = 32.dp, top = 42.dp), color = Color.White
+                    text = stringResource(R.string.coin_market),
+                    style = Style.whiteXXXLargeTextStyle,
+                    modifier = Modifier.padding(start = 32.dp, top = 42.dp)
                 )
 
                 Text(
-                    text = stringResource(R.string.cap), color = introTextColor, style = TextStyle(
-                        fontSize = 42.sp, fontWeight = FontWeight.Bold
-                    ), modifier = Modifier.padding(top = 42.dp)
+                    text = stringResource(R.string.cap),
+                    style = Style.XXXLargeTextStyle.copy(color = introTextColor),
+                    modifier = Modifier.padding(top = 42.dp)
                 )
 
             }
@@ -70,11 +71,11 @@ fun IntroScreen(navController: NavHostController) {
 
 
                 Text(
-                    text = stringResource(R.string.desc_intro), style = TextStyle(
-                        fontSize = 36.sp, fontWeight = FontWeight.Bold
-                    ), modifier = Modifier
+                    text = stringResource(R.string.desc_intro),
+                    style = Style.whiteXXLargeBoldTextStyle,
+                    modifier = Modifier
                         .fillMaxWidth(0.9f)
-                        .padding(32.dp), color = Color.White
+                        .padding(32.dp)
                 )
 
                 val context = LocalContext.current

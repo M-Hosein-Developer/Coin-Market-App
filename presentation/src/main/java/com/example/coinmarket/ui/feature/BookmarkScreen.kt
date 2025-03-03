@@ -41,6 +41,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.MyScreens
@@ -59,7 +61,7 @@ fun BookmarkScreen(navController: NavHostController, viewModel: MainViewModel) {
             .background(MaterialTheme.colorScheme.background)
     ) {
 
-        BookmarkToolbar{ navController.popBackStack() }
+        MainToolbar(stringResource(R.string.bookmark)){ navController.popBackStack() }
 
         CryptoBookmarkList(
             getBookmarkData
@@ -68,30 +70,6 @@ fun BookmarkScreen(navController: NavHostController, viewModel: MainViewModel) {
         }
 
     }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookmarkToolbar(onBackPress :() -> Unit){
-
-    TopAppBar(
-        title = { Text(
-            text = stringResource(R.string.bookmark),
-            style = TextStyle(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 8.dp)
-        ) },
-        navigationIcon = {
-            IconButton(onClick = { onBackPress.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-            }
-        }
-    )
-
 
 }
 
@@ -122,8 +100,7 @@ fun CryptoBookmarkList(getCoinList: List<CryptoCurrencyEntity>, onClickedItem: (
             BookmarkLoading()
             Text(
                 text = stringResource(R.string.no_crypto),
-                color = MaterialTheme.colorScheme.onBackground
-
+                style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
         }
 
@@ -159,27 +136,25 @@ fun CryptoBookmarkListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> U
 
             Text(
                 text = coin.name,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
+                style = Style.xNormalTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
                 Text(
                     text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Green
+                    style = Style.greenNormalTextStyle
                 )
             } else if (coin.quotes[0].percentChange24h < 0) {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Red
+                    style = Style.redNormalTextStyle
                 )
             } else {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4))
+                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    style = Style.baseTextStyle
+                )
             }
 
         }
@@ -204,20 +179,13 @@ fun CryptoBookmarkListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> U
 
             Text(
                 text = "$" + (coin.quotes[0].price.toString()).subSequence(0, 7),
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
+                style = Style.xNormalBoldTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                ),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
 
 

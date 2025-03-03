@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.introTextColor
 
 @Composable
@@ -45,7 +47,7 @@ fun InfoScreen(navController: NavHostController) {
             .background(MaterialTheme.colorScheme.background)
     ) {
 
-        InfoToolbar { navController.popBackStack() }
+        MainToolbar(stringResource(R.string.info)){ navController.popBackStack() }
 
         Info(
             {
@@ -73,29 +75,6 @@ fun InfoScreen(navController: NavHostController) {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun InfoToolbar(onBackPress :() -> Unit){
-
-    TopAppBar(
-        title = { Text(
-            text = stringResource(R.string.info),
-            style = TextStyle(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 8.dp)
-        ) },
-        navigationIcon = {
-            IconButton(onClick = { onBackPress.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-            }
-        }
-    )
-
-}
-
 @Composable
 fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit , onInstagramClicked: (String) -> Unit) {
 
@@ -113,22 +92,15 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "Coin Market ",
-                    style = TextStyle(
-                        fontSize = 42.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style = Style.XXXLargeBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
-                        .padding(start = 32.dp, top = 12.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                        .padding(start = 32.dp, top = 12.dp)
                 )
 
                 Text(
                     text = "Cap",
                     color = introTextColor,
-                    style = TextStyle(
-                        fontSize = 42.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style = Style.XXXLargeBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .padding(top = 12.dp)
                 )
@@ -139,25 +111,17 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "${stringResource(R.string.description)}: ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style = Style.xNormalBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
-                        .padding(top = 32.dp, start = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                        .padding(top = 32.dp, start = 32.dp)
                 )
 
                 Text(
                     text = stringResource(R.string.desc_text),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light
-                    ),
+                    style = Style.xNormalBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .padding(start = 32.dp, top = 18.dp, end = 32.dp),
                     lineHeight = 32.sp,
-                    color = MaterialTheme.colorScheme.onBackground
                 )
 
             }
@@ -170,25 +134,17 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "${stringResource(R.string.email)}: ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style = Style.xNormalBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .padding(top = 32.dp, start = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
                     text = stringResource(R.string.email_address),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light
-                    ),
+                    style = Style.xNormalLightTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .clickable { onEmailClicked.invoke("m.hosein.developer@gmail.com") },
-                    color = MaterialTheme.colorScheme.onBackground
+                        .clickable { onEmailClicked.invoke("m.hosein.developer@gmail.com") }
                 )
 
             } // Email
@@ -197,25 +153,17 @@ fun Info(onEmailClicked: (String) -> Unit , onLinkedInClicked: (String) -> Unit 
 
                 Text(
                     text = "${stringResource(R.string.linkedIn)}: ",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style = Style.xNormalBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
-                        .padding(top = 32.dp, start = 32.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                        .padding(top = 32.dp, start = 32.dp)
                 )
 
                 Text(
                     text = stringResource(R.string.linkedIn_address),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Light
-                    ),
+                    style = Style.xNormalLightTextStyle.copy(MaterialTheme.colorScheme.onBackground),
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .clickable { onLinkedInClicked.invoke("mohammad-hosein-hajiakbari-662337246") },
-                    color = MaterialTheme.colorScheme.onBackground
+                        .clickable { onLinkedInClicked.invoke("mohammad-hosein-hajiakbari-662337246") }
                 )
 
             } // LinkedIn

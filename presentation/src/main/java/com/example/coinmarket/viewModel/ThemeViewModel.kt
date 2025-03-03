@@ -49,9 +49,8 @@ class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase , pri
 
     }
 
-    fun saveLanguagePreference(activity : Activity ,language: String) {
+    fun saveLanguagePreference(language: String) {
         prefs.edit().putString("language", language).apply()
-        activity.recreate()
     }
 
     fun getSavedLanguage(): String =

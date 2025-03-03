@@ -52,6 +52,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
 import com.example.coinmarket.ui.theme.Gradient3
@@ -111,10 +112,7 @@ fun HomeToolbar(onHamburgerClick :() -> Unit) {
         title = {
             Text(
                 text = stringResource(R.string.home),
-                style = TextStyle(
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style = Style.veryLargeBoldTextStyle,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp)
             )
@@ -179,10 +177,7 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                                 10
                             ),
                             Modifier.padding(start = 24.dp, bottom = 8.dp),
-                            style = TextStyle(
-                                fontSize = 28.sp,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                            style = Style.whiteVeryLargeTextStyle,
                             color = Color.White
                         )
 
@@ -192,10 +187,7 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                                 10
                             ) + "  vol",
                             Modifier.padding(start = 24.dp, bottom = 8.dp),
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Light,
-                            ),
+                            style = Style.largeLightTextStyle,
                             color = Color.White
                         )
 
@@ -204,32 +196,21 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                                 text = "%+" + (getCoinList[0].quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                ),
-                                color = Green
+                                style = Style.greenXNormalBoldTextStyle
                             )
                         } else if (getCoinList[0].quotes[0].percentChange24h < 0) {
                             Text(
                                 text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                ),
-                                color = Red
+                                style = Style.redXNormalBoldTextStyle
                             )
                         } else {
                             Text(
                                 text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                ),
+                                style = Style.xNormalTextStyle,
                             )
                         }
 
@@ -274,10 +255,7 @@ fun CoinList(
 
         Text(
             text = stringResource(R.string.charts),
-            style = TextStyle(
-                fontSize = 18.sp,
-            ),
-            color = MaterialTheme.colorScheme.onBackground
+            style = Style.xNormalTextStyle.copy(MaterialTheme.colorScheme.onBackground)
         )
 
         TextButton(
@@ -285,10 +263,7 @@ fun CoinList(
         ) {
             Text(
                 text = stringResource(R.string.see_all),
-                color = Red,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                )
+                style = Style.redXNormalTextStyle
             )
         }
 
@@ -356,27 +331,24 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
             Text(
                 text = coin.name,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.xNormalTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
                 Text(
                     text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Green
+                    style = Style.greenNormalTextStyle
                 )
             } else if (coin.quotes[0].percentChange24h < 0) {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Red
+                    style = Style.redNormalTextStyle
                 )
             } else {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    style = Style.baseTextStyle
                 )
             }
 
@@ -404,20 +376,13 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
             Text(
                 text = "$" + (coin.quotes[0].price.toString()).subSequence(0, 7),
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.xNormalBoldTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             Text(
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                ),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
 
 

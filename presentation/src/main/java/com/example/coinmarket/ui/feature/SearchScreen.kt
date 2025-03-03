@@ -47,6 +47,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.util.EmptyCoinList
@@ -76,7 +78,7 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
             .background(MaterialTheme.colorScheme.background)
     ) {
 
-        SearchToolbar { navController.popBackStack() }
+        MainToolbar(stringResource(R.string.search)){ navController.popBackStack() }
 
         SearchBox(
             edtValue = viewModel.search.value,
@@ -108,39 +110,10 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SearchToolbar(onBackPress: () -> Unit) {
-
-    TopAppBar(
-        title = {
-            Text(
-                text = stringResource(R.string.search),
-                style = TextStyle(
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = { onBackPress.invoke() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = null
-                )
-            }
-        }
-    )
-
-}
-
-
 @Composable
 fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges: (String) -> Unit) {
     OutlinedTextField(
-        label = { Text(hint) },
+        label = { Text(hint , style = Style.baseTextStyle) },
         value = edtValue,
         singleLine = true,
         onValueChange = onValueChanges,
@@ -149,10 +122,8 @@ fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges:
             .fillMaxWidth()
             .padding(18.dp),
         shape = ShapeDefaults.Medium,
-        leadingIcon = { Icon(imageVector = icon, contentDescription = null) },
-
-        )
-
+        leadingIcon = { Icon(imageVector = icon, contentDescription = null) }
+    )
 }
 
 
@@ -163,7 +134,7 @@ fun CryptoList(
     onClickedItem: (Int) -> Unit
 ) {
 
-    if (getCoinList.size >= 1) {
+    if (getCoinList.isNotEmpty()) {
 
         LazyColumn(
 
@@ -185,7 +156,10 @@ fun CryptoList(
             verticalArrangement = Arrangement.Center
         ) {
             Loading()
-            Text(text = stringResource(R.string.no_crypto))
+            Text(
+                text = stringResource(R.string.no_crypto),
+                style = Style.baseTextStyle
+            )
         }
 
     }
@@ -219,32 +193,28 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
         ) {
 
             Text(
-                text = if (coin.name.length > 7) coin.name.subSequence(0, 7)
-                    .toString() else coin.name,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
+                text = if (coin.name.length > 7) coin.name.subSequence(0, 7).toString() else coin.name,
+                style = Style.xNormalTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (coin.quotes[0].percentChange24h > 0) {
                 Text(
                     text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Green
+                    style = Style.greenNormalTextStyle
                 )
             } else if (coin.quotes[0].percentChange24h < 0) {
                 Text(
                     text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
-                    color = Red
+                    style = Style.redNormalTextStyle
                 )
             } else {
                 Text(
                     text = if (coin.quotes[0].percentChange24h.toString().length > 4)
                         "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4)
                     else
-                        "%" + coin.quotes[0].percentChange24h.toString()
+                        "%" + coin.quotes[0].percentChange24h.toString(),
+                    style = Style.baseTextStyle
                 )
             }
         }
@@ -269,12 +239,8 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
             Text(
                 text = "$" + (coin.quotes[0].price.toString()).subSequence(0, 7),
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                ),
+                style = Style.xNormalBoldTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
             )
 
 
@@ -284,17 +250,10 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                     coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol
                 else
                     coin.ath.toString() + " " + coin.symbol,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                ),
-                color = MaterialTheme.colorScheme.onBackground
+                style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
-
-
         }
-
     }
-
 }
 
 //loading animation

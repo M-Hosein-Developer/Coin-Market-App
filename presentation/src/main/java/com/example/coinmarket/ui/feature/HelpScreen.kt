@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 
 @Composable
 fun HelpScreen(navController: NavHostController) {
@@ -53,7 +55,7 @@ fun HelpScreen(navController: NavHostController) {
             .background(MaterialTheme.colorScheme.background)
     ) {
 
-        HelpToolbar {
+        MainToolbar(stringResource(R.string.help)){
             navController.popBackStack()
         }
 
@@ -71,29 +73,6 @@ fun HelpScreen(navController: NavHostController) {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HelpToolbar(onBackPress :() -> Unit ){
-
-    TopAppBar(
-        title = { Text(
-            text = stringResource(R.string.help),
-            style = TextStyle(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 8.dp)
-        ) },
-        navigationIcon = {
-            IconButton(onClick = { onBackPress.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-            }
-        }
-        )
-
-}
-
 @Composable
 fun HelpText(title: String, desc: String) {
 
@@ -104,23 +83,14 @@ fun HelpText(title: String, desc: String) {
 
         Text(
             text = title,
-            style = TextStyle(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            ),
+            style = Style.xLargeBoldTextStyle.copy(MaterialTheme.colorScheme.onBackground),
             modifier = Modifier.padding(top = 12.dp),
-            color = MaterialTheme.colorScheme.onBackground
         )
-
 
         Text(
             text = desc,
-            style = TextStyle(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Light
-            ),
-            modifier = Modifier.padding(top = 12.dp),
-            color = MaterialTheme.colorScheme.onBackground
+            style = Style.largeLightTextStyle.copy(MaterialTheme.colorScheme.onBackground),
+            modifier = Modifier.padding(top = 12.dp)
         )
 
     }

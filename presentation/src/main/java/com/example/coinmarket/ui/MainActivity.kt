@@ -63,6 +63,7 @@ import com.example.coinmarket.ui.feature.SearchScreen
 import com.example.coinmarket.ui.feature.SettingScreen
 import com.example.coinmarket.ui.feature.SignInScreen
 import com.example.coinmarket.ui.feature.SignUpScreen
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.CoinMarketTheme
 import com.example.coinmarket.ui.theme.Gradient1
 import com.example.coinmarket.ui.theme.Gradient2
@@ -201,7 +202,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun changeAppLanguage(context: Context, language: String) {
+    private fun changeAppLanguage(context: Context, language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
@@ -235,7 +236,7 @@ fun UiScreen(
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.35f)
+                        .fillMaxHeight(0.40f)
                         .background(
                             brush = Brush.linearGradient(
                                 colors = listOf(
@@ -258,23 +259,16 @@ fun UiScreen(
 
                     Text(
                         text = stringResource(R.string.coin_market_drawer),
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        color = Color.White ,
+                        style = Style.whiteVeryLargeTextStyle,
                         modifier = Modifier.padding(start = 12.dp , bottom = 24.dp)
                         )
 
                     Text(
                         text = stringResource(R.string.coin_market_drawer_desc),
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Light
-                        ),
-                        color = Color.White ,
-                        modifier = Modifier.padding(start = 12.dp , bottom = 24.dp , end = 24.dp),
-                        lineHeight = 28.sp
+                        style = Style.whiteNormalLightTextStyle,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp , bottom = 24.dp , end = 24.dp),
                     )
 
                 }
@@ -282,12 +276,14 @@ fun UiScreen(
                 HorizontalDivider()
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.home)) },
+                    label = { Text(text = stringResource(R.string.home) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Home, contentDescription = null) },
                     onClick = {
                         navController.navigate(MyScreens.HomeScreen.route){
-                        popUpTo(MyScreens.HomeScreen.route)
+                        popUpTo(MyScreens.HomeScreen.route){
+                            inclusive = true
+                        }
                     }
                         scope.launch {
                             drawerState.apply {
@@ -298,7 +294,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.bookmark)) },
+                    label = { Text(text = stringResource(R.string.bookmark) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_bookmark_border_24), contentDescription = null) },
                     onClick = {
@@ -312,7 +308,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.setting)) },
+                    label = { Text(text = stringResource(R.string.setting) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Settings, contentDescription = null) },
                     onClick = {
@@ -326,7 +322,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.info)) },
+                    label = { Text(text = stringResource(R.string.info) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
                     onClick = {
@@ -340,7 +336,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.help)) },
+                    label = { Text(text = stringResource(R.string.help) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = { Icon(painter = painterResource(R.drawable.outline_help_outline_24), contentDescription = null) },
                     onClick = {
@@ -354,7 +350,7 @@ fun UiScreen(
                 )
 
                 NavigationDrawerItem(
-                    label = { Text(text = stringResource(R.string.logout)) },
+                    label = { Text(text = stringResource(R.string.logout) , style = Style.baseTextStyle) },
                     selected = false,
                     icon = {
                         Icon(

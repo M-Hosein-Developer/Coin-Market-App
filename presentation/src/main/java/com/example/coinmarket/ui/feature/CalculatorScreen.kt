@@ -53,6 +53,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.MainToolbar
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Orange
 import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.viewModel.MainViewModel
@@ -85,7 +87,7 @@ fun CalculatorScreen(
 
     ) {
 
-        CalculatorToolbar{
+        MainToolbar(stringResource(R.string.calculator)){
             navController1.popBackStack()
         }
 
@@ -113,31 +115,6 @@ fun CalculatorScreen(
 
 
     }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CalculatorToolbar(onBackCLicked: () -> Unit) {
-
-    TopAppBar(
-        title = {
-            Text(
-                text = stringResource(R.string.calculator),
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = { onBackCLicked.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-            }
-        },
-    )
 
 }
 
