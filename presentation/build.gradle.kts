@@ -101,7 +101,7 @@ dependencies {
     implementation(libs.lottie.compose)
 
     //Chart
-    implementation(libs.composable.graphs)
+    implementation(libs.mpandroidchart)
 
     //Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))

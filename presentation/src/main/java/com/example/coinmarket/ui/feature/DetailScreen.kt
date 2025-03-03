@@ -1,7 +1,8 @@
 package com.example.coinmarket.ui.feature
 
-import android.content.Intent
-import android.net.Uri
+import android.graphics.Color.TRANSPARENT
+import android.util.Log
+import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,8 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +41,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
@@ -56,13 +57,11 @@ import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.util.percentToPrice
 import com.example.coinmarket.viewModel.MainViewModel
-import com.jaikeerthick.composable_graphs.composables.line.LineGraph
-import com.jaikeerthick.composable_graphs.composables.line.model.LineData
-import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphColors
-import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphFillType
-import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphStyle
-import com.jaikeerthick.composable_graphs.composables.line.style.LineGraphVisibility
-import com.jaikeerthick.composable_graphs.style.LabelPosition
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import ir.androidcoder.entities.CryptoCurrencyEntity
 
 @Composable
@@ -403,92 +402,66 @@ fun CoinItem(data: CryptoCurrencyEntity) {
 @Composable
 fun Chart(data: CryptoCurrencyEntity) {
 
-    val checkData = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d).toFloat()
-    val graphData = listOf(
-        LineData(
-            x = "", y =
-            if (checkData <= 1) {
-                1
-            } else {
-                checkData
-            }
-        ),
+    val checkData = data.quotes[0].percentChange24h
 
-        LineData(
-            x = "90day",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d)
+    val graphData = listOf(
+
+        Entry(
+            0f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange90d)).toFloat()
         ),
-        LineData(
-            x = "60day",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange60d)
+        Entry(
+            1f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange60d)).toFloat()
         ),
-        LineData(
-            x = "30day",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange30d)
+        Entry(
+            2f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange30d)).toFloat()
         ),
-        LineData(
-            x = "7day",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange7d)
+        Entry(
+            3f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange7d)).toFloat()
         ),
-        LineData(
-            x = "1day",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange24h)
+        Entry(
+            4f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange24h)).toFloat()
         ),
-        LineData(
-            x = "1hour",
-            y = percentToPrice(data.quotes[0].price, data.quotes[0].percentChange1h)
+        Entry(
+            5f,
+            (percentToPrice(data.quotes[0].price, data.quotes[0].percentChange1h)).toFloat()
         )
     )
 
-    LineGraph(
-        modifier = Modifier
-            .padding(horizontal = 32.dp, vertical = 22.dp)
-            .padding(top = 14.dp),
-        data = graphData,
-        style =
-        LineGraphStyle(
-            visibility = LineGraphVisibility(
-                isYAxisLabelVisible = true,
-                isCrossHairVisible = true,
-                isGridVisible = true,
-            ),
-            yAxisLabelPosition = LabelPosition.LEFT,
-            colors = LineGraphColors(
-                lineColor =
-                if (data.quotes[0].percentChange24h > 0) {
-                    GreenShadow
-                } else {
-                    RedShadow
-                },
-
-                pointColor =
-                if (data.quotes[0].percentChange24h > 0) {
-                    GreenShadow
-                } else {
-                    RedShadow
-                },
-
-                clickHighlightColor =
-                if (data.quotes[0].percentChange24h > 0) {
-                    GreenShadow
-                } else {
-                    RedShadow
-                },
-
-                fillType = LineGraphFillType.Gradient(
-                    brush = Brush.verticalGradient(
-                        listOf(
-                            if (data.quotes[0].percentChange24h > 0) {
-                                GreenShadow
-                            } else {
-                                RedShadow
-                            },
-                            Color.White
-                        )
-                    )
+    AndroidView(
+        factory = { context ->
+            LineChart(context).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
                 )
-            )
-        )
+
+                description.isEnabled = false
+                setTouchEnabled(true)
+                setPinchZoom(true)
+                axisRight.isEnabled = true
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+                val drawable = ContextCompat.getDrawable(context, if (checkData.toFloat() >= 0 ) R.drawable.green_gradient_fill else R.drawable.red_gradient_fill)
+                val dataSet = LineDataSet(graphData,"").apply {
+                    color = TRANSPARENT
+                    setDrawValues(false)
+                    setDrawCircles(false)
+                    lineWidth = 2f
+                    setDrawFilled(true)
+                    fillDrawable = drawable
+                }
+
+                val lineData = LineData(dataSet)
+                this.data = lineData
+                this.invalidate()
+            }
+        },
+        modifier = Modifier.height(300.dp)
     )
 }
 
