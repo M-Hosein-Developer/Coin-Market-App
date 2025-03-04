@@ -1,38 +1,33 @@
 package com.example.coinmarket.viewModel
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.coinmarket.util.EmptyCoin
 import com.example.coinmarket.util.EmptyCoinList
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
-import ir.androidcoder.repositories.mainRepo.MainRepository
-import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
+import ir.androidcoder.usecases.mainUsecase.MainUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import kotlinx.coroutines.test.runCurrent
-import kotlinx.coroutines.test.runTest
-import org.mockito.Mockito
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -43,10 +38,10 @@ class MainViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
-    @Mock
-    private lateinit var repository: MainRepository
+//    private lateinit var repository: MainRepository
 
-    private lateinit var usecase: MainUsecaseImpl
+    @Mock
+    private lateinit var usecase: MainUsecase
 
     @Mock
     private lateinit var context : Context
@@ -56,7 +51,7 @@ class MainViewModelTest {
     @Before
     fun setup(){
         Dispatchers.setMain(testDispatcher)
-        usecase = MainUsecaseImpl(repository)
+//        usecase = MainUsecaseImpl(repository)
         viewModel = MainViewModel(usecase , context)
     }
 
@@ -145,5 +140,40 @@ class MainViewModelTest {
         }
     }
 
+    @Test
+    fun `When call insertBookmark should insert a crypto in data base`() = runTest {
+        val mockEntity = EmptyCoin
+
+        viewModel.insertBookmark(mockEntity)
+
+        advanceUntilIdle()
+
+        verify(usecase, times(1)).insertBookmark(mockEntity)
+    }
+
+    @Test
+    fun `when call getCryptoBookmarkList should get list of bookmark crypto`() = runTest {
+        val mockEntity = flow { emit(EmptyCoinList)}
+        `when`(usecase.getBookmarkList()).thenReturn(mockEntity)
+
+        viewModel.getCryptoBookmarkList()
+        advanceUntilIdle()
+
+        val data = viewModel.getCryptoList.value
+        mockEntity.collect{
+            assertEquals(it , data)
+        }
+    }
+
+    @Test
+    fun `when call deleteBookmark should delete coin with id from data base`() = runTest {
+        val mockEntity = 1
+
+        viewModel.deleteBookmark(1)
+
+        advanceUntilIdle()
+
+        verify(usecase, times(1)).deleteBookmark(mockEntity)
+    }
 
 }

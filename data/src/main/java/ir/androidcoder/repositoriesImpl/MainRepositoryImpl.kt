@@ -52,14 +52,13 @@ class MainRepositoryImpl @Inject constructor(
 
 
     //Bookmark
-    override suspend fun insertBookmark(data: CryptoCurrencyEntity) {
+    override fun insertBookmark(data: CryptoCurrencyEntity) {
         dao.insertDataBookmark(data.toCryptoModel())
     }
 
-    override val getBookmarkList: Flow<List<CryptoCurrencyEntity>> = flow {
-        while (true){
-            emit(dao.getAlLBookmark().map { it.toBookmarkEntity() })
-            delay(5000)
+    override fun getBookmarkList(): Flow<List<CryptoCurrencyEntity>> = flow {
+        dao.getAlLBookmark().collect{
+            emit(it.map { data -> data.toBookmarkEntity() })
         }
     }.flowOn(Dispatchers.IO)
 

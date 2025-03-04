@@ -5,8 +5,8 @@ import ir.androidcoder.local.dataClass.DynamicTheme
 
 fun DynamicTheme.toThemeEntity(): DynamicThemeEntity = DynamicThemeEntity(
 
-    id = this.id,
-    dynamicThemeState = this.dynamicThemeState
+    id = this.id ?: 1,
+    dynamicThemeState = this.dynamicThemeState ?: false
 
 )
 

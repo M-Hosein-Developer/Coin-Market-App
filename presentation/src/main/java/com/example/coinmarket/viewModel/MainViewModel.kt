@@ -1,7 +1,6 @@
 package com.example.coinmarket.viewModel
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -13,15 +12,14 @@ import com.example.coinmarket.util.NetworkChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
-import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
-import kotlinx.coroutines.delay
+import ir.androidcoder.usecases.mainUsecase.MainUsecase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, context: Context) : ViewModel() {
+class MainViewModel @Inject constructor(private val usecase: MainUsecase, context: Context) : ViewModel() {
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
@@ -29,14 +27,14 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
     val search = mutableStateOf("")
 
     init {
-//        if (NetworkChecker(context).internetConnection){
-//            getCryptoList()
-//        }else{
-//            getCryptoListFromDb()
-//        }
-//        getCryptoById(-1){}
+        if (NetworkChecker(context).internetConnection){
+            getCryptoList()
+        }else{
+            getCryptoListFromDb()
+        }
+        getCryptoById(-1){}
         getDollarPrice()
-//        getCryptoBookmarkList()
+        getCryptoBookmarkList()
     }
 
     @VisibleForTesting
@@ -82,15 +80,15 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
             }
     }
 
-    fun insertBookmark(data: CryptoCurrencyEntity) = viewModelScope.launch {
+    fun insertBookmark(data: CryptoCurrencyEntity) {
         usecase.insertBookmark(data)
     }
 
-    private fun getCryptoBookmarkList() = viewModelScope.launch {
-        usecase.getBookmarkList
-            .catch {
-                Log.v("error", "Error -> " + it.message)
-            }.collect{
+    @VisibleForTesting
+    fun getCryptoBookmarkList() = viewModelScope.launch {
+        usecase.getBookmarkList()
+            .catch {}
+            .collect{
                 getCryptoBookmarkList.value = it
             }
     }

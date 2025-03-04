@@ -6,24 +6,24 @@ import ir.androidcoder.repositories.mainRepo.MainRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MainUsecaseImpl(private val repository : MainRepository) {
+class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase {
 
-    fun getCryptoList() = repository.getCryptoList()
+    override fun getCryptoList() = repository.getCryptoList()
 
-    fun getCryptoListFromDb() = repository.getCryptoListFromDb()
+    override fun getCryptoListFromDb() = repository.getCryptoListFromDb()
 
-    fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
+    override fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
 
-    fun getDollarPrice() = repository.getDollarPrice()
+    override fun getDollarPrice() = repository.getDollarPrice()
 
-    val getBookmarkList: Flow<List<CryptoCurrencyEntity>> = repository.getBookmarkList.map { it }
+    override fun getBookmarkList() = repository.getBookmarkList()
 
 
-    suspend fun insertBookmark(data: CryptoCurrencyEntity) {
+    override fun insertBookmark(data: CryptoCurrencyEntity) {
         repository.insertBookmark(data)
     }
 
-    suspend fun deleteBookmark(id: Int) {
+    override suspend fun deleteBookmark(id: Int) {
         repository.deleteBookmark(id)
     }
 

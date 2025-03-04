@@ -1,12 +1,10 @@
-package ir.androidcoder.repositories.mainRepo
+package ir.androidcoder.usecases.mainUsecase
 
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
 import kotlinx.coroutines.flow.Flow
 
-
-interface MainRepository {
-
+interface MainUsecase {
 
     fun getCryptoList() : Flow<List<CryptoCurrencyEntity>>
 
@@ -21,6 +19,5 @@ interface MainRepository {
     fun getBookmarkList() : Flow<List<CryptoCurrencyEntity>>
 
     suspend fun deleteBookmark(id : Int)
-
 
 }
