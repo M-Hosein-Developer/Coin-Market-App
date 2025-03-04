@@ -31,6 +31,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -100,7 +101,7 @@ class MainActivity : ComponentActivity() {
         initTheme()
 
         setContent {
-            CoinMarketTheme(dynamicColor = themeViewModel.themeState.dynamicThemeState) {
+            CoinMarketTheme(dynamicColor = themeViewModel.themeState.collectAsState().value.dynamicThemeState) {
                 UiScreen(viewModel, signInUpViewModel, {
                     signInUser(it)
                 }, {

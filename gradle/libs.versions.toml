@@ -25,6 +25,7 @@ navigationCompose = "2.7.7"
 retrofit = "2.9.0"
 roomKtx = "2.6.1"
 uiTestJunit4 = "1.6.5"
+activityKtx = "1.8.0"
 
 
 [libraries]
@@ -65,6 +66,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 
 
 [plugins]

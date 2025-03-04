@@ -65,7 +65,14 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":data"))
     implementation(project(":domain"))
+
     testImplementation(libs.junit)
+    testImplementation(libs.androidx.activity.ktx)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("org.mockito:mockito-core:4.6.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

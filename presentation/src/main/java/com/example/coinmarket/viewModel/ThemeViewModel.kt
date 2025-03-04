@@ -13,17 +13,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.DynamicThemeEntity
 import ir.androidcoder.usecases.themeUsecase.ThemeUsecase
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase , private val prefs: SharedPreferences) : ViewModel() {
 
-    var themeState by mutableStateOf(DynamicThemeEntity(1, false))
+    val themeState = MutableStateFlow(DynamicThemeEntity(1, false))
     var switchState by mutableStateOf(false)
 
     init {
-//        getDynamicThemeState()
+       getDynamicThemeState()
     }
 
     fun insertDynamicThemeStateRep() {
@@ -38,15 +39,9 @@ class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase , pri
     }
 
     fun getDynamicThemeState() = viewModelScope.launch {
-        while (true) {
-            themeState = usecase.getDynamicThemeState()
-            switchState = if (usecase.getDynamicThemeState().dynamicThemeState)
-                true
-            else
-                false
-            delay(1000)
-        }
-
+        val entity = usecase.getDynamicThemeState() ?: DynamicThemeEntity(1 , false)
+        themeState.value = entity
+        switchState = entity.dynamicThemeState
     }
 
     fun saveLanguagePreference(language: String) {

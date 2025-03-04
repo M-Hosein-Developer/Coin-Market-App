@@ -28,6 +28,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,13 +65,11 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
     var language by rememberSaveable { mutableStateOf(R.string.english) }
 
     //Switch
-    var checked by remember { mutableStateOf(false) }
+    val checked = remember { mutableStateOf(false) }
     val context = LocalContext.current as? Activity ?: return
 
     if (viewModel.getSavedLanguage() == "en") language = R.string.english
     else language = R.string.persian
-
-    viewModel.getDynamicThemeState()
 
     Column(
         Modifier
@@ -89,6 +88,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
         DynamicTheme(viewModel){
             viewModel.switchState = it
             viewModel.insertDynamicThemeStateRep()
+            context.recreate()
         }
 
         HorizontalDivider(
@@ -112,7 +112,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
         )
     }
 
-    checked = viewModel.themeState.dynamicThemeState
+    checked.value = viewModel.themeState.collectAsState().value.dynamicThemeState
 
 }
 
