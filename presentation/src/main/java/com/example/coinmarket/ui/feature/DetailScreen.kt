@@ -1,7 +1,6 @@
 package com.example.coinmarket.ui.feature
 
 import android.graphics.Color.TRANSPARENT
-import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -472,183 +473,219 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp)
+            .padding(horizontal = 24.dp)
             .padding(top = 12.dp)
     ) {
 
-        Column {
-
-            Text(
-                text = "Volume 24H:  " + if (data.quotes[0].volume24h.toString().length > 15)
-                    (data.quotes[0].volume24h).toString().subSequence(0, 15)
-                else
-                    data.quotes[0].volume24h.toString(),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = "Volume 7d:  " + if (data.quotes[0].volume7d.toString().length > 15)
-                    (data.quotes[0].volume7d).toString().subSequence(0, 15)
-                else
-                    data.quotes[0].volume7d.toString(),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = "Volume 30d:  " + if (data.quotes[0].volume30d.toString().length > 15)
-                    (data.quotes[0].volume30d).toString().subSequence(0, 15)
-                else
-                    data.quotes[0].volume30d.toString(),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-
-        }
-
-        HorizontalDivider(Modifier.padding(vertical = 8.dp))
-
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        ){
-            Text(
-                text = "1H:  " + if (data.quotes[0].percentChange1h.toString().length > 5)
-                    "" + (data.quotes[0].percentChange1h).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange1h.toString() + "%",
-                modifier = Modifier.padding(bottom = 8.dp),
-                color =  if (data.quotes[0].percentChange24h > 0) {
-                    Green
-                } else {
-                    Red
-                }
-            )
-
-            Text(
-                text = "1d:  " + if (data.quotes[0].percentChange24h.toString().length > 5)
-                    "" + (data.quotes[0].percentChange24h).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange24h.toString() + "%",
-                modifier = Modifier.padding(bottom = 8.dp),
-                color =  if (data.quotes[0].percentChange24h > 0) {
-                    Green
-                } else {
-                    Red
-                }
-            )
-
-            Text(
-                text = "7d:  " + if (data.quotes[0].percentChange7d.toString().length > 5)
-                    "" + (data.quotes[0].percentChange7d).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange7d.toString() + "%",
-            modifier = Modifier.padding(bottom = 8.dp),
-            color =  if (data.quotes[0].percentChange24h > 0) {
-                Green
-            } else {
-                Red
-            }
-            )
-        }
-
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        ){
-            Text(
-                text = "1M:  " + if (data.quotes[0].percentChange30d.toString().length > 5)
-                    "" + (data.quotes[0].percentChange30d).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange30d.toString() + "%",
-                modifier = Modifier.padding(bottom = 8.dp),
-                color =  if (data.quotes[0].percentChange24h > 0) {
-                    Green
-                } else {
-                    Red
-                }
-            )
-
-            Text(
-                text = "60d:  " + if (data.quotes[0].percentChange60d.toString().length > 5)
-                    "" + (data.quotes[0].percentChange60d).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange60d.toString() + "%",
-                modifier = Modifier.padding(bottom = 8.dp),
-                color =  if (data.quotes[0].percentChange24h > 0) {
-                    Green
-                } else {
-                    Red
-                }
-            )
-
-            Text(
-                text = "90d:  " + if (data.quotes[0].percentChange90d.toString().length > 5)
-                    "" + (data.quotes[0].percentChange90d).toString().subSequence(0, 5) + "%"
-                else
-                    data.quotes[0].percentChange90d.toString() + "%",
-                modifier = Modifier.padding(bottom = 8.dp),
-                color =  if (data.quotes[0].percentChange24h > 0) {
-                    Green
-                } else {
-                    Red
-                }
-            )
-        }
-
-        HorizontalDivider(Modifier.padding(vertical = 8.dp))
-
-        Column {
-
-            Text(
-                text = "Total Supply:  " + data.totalSupply,
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = "Max Supply:  " + data.maxSupply,
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = "High24h:  " + if (data.high24h > 6)
-                    (data.high24h).toString().subSequence(0, 7)
-                else
-                    data.high24h.toString(),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-
-            Text(
-                text = "Low24h:  " + if (data.low24h > 7)
-                    (data.low24h).toString().subSequence(0, 7)
-                else
-                    data.low24h.toString(),
-                modifier = Modifier.padding(bottom = 8.dp),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-
-        }
-
-        HorizontalDivider(Modifier.padding(vertical = 8.dp))
-
-        Column {
-
-
-            Row (
-                horizontalArrangement = Arrangement.SpaceBetween,
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            elevation = CardDefaults.elevatedCardElevation(2.dp)
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-            ){
+                    .fillMaxSize()
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+
                 Text(
-                    text = "${stringResource(R.string.last_update)}:  " + (data.lastUpdated).subSequence(0 , 10) + "%",
+                    text = "Volume 24H:  " + if (data.quotes[0].volume24h.toString().length > 15)
+                        (data.quotes[0].volume24h).toString().subSequence(0, 15)
+                    else
+                        data.quotes[0].volume24h.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
                     color = MaterialTheme.colorScheme.onBackground
                 )
+                Text(
+                    text = "Volume 7d:  " + if (data.quotes[0].volume7d.toString().length > 15)
+                        (data.quotes[0].volume7d).toString().subSequence(0, 15)
+                    else
+                        data.quotes[0].volume7d.toString(),
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = "Volume 30d:  " + if (data.quotes[0].volume30d.toString().length > 15)
+                        (data.quotes[0].volume30d).toString().subSequence(0, 15)
+                    else
+                        data.quotes[0].volume30d.toString(),
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            elevation = CardDefaults.elevatedCardElevation(2.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            ) {
+                Text(
+                    text = "1H:  " + if (data.quotes[0].percentChange1h.toString().length > 5)
+                        "" + (data.quotes[0].percentChange1h).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange1h.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+
+                Text(
+                    text = "1d:  " + if (data.quotes[0].percentChange24h.toString().length > 5)
+                        "" + (data.quotes[0].percentChange24h).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange24h.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+
+                Text(
+                    text = "7d:  " + if (data.quotes[0].percentChange7d.toString().length > 5)
+                        "" + (data.quotes[0].percentChange7d).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange7d.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            elevation = CardDefaults.elevatedCardElevation(2.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            ) {
+                Text(
+                    text = "1M:  " + if (data.quotes[0].percentChange30d.toString().length > 5)
+                        "" + (data.quotes[0].percentChange30d).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange30d.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+
+                Text(
+                    text = "60d:  " + if (data.quotes[0].percentChange60d.toString().length > 5)
+                        "" + (data.quotes[0].percentChange60d).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange60d.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+
+                Text(
+                    text = "90d:  " + if (data.quotes[0].percentChange90d.toString().length > 5)
+                        "" + (data.quotes[0].percentChange90d).toString().subSequence(0, 5) + "%"
+                    else
+                        data.quotes[0].percentChange90d.toString() + "%",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = if (data.quotes[0].percentChange24h > 0) {
+                        Green
+                    } else {
+                        Red
+                    }
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            elevation = CardDefaults.elevatedCardElevation(2.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+                Text(
+                    text = "Total Supply:  " + data.totalSupply,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = "Max Supply:  " + data.maxSupply,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = "High24h:  " + if (data.high24h > 6)
+                        (data.high24h).toString().subSequence(0, 7)
+                    else
+                        data.high24h.toString(),
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+                Text(
+                    text = "Low24h:  " + if (data.low24h > 7)
+                        (data.low24h).toString().subSequence(0, 7)
+                    else
+                        data.low24h.toString(),
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            colors = CardDefaults.cardColors(Color.White),
+            elevation = CardDefaults.elevatedCardElevation(2.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(12.dp)
+            ) {
+
+
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                ) {
+                    Text(
+                        text = "${stringResource(R.string.last_update)}:  " + (data.lastUpdated).subSequence(
+                            0,
+                            10
+                        ) + "%",
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
 
 //                Text(
 //                    text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
@@ -656,25 +693,29 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
 //                    color = MaterialTheme.colorScheme.onBackground
 //                )
 
-            }
+                }
 
 
-            Row (
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-                Text(
-                    text = "${stringResource(R.string.last_update)}:  " + (data.dateAdded).subSequence(0 , 10) + "%",
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = "${stringResource(R.string.last_update)}:  " + (data.dateAdded).subSequence(
+                            0,
+                            10
+                        ) + "%",
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
 
 //                Text(
 //                    text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
 //                    color = MaterialTheme.colorScheme.onBackground
 //                )
 
+                }
             }
         }
     }
@@ -684,7 +725,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .padding(bottom = 8.dp)
+            .padding(vertical = 12.dp)
     ){
 
         TextButton(
