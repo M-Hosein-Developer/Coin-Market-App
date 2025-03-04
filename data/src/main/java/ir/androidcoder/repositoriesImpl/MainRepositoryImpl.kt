@@ -52,7 +52,7 @@ class MainRepositoryImpl @Inject constructor(
 
 
     //Bookmark
-    override fun insertBookmark(data: CryptoCurrencyEntity) {
+    override suspend fun insertBookmark(data: CryptoCurrencyEntity) {
         dao.insertDataBookmark(data.toCryptoModel())
     }
 

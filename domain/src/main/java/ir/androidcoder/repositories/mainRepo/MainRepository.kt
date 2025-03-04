@@ -16,7 +16,7 @@ interface MainRepository {
 
     fun getDollarPrice() : Flow<PriceEntity>
 
-    fun insertBookmark(data : CryptoCurrencyEntity)
+    suspend fun insertBookmark(data : CryptoCurrencyEntity)
 
     fun getBookmarkList() : Flow<List<CryptoCurrencyEntity>>
 

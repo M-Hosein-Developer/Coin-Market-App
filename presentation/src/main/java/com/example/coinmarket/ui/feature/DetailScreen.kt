@@ -120,7 +120,12 @@ fun DetailToolbar(
 ) {
 
     val bookmarkBtn = remember { mutableStateOf(false) }
-    var bookmarkBtnDb = false
+
+    bookmarkData.forEach {
+        if (data.id == it.id) {
+            bookmarkBtn.value = true
+        }
+    }
 
     TopAppBar(
         title = {
@@ -264,19 +269,7 @@ fun DetailToolbar(
                 }
             ) {
 
-                bookmarkData.forEach {
-                    if (data.id == it.id) {
-                        bookmarkBtnDb = true
-                    }
-                }
-
                 if (bookmarkBtn.value)
-                    Icon(
-                        painter = painterResource(R.drawable.baseline_bookmark_24),
-                        contentDescription = null,
-                        modifier = Modifier.size(35.dp)
-                    )
-                else if (bookmarkBtnDb)
                     Icon(
                         painter = painterResource(R.drawable.baseline_bookmark_24),
                         contentDescription = null,
@@ -288,7 +281,6 @@ fun DetailToolbar(
                         contentDescription = null,
                         modifier = Modifier.size(35.dp)
                     )
-
 
             }
         }

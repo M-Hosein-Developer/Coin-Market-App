@@ -30,7 +30,7 @@ interface RoomDao {
 
     //Bookmark
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDataBookmark(data: BookmarkResponse.Data.CryptoCurrency)
+    suspend fun insertDataBookmark(data: BookmarkResponse.Data.CryptoCurrency)
 
     @Query("SELECT * FROM bookmarkTable")
     fun getAlLBookmark(): Flow<List<BookmarkResponse.Data.CryptoCurrency>>

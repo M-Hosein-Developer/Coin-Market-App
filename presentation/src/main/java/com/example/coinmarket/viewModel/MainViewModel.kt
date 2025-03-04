@@ -80,7 +80,7 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecase, contex
             }
     }
 
-    fun insertBookmark(data: CryptoCurrencyEntity) {
+    fun insertBookmark(data: CryptoCurrencyEntity) = viewModelScope.launch{
         usecase.insertBookmark(data)
     }
 

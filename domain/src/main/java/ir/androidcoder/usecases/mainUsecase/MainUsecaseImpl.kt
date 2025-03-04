@@ -19,7 +19,7 @@ class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase {
     override fun getBookmarkList() = repository.getBookmarkList()
 
 
-    override fun insertBookmark(data: CryptoCurrencyEntity) {
+    override suspend fun insertBookmark(data: CryptoCurrencyEntity) {
         repository.insertBookmark(data)
     }
 
