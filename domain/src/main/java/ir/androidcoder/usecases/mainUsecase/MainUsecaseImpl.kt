@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.map
 
 class MainUsecaseImpl(private val repository : MainRepository) {
 
-    val getCryptoList: Flow<List<CryptoCurrencyEntity>> = repository.getCryptoList.map { it }
+    fun getCryptoList() = repository.getCryptoList()
 
-    val getCryptoListFromDb: Flow<List<CryptoCurrencyEntity>> = repository.getCryptoListFromDb.map { it }
+    fun getCryptoListFromDb() = repository.getCryptoListFromDb()
 
-    suspend fun getCryptoByIdFromDb(id: Int): CryptoCurrencyEntity = repository.getCryptoByIdFromDb(id)
+    fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
 
     val getDollarPrice: Flow<PriceEntity> = repository.getDollarPrice.map { it }
 

@@ -7,6 +7,7 @@ import androidx.room.Query
 import ir.androidcoder.local.dataClass.BookmarkResponse
 import ir.androidcoder.local.dataClass.CoinMarketResponse
 import ir.androidcoder.local.dataClass.DynamicTheme
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoomDao {
@@ -18,7 +19,7 @@ interface RoomDao {
     suspend fun getAlLCoinFromDb(): List<CoinMarketResponse.Data.CryptoCurrency>
 
     @Query("SELECT * FROM CryptoCurrency WHERE id = :id ")
-    suspend fun getCoinById(id : Int) : CoinMarketResponse.Data.CryptoCurrency
+    fun getCoinById(id : Int) : Flow<CoinMarketResponse.Data.CryptoCurrency>
 
     //Dynamic Theme
     @Insert(onConflict = OnConflictStrategy.REPLACE)

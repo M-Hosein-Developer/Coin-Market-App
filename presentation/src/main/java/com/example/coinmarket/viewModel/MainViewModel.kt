@@ -2,13 +2,13 @@ package com.example.coinmarket.viewModel
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.NetworkChecker
-import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
@@ -28,31 +28,33 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
     val search = mutableStateOf("")
 
     init {
-        if (NetworkChecker(context).internetConnection){
-            getCryptoList()
-        }else{
-            getCryptoListFromDb()
-        }
+//        if (NetworkChecker(context).internetConnection){
+//            getCryptoList()
+//        }else{
+//            getCryptoListFromDb()
+//        }
         getCryptoById(-1){}
-        getDollarPrice()
-        getCryptoBookmarkList()
+//        getDollarPrice()
+//        getCryptoBookmarkList()
     }
 
-    private fun getCryptoList() {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            usecase.getCryptoList
-                .catch { Log.v("error", "Error -> " + it.message) }
+    @VisibleForTesting
+    fun getCryptoList() {
+        viewModelScope.launch {
+            usecase.getCryptoList()
+                .catch {  }
                 .collect {
                     getCryptoList.value = it
                 }
         }
     }
 
-    private fun getCryptoListFromDb() {
+    @VisibleForTesting
+    fun getCryptoListFromDb() {
 
         viewModelScope.launch {
-            usecase.getCryptoListFromDb
-                .catch { Log.v("errorDb", "Error -> " + it.message) }
+            usecase.getCryptoListFromDb()
+                .catch { }
                 .collect {
                     getCryptoList.value = it
                 }
@@ -61,11 +63,12 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
     }
 
     fun getCryptoById(id: Int , getCryptoById :(CryptoCurrencyEntity) -> Unit) {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            while (true) {
-                getCryptoById.invoke(usecase.getCryptoByIdFromDb(id))
-                delay(4000)
-            }
+        viewModelScope.launch {
+            usecase.getCryptoByIdFromDb(id)
+                .catch {  }
+                .collect{
+                    getCryptoById.invoke(it)
+                }
         }
     }
 
@@ -78,12 +81,11 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
             }
     }
 
-    fun insertBookmark(data: CryptoCurrencyEntity) = viewModelScope.launch(
-        coroutineExceptionHandler) {
+    fun insertBookmark(data: CryptoCurrencyEntity) = viewModelScope.launch {
         usecase.insertBookmark(data)
     }
 
-    private fun getCryptoBookmarkList() = viewModelScope.launch(coroutineExceptionHandler) {
+    private fun getCryptoBookmarkList() = viewModelScope.launch {
         usecase.getBookmarkList
             .catch {
                 Log.v("error", "Error -> " + it.message)
@@ -92,7 +94,7 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
             }
     }
 
-    fun deleteBookmark(id: Int) = viewModelScope.launch(coroutineExceptionHandler) {
+    fun deleteBookmark(id: Int) = viewModelScope.launch {
         usecase.deleteBookmark(id)
     }
 

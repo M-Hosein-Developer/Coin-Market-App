@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -23,16 +24,16 @@ class MainRepositoryImpl @Inject constructor(
     private val dao: RoomDao
 ) : MainRepository {
 
-    override val getCryptoList: Flow<List<CryptoCurrencyEntity>> = flow {
+    override fun getCryptoList(): Flow<List<CryptoCurrencyEntity>> = flow {
         while (true) {
             val data = apiService.getCryptoList().data.cryptoCurrencyList
             emit(data.map { it.toCryptoEntity() })
             dao.insertDataFrom(data)
             delay(3000)
         }
-    }.flowOn(Dispatchers.IO)
+    }
 
-    override val getCryptoListFromDb: Flow<List<CryptoCurrencyEntity>> = flow {
+    override fun getCryptoListFromDb(): Flow<List<CryptoCurrencyEntity>> = flow {
         while (true) {
             val data = dao.getAlLCoinFromDb()
             emit(data.map { it.toCryptoEntity() })
@@ -40,7 +41,7 @@ class MainRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getCryptoByIdFromDb(id: Int): CryptoCurrencyEntity = dao.getCoinById(id).toCryptoEntity()
+    override fun getCryptoByIdFromDb(id: Int): Flow<CryptoCurrencyEntity> = dao.getCoinById(id).map { it.toCryptoEntity() }
 
     override val getDollarPrice: Flow<PriceEntity> = flow {
         while (true){

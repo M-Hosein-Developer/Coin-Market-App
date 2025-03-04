@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 interface MainRepository {
 
 
-    val getCryptoList : Flow<List<CryptoCurrencyEntity>>
+    fun getCryptoList() : Flow<List<CryptoCurrencyEntity>>
 
-    val getCryptoListFromDb : Flow<List<CryptoCurrencyEntity>>
+    fun getCryptoListFromDb() : Flow<List<CryptoCurrencyEntity>>
 
-    suspend fun getCryptoByIdFromDb(id : Int) : CryptoCurrencyEntity
+    fun getCryptoByIdFromDb(id : Int) : Flow<CryptoCurrencyEntity>
 
     val getDollarPrice : Flow<PriceEntity>
 
