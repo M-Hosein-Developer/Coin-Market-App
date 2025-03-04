@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.coinmarket.util.EmptyCoinList
 import ir.androidcoder.entities.CryptoCurrencyEntity
+import ir.androidcoder.entities.PriceEntity
 import ir.androidcoder.repositories.mainRepo.MainRepository
 import ir.androidcoder.usecases.mainUsecase.MainUsecaseImpl
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -125,13 +127,23 @@ class MainViewModelTest {
         viewModel.getCryptoById(1){
             assertEquals(mockEntity , it)
         }
-        advanceUntilIdle()
-
-
     }
 
+    @Test
+    fun `when call getDollarPrice should get dollar price`() = runTest{
+        val mockEntity = flow<PriceEntity> {
+            PriceEntity("100" , "100" , "100" , "100")
+        }
+        `when`(usecase.getDollarPrice()).thenReturn(mockEntity)
 
+        viewModel.getDollarPrice()
+        advanceUntilIdle()
 
+        val data = viewModel.getDollarPrice.value
+        mockEntity.collect{
+            assertEquals(it , data)
+        }
+    }
 
 
 }

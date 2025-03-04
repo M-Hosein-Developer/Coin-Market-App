@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.EmptyCoinListBook
+import com.example.coinmarket.util.EmptyDollar
 import com.example.coinmarket.util.NetworkChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.CryptoCurrencyEntity
@@ -24,7 +25,7 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
 
     val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
-    val getDollarPrice = MutableStateFlow<PriceEntity?>(null)
+    val getDollarPrice = MutableStateFlow<PriceEntity>(EmptyDollar)
     val search = mutableStateOf("")
 
     init {
@@ -33,8 +34,8 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
 //        }else{
 //            getCryptoListFromDb()
 //        }
-        getCryptoById(-1){}
-//        getDollarPrice()
+//        getCryptoById(-1){}
+        getDollarPrice()
 //        getCryptoBookmarkList()
     }
 
@@ -72,11 +73,11 @@ class MainViewModel @Inject constructor(private val usecase: MainUsecaseImpl, co
         }
     }
 
-    private fun getDollarPrice() = viewModelScope.launch {
-        usecase.getDollarPrice
-            .catch {
-                Log.v("error", "Error -> " + it.message)
-            }.collect{
+    @VisibleForTesting
+    fun getDollarPrice() = viewModelScope.launch {
+        usecase.getDollarPrice()
+            .catch {}
+            .collect{
                 getDollarPrice.value = it
             }
     }

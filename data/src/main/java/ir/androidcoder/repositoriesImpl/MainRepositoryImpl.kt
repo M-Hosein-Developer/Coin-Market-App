@@ -43,7 +43,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun getCryptoByIdFromDb(id: Int): Flow<CryptoCurrencyEntity> = dao.getCoinById(id).map { it.toCryptoEntity() }
 
-    override val getDollarPrice: Flow<PriceEntity> = flow {
+    override fun getDollarPrice(): Flow<PriceEntity> = flow {
         while (true){
             emit(apiServicePrice.getPriceDollar().toPriceEntity())
             delay(10000)

@@ -14,7 +14,7 @@ interface MainRepository {
 
     fun getCryptoByIdFromDb(id : Int) : Flow<CryptoCurrencyEntity>
 
-    val getDollarPrice : Flow<PriceEntity>
+    fun getDollarPrice() : Flow<PriceEntity>
 
     suspend fun insertBookmark(data : CryptoCurrencyEntity)
 

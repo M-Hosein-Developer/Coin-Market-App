@@ -14,7 +14,7 @@ class MainUsecaseImpl(private val repository : MainRepository) {
 
     fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
 
-    val getDollarPrice: Flow<PriceEntity> = repository.getDollarPrice.map { it }
+    fun getDollarPrice() = repository.getDollarPrice()
 
     val getBookmarkList: Flow<List<CryptoCurrencyEntity>> = repository.getBookmarkList.map { it }
 
