@@ -1,5 +1,6 @@
 package com.example.coinmarket.ui.feature
 
+import android.R.string
 import android.graphics.Color.TRANSPARENT
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -49,6 +50,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.coinmarket.R
+import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
@@ -482,28 +484,28 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
             ) {
 
                 Text(
-                    text = "Volume 24H:  " + if (data.quotes[0].volume24h.toString().length > 15)
+                    text = "${stringResource(R.string.volume_24H)}:  " + if (data.quotes[0].volume24h.toString().length > 15)
                         (data.quotes[0].volume24h).toString().subSequence(0, 15)
                     else
                         data.quotes[0].volume24h.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
                 )
                 Text(
-                    text = "Volume 7d:  " + if (data.quotes[0].volume7d.toString().length > 15)
+                    text = "${stringResource(R.string.volume_7d)}:  " + if (data.quotes[0].volume7d.toString().length > 15)
                         (data.quotes[0].volume7d).toString().subSequence(0, 15)
                     else
                         data.quotes[0].volume7d.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
                 )
                 Text(
-                    text = "Volume 30d:  " + if (data.quotes[0].volume30d.toString().length > 15)
+                    text = "${stringResource(R.string.volume_30d)}:  " + if (data.quotes[0].volume30d.toString().length > 15)
                         (data.quotes[0].volume30d).toString().subSequence(0, 15)
                     else
                         data.quotes[0].volume30d.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
                 )
 
             }
@@ -624,31 +626,31 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
             ) {
 
                 Text(
-                    text = "Total Supply:  " + data.totalSupply,
+                    text = "${stringResource(R.string.total_supply)}:  " + data.totalSupply,
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
+                    )
                 Text(
-                    text = "Max Supply:  " + data.maxSupply,
+                    text = "${stringResource(R.string.max_supply)}:  " + data.maxSupply,
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
+                    )
                 Text(
-                    text = "High24h:  " + if (data.high24h > 6)
+                    text = "${stringResource(R.string.high24h)}:  " + if (data.high24h > 6)
                         (data.high24h).toString().subSequence(0, 7)
                     else
                         data.high24h.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
+                    )
 
                 Text(
-                    text = "Low24h:  " + if (data.low24h > 7)
+                    text = "${stringResource(R.string.low24h)}:  " + if (data.low24h > 7)
                         (data.low24h).toString().subSequence(0, 7)
                     else
                         data.low24h.toString(),
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
                 )
 
             }
@@ -676,8 +678,8 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                             10
                         ) + "%",
                         modifier = Modifier.padding(bottom = 8.dp),
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                        style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
+                        )
 
 //                Text(
 //                    text = "Time:  " + (data.lastUpdated).subSequence(11 , 16) + "%",
@@ -699,8 +701,8 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                             10
                         ) + "%",
                         modifier = Modifier.padding(bottom = 8.dp),
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                        style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground),
+                        )
 
 //                Text(
 //                    text = "Time:  " + (data.dateAdded).subSequence(11 , 16) + "%",
@@ -726,10 +728,8 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
         ) {
             Text(
                 text = stringResource(R.string.more_detail_btn_text),
-                color = Red,
-                style = TextStyle(
-                    fontSize = 18.sp
-                ),
+                style = Style.redXNormalTextStyle,
+
                 modifier = Modifier.fillMaxWidth(),
             )
         }

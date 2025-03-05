@@ -56,7 +56,13 @@
     <string name="have_account">Already have an account?</string>
     <string name="coin_market_drawer">Coin Market Cap</string>
     <string name="coin_market_drawer_desc">"With Crypto app, monitor digital currency prices and make informed decisions."</string>
-
+    <string name="volume_24H">Volume 24H</string>
+    <string name="volume_7d">Volume 7d</string>
+    <string name="volume_30d">Volume 30d</string>
+    <string name="total_supply">Total Supply</string>
+    <string name="max_supply">Max Supply</string>
+    <string name="high24h">High in 24h</string>
+    <string name="low24h">Low in 24h</string>
 
 
 

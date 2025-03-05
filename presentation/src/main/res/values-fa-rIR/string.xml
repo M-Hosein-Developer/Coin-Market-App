@@ -58,6 +58,14 @@
     <string name="have_account">قبلا حساب کاربری ایجاد کرده اید؟</string>
     <string name="coin_market_drawer">Coin Market Cap</string>
     <string name="coin_market_drawer_desc">"با اپلیکیشن کریپتو، قیمت ارزهای دیجیتال را رصد کنید و آگاهانه تصمیم بگیرید."</string>
+    <string name="volume_24H">دوره 24 ساعته</string>
+    <string name="volume_7d">دوره 7 روزه</string>
+    <string name="volume_30d">دوره 30 روزه</string>
+    <string name="total_supply">عرضه کل</string>
+    <string name="max_supply">حداکثر تامین</string>
+    <string name="high24h">اوج در 24 ساعت</string>
+    <string name="low24h">ریزش در 24 ساعت</string>
+
 
 
 
