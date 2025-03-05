@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.androidcoder.repositories.mainRepo.MainRepository
 import ir.androidcoder.repositories.themeRepo.ThemeRepository
-import ir.androidcoder.repositoriesImpl.MainRepositoryImpl
-import ir.androidcoder.repositoriesImpl.ThemeRepositoryImpl
+import ir.androidcoder.repositories.MainRepositoryImpl
+import ir.androidcoder.repositories.ThemeRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

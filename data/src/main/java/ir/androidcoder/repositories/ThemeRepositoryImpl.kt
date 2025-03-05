@@ -1,4 +1,4 @@
-package ir.androidcoder.repositoriesImpl
+package ir.androidcoder.repositories
 
 import ir.androidcoder.entities.DynamicThemeEntity
 import ir.androidcoder.mapper.toThemeEntity
