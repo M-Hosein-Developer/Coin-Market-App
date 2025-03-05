@@ -14,6 +14,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -21,6 +25,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String" , "BASE_URL" , project.property("BASE_URL") as String)
+            buildConfigField("String" , "BASE_URL_PRICE" , project.property("BASE_URL_PRICE") as String)
+
+        }
+
+        debug {
+
+            buildConfigField("String" , "BASE_URL" , project.property("BASE_URL") as String)
+            buildConfigField("String" , "BASE_URL_PRICE" , project.property("BASE_URL_PRICE") as String)
+
         }
     }
     compileOptions {
