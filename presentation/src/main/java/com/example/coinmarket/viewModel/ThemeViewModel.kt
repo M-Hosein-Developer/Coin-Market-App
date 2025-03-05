@@ -1,7 +1,5 @@
 package com.example.coinmarket.viewModel
 
-import android.app.Activity
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +10,6 @@ import com.example.coinmarket.util.coroutineExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.DynamicThemeEntity
 import ir.androidcoder.usecases.themeUsecase.ThemeUsecase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,15 +1,10 @@
 package com.example.coinmarket.ui.style
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
 import com.example.coinmarket.R
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red

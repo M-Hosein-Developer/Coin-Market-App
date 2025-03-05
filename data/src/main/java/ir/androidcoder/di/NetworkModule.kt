@@ -5,6 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.androidcoder.data.BuildConfig
+import ir.androidcoder.remote.ApiService
+import ir.androidcoder.remote.ApiServicePrice
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
@@ -36,14 +38,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(@Named("CoinMarket") retrofit: Retrofit): ir.androidcoder.remote.ApiService {
-        return retrofit.create(ir.androidcoder.remote.ApiService::class.java)
+    fun provideApiService(@Named("CoinMarket") retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideApiServicePrice(@Named("Price") retrofit: Retrofit): ir.androidcoder.remote.ApiServicePrice {
-        return retrofit.create(ir.androidcoder.remote.ApiServicePrice::class.java)
+    fun provideApiServicePrice(@Named("Price") retrofit: Retrofit): ApiServicePrice {
+        return retrofit.create(ApiServicePrice::class.java)
     }
 
 }

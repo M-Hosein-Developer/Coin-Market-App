@@ -1,6 +1,5 @@
 package com.example.coinmarket.ui.feature
 
-import android.R.string
 import android.graphics.Color.TRANSPARENT
 import android.view.ViewGroup
 import androidx.compose.foundation.background
