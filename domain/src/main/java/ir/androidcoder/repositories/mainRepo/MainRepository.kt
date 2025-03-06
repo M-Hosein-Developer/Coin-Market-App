@@ -1,5 +1,6 @@
 package ir.androidcoder.repositories.mainRepo
 
+import androidx.paging.PagingData
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
 import kotlinx.coroutines.flow.Flow
@@ -7,10 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
-
-    fun getCryptoList() : Flow<List<CryptoCurrencyEntity>>
-
-    fun getCryptoListFromDb() : Flow<List<CryptoCurrencyEntity>>
+    fun getCryptoList() : Flow<PagingData<CryptoCurrencyEntity>>
 
     fun getCryptoByIdFromDb(id : Int) : Flow<CryptoCurrencyEntity>
 

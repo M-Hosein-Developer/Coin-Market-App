@@ -4,7 +4,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.local.RoomDao
 import ir.androidcoder.local.dataClass.CoinMarketResponse
 import ir.androidcoder.remote.ApiService

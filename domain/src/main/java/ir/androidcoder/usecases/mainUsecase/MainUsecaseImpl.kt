@@ -10,8 +10,6 @@ class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase {
 
     override fun getCryptoList() = repository.getCryptoList()
 
-    override fun getCryptoListFromDb() = repository.getCryptoListFromDb()
-
     override fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
 
     override fun getDollarPrice() = repository.getDollarPrice()
