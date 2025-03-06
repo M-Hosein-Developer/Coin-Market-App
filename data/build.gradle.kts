@@ -70,5 +70,8 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
 
+    //paging
+    implementation(libs.androidx.paging.runtime)
+    implementation("androidx.room:room-paging:2.6.1")
 
 }

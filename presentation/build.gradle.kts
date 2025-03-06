@@ -110,6 +110,9 @@ dependencies {
     //Chart
     implementation(libs.mpandroidchart)
 
+    //paging
+    implementation(libs.androidx.paging.compose)
+
     //Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-auth")
