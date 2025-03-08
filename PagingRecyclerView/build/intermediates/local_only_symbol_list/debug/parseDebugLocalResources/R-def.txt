@@ -1,0 +1,4 @@
+R_DEF: Internal format may change without notice
+local
+attr? prv_activatedSkeleton
+styleable PagingRecyclerView prv_activatedSkeleton

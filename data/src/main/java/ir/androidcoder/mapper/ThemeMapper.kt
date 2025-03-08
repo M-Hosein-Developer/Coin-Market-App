@@ -12,7 +12,7 @@ fun DynamicTheme.toThemeEntity(): DynamicThemeEntity = DynamicThemeEntity(
 
 fun DynamicThemeEntity.toThemeModel(): DynamicTheme = DynamicTheme(
 
-    id = this.id,
-    dynamicThemeState = this.dynamicThemeState
+    id = this.id ?: 1,
+    dynamicThemeState = this.dynamicThemeState ?: false
 
 )
