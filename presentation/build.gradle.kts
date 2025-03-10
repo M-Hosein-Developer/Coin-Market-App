@@ -113,6 +113,9 @@ dependencies {
     //paging
     implementation(libs.androidx.paging.compose)
 
+    //refresh
+    implementation(libs.accompanist.swiperefresh)
+
     //Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-auth")
