@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.map
 
 class MainUsecaseImpl(private val repository : MainRepository) : MainUsecase {
 
-    override fun getCryptoList() = repository.getCryptoList()
+    override fun getCryptoListFormServer() = repository.getCryptoListFormServer()
+
+    override fun getCryptoListFormDatabase(query : String) = repository.getCryptoListFormDatabase(query)
 
     override fun getCryptoByIdFromDb(id: Int) = repository.getCryptoByIdFromDb(id)
 

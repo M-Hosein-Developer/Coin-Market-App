@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainUsecase {
 
-    fun getCryptoList() : Flow<PagingData<CryptoCurrencyEntity>>
+    fun getCryptoListFormServer() : Flow<PagingData<CryptoCurrencyEntity>>
+
+    fun getCryptoListFormDatabase(query : String) : Flow<PagingData<CryptoCurrencyEntity>>
 
     fun getCryptoByIdFromDb(id : Int) : Flow<CryptoCurrencyEntity>
 
