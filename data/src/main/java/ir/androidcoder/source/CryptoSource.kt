@@ -8,16 +8,24 @@ import ir.androidcoder.local.dataClass.CoinMarketResponse
 import ir.androidcoder.remote.ApiService
 import ir.androidcoder.remote.ApiServicePrice
 import ir.androidcoder.source.pagingMediator.CryptoPagingMediator
+import ir.androidcoder.source.pagingSource.CryptoPagingSource
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class CryptoSource @Inject constructor(private val apiService: ApiService, private val apiServicePrice: ApiServicePrice, private val dao: RoomDao) {
 
 
-    fun getCryptoList() : Pager<Int , CoinMarketResponse.Data.CryptoCurrency> = Pager(
+    fun getCryptoListFormServer() : Pager<Int , CoinMarketResponse.Data.CryptoCurrency> = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            remoteMediator = CryptoPagingMediator(api = apiService , dao = dao),
-            pagingSourceFactory = { dao.getAlLCoinFromDb() }
+            pagingSourceFactory = { CryptoPagingSource(apiService) }
         )
+
+    fun getCryptoListFormDatabase(query : String) : Pager<Int , CoinMarketResponse.Data.CryptoCurrency> = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        remoteMediator = CryptoPagingMediator(apiService , dao),
+        pagingSourceFactory = {
+            if (query == "") dao.getAlLCoinFromDb() else dao.getCoinByQuery(query)
+        }
+    )
 
 }

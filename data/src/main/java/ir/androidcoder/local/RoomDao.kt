@@ -22,6 +22,9 @@ interface RoomDao {
     @Query("SELECT * FROM CryptoCurrency WHERE id = :id ")
     fun getCoinById(id : Int) : Flow<CoinMarketResponse.Data.CryptoCurrency>
 
+    @Query("SELECT * FROM CryptoCurrency WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'")
+    fun getCoinByQuery(query : String) : PagingSource<Int , CoinMarketResponse.Data.CryptoCurrency>
+
     //Dynamic Theme
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDynamicTheme(state : DynamicTheme)

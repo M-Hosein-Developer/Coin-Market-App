@@ -28,9 +28,14 @@ class MainRepositoryImpl @Inject constructor(
     private val dao: RoomDao
 ) : MainRepository {
 
-    override fun getCryptoList(): Flow<PagingData<CryptoCurrencyEntity>> = source.getCryptoList()
+    override fun getCryptoListFormServer(): Flow<PagingData<CryptoCurrencyEntity>> = source.getCryptoListFormServer()
         .flow
         .map { pagingData -> pagingData.map { it.toCryptoEntity() } }
+
+    override fun getCryptoListFormDatabase(query : String): Flow<PagingData<CryptoCurrencyEntity>> = source.getCryptoListFormDatabase(query)
+        .flow
+        .map { pagingData -> pagingData.map { it.toCryptoEntity() } }
+
 
 
     override fun getCryptoByIdFromDb(id: Int): Flow<CryptoCurrencyEntity> = dao.getCoinById(id).map { it.toCryptoEntity() }
