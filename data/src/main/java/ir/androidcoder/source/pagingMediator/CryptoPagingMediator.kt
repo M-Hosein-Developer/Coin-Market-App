@@ -1,5 +1,6 @@
 package ir.androidcoder.source.pagingMediator
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -7,9 +8,13 @@ import androidx.paging.RemoteMediator
 import ir.androidcoder.local.RoomDao
 import ir.androidcoder.local.dataClass.CoinMarketResponse
 import ir.androidcoder.remote.ApiService
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagingApi::class)
 class CryptoPagingMediator(private val api : ApiService , private val dao: RoomDao) : RemoteMediator<Int, CoinMarketResponse.Data.CryptoCurrency>() {
+
+    private var currentPage = 1
+
 
     override suspend fun load(
         loadType: LoadType,
@@ -21,12 +26,12 @@ class CryptoPagingMediator(private val api : ApiService , private val dao: RoomD
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val lastItem = state.lastItemOrNull()
-                    lastItem?.id?.plus(1) ?: 1
+                    currentPage += 1
+                    currentPage * 20
                 }
             }
 
-            val response = api.getCryptoList(limit = page * 10).data.cryptoCurrencyList
+            val response = api.getCryptoList().data.cryptoCurrencyList
             dao.insertDataFrom(response)
             MediatorResult.Success(endOfPaginationReached = response.isEmpty())
         } catch (e: Exception) {
