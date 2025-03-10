@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.coinmarket.ui.feature
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,10 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +45,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -57,26 +63,28 @@ import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.GreenShadow
 import com.example.coinmarket.ui.theme.Red
 import com.example.coinmarket.ui.theme.RedShadow
-import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.viewModel.MainViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel, navController: NavHostController , onHamburgerClick :() -> Unit) {
 
     //get data
-    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
-    LaunchedEffect(Unit) {
-        while (true) {
-            getCoinList.value = viewModel.getCryptoList.value
-            Log.v("testDataFromVar", getCoinList.toString())
-            delay(2500)
-        }
-    }
+//    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
+//    LaunchedEffect(Unit) {
+//        while (true) {
+//            getCoinList.value = viewModel.getCryptoList
+//            Log.v("testDataFromVar", getCoinList.toString())
+//            delay(2500)
+//        }
+//    }
 
 
     //screen
@@ -89,9 +97,9 @@ fun HomeScreen(viewModel: MainViewModel, navController: NavHostController , onHa
         HomeToolbar{
             onHamburgerClick.invoke()
         }
-        CardSlider(getCoinList.value)
+        CardSlider(viewModel)
         CoinList(
-            getCoinList.value,
+            viewModel,
             { navController.navigate(MyScreens.SearchScreen.route) },
             { navController.navigate(MyScreens.DetailScreen.route + "/" + it) }
         )
@@ -127,7 +135,9 @@ fun HomeToolbar(onHamburgerClick :() -> Unit) {
 
 //card
 @Composable
-fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
+fun CardSlider(viewModel: MainViewModel) {
+
+    val data = viewModel.getCryptoListFormServer.collectAsLazyPagingItems().itemSnapshotList.take(1).toList()
 
     Card(
         modifier = Modifier
@@ -139,22 +149,19 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
             .clip(RoundedCornerShape(24.dp))
     ) {
 
-
-        Box(
-            Modifier
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Gradient1, Gradient2, Gradient3
+        if (data.isNotEmpty())
+            Box(
+                Modifier
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Gradient1, Gradient2, Gradient3
+                            )
                         )
                     )
-                )
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-
-            if (getCoinList.size > 3) {
-
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top,
@@ -169,7 +176,7 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                     ) {
 
                         Text(
-                            text = "$" + (getCoinList[0].quotes[0].price.toString()).subSequence(
+                            text = "$" + (data[0]!!.quotes[0].price.toString()).subSequence(
                                 0,
                                 10
                             ),
@@ -179,7 +186,7 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                         )
 
                         Text(
-                            text = "$" + (getCoinList[0].quotes[0].volume24h.toString()).subSequence(
+                            text = "$" + (data[0]!!.quotes[0].volume24h.toString()).subSequence(
                                 0,
                                 10
                             ) + "  vol",
@@ -188,23 +195,23 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                             color = Color.White
                         )
 
-                        if (getCoinList[0].quotes[0].percentChange24h > 0) {
+                        if (data[0]!!.quotes[0].percentChange24h > 0) {
                             Text(
-                                text = "%+" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                text = "%+" + (data[0]!!.quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.greenXNormalBoldTextStyle
                             )
-                        } else if (getCoinList[0].quotes[0].percentChange24h < 0) {
+                        } else if (data[0]!!.quotes[0].percentChange24h < 0) {
                             Text(
-                                text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                text = "%" + (data[0]!!.quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.redXNormalBoldTextStyle
                             )
                         } else {
                             Text(
-                                text = "%" + (getCoinList[0].quotes[0].percentChange24h).toString()
+                                text = "%" + (data[0]!!.quotes[0].percentChange24h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.xNormalTextStyle,
@@ -222,13 +229,7 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
                     )
                 }
 
-            } else {
-                Loader()
-            }
-
-
         }
-
     }
 
 
@@ -237,10 +238,21 @@ fun CardSlider(getCoinList: List<CryptoCurrencyEntity>) {
 //crypto list and item
 @Composable
 fun CoinList(
-    getCoinList: List<CryptoCurrencyEntity>,
+    viewModel: MainViewModel,
     onClickedSearch: () -> Unit,
     onClickedItem: (Int) -> Unit
 ) {
+
+    val data = viewModel.getCryptoListFormServer.collectAsLazyPagingItems()
+    val isRefresh = remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        while (true){
+            data.refresh()
+            delay(10000)
+        }
+    }
 
     Row(
         Modifier
@@ -274,19 +286,33 @@ fun CoinList(
         verticalArrangement = Arrangement.Center
     ) {
 
-        if (getCoinList.size >= 10) {
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefresh.value),
+            onRefresh = {
+                isRefresh.value = true
+                data.refresh()
+                scope.launch {
+                    delay(2000)
+                    isRefresh.value = false
+                }
+            }
+        ) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                items(10) { it ->
-                    CoinListItem(getCoinList[it]) { onClickedItem.invoke(it) }
+                items(items = data.itemSnapshotList.take(10)) {
+                    CoinListItem(it!!) { onClickedItem.invoke(it) }
+                }
+
+                data.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> item { Loading() }
+                        loadState.append is LoadState.Loading -> item { Loading() }
+                    }
                 }
             }
-        } else {
-            Loader()
         }
-
     }
 }
 
@@ -332,19 +358,19 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            if (coin.quotes[0].percentChange24h > 0) {
+            if (coin.quotes[0].percentChange1h > 0) {
                 Text(
-                    text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 3),
                     style = Style.greenNormalTextStyle
                 )
-            } else if (coin.quotes[0].percentChange24h < 0) {
+            } else if (coin.quotes[0].percentChange1h < 0) {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 3),
                     style = Style.redNormalTextStyle
                 )
             } else {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%" + coin.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     style = Style.baseTextStyle
                 )
             }

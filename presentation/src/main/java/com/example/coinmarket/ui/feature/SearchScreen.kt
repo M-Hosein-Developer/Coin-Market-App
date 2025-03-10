@@ -1,9 +1,13 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.coinmarket.ui.feature
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -31,6 +36,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -43,23 +51,25 @@ import com.example.coinmarket.ui.MainToolbar
 import com.example.coinmarket.ui.style.Style
 import com.example.coinmarket.ui.theme.Green
 import com.example.coinmarket.ui.theme.Red
-import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.MyScreens
 import com.example.coinmarket.util.chartUrl
 import com.example.coinmarket.util.imageUrl
 import com.example.coinmarket.viewModel.MainViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
 
-    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
-    val filterList = arrayListOf<CryptoCurrencyEntity>()
+    viewModel.getCryptoListFormDatabase()
+    val getCoinList = remember { mutableStateOf<LazyPagingItems<CryptoCurrencyEntity>?>(null) }
 
     LaunchedEffect(Unit) {
         while (true) {
-            getCoinList.value = viewModel.getCryptoList.value
+
             Log.v("testDataFromVar", getCoinList.toString())
             delay(2500)
         }
@@ -78,24 +88,12 @@ fun SearchScreen(viewModel: MainViewModel, navController: NavHostController) {
             hint = stringResource(R.string.hint_search_box)
         ) {
             viewModel.search.value = it
-        }
-
-
-        getCoinList.value.forEach {
-            if (it.name.lowercase().contains(viewModel.search.value) || it.symbol.lowercase()
-                    .contains(viewModel.search.value)
-            ) {
-                filterList.add(it)
-            }
+            viewModel.getCryptoListFormDatabase()
         }
 
 
         CryptoList(
-            if (viewModel.search.value == "") {
-                getCoinList.value
-            } else {
-                filterList
-            }
+            viewModel
         ) {
             navController.navigate(MyScreens.DetailScreen.route + "/" + it)
         }
@@ -120,43 +118,54 @@ fun SearchBox(edtValue: String, icon: ImageVector, hint: String, onValueChanges:
 
 
 //crypto list and item
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun CryptoList(
-    getCoinList: List<CryptoCurrencyEntity>,
+    viewModel: MainViewModel,
     onClickedItem: (Int) -> Unit
 ) {
 
-    if (getCoinList.isNotEmpty()) {
+    val data = viewModel.getCryptoListFormDatabase.value?.collectAsLazyPagingItems()
+    val isRefresh = remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
+    LaunchedEffect(Unit) {
+        while (true){
+            data?.refresh()
+            delay(10000)
+        }
+    }
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefresh.value),
+        onRefresh = {
+            isRefresh.value = true
+            data?.refresh()
+            scope.launch {
+                delay(2000)
+                isRefresh.value = false
+            }
+        }
+    ) {
         LazyColumn(
-
             Modifier
                 .padding(horizontal = 20.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(getCoinList.size) {
-                CryptoListItem(getCoinList[it], onClickedItem)
+            if (data != null) {
+                items(data.itemCount) { index ->
+                    data[index]?.let { CryptoListItem(it, onClickedItem) }
+                }
+                data.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> item { Loading() }
+                        loadState.append is LoadState.Loading -> item { Loading() }
+                    }
+                }
             }
         }
-
-    } else {
-
-        Column(
-            Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Loading()
-            Text(
-                text = stringResource(R.string.no_crypto),
-                style = Style.baseTextStyle
-            )
-        }
-
     }
-
-
 }
 
 @Composable
@@ -252,13 +261,18 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 @Composable
 fun Loading() {
 
-    val composition by rememberLottieComposition(
-        LottieCompositionSpec.RawRes(R.raw.loading_anime)
-    )
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        val composition by rememberLottieComposition(
+            LottieCompositionSpec.RawRes(R.raw.loading_anime)
+        )
 
-    LottieAnimation(
-        composition = composition,
-        iterations = LottieConstants.IterateForever,
-        modifier = Modifier.size(150.dp),
-    )
+        LottieAnimation(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier.size(150.dp),
+        )
+    }
 }
