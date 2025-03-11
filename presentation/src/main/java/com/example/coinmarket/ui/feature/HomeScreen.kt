@@ -336,7 +336,7 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
                 .background(
-                    if (coin.quotes[0].percentChange24h > 0) {
+                    if (coin.quotes[0].percentChange1h > 0) {
                         GreenShadow
                     } else {
                         RedShadow
