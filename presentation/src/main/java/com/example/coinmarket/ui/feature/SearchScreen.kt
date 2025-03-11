@@ -199,22 +199,22 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                 modifier = Modifier.padding(bottom = 8.dp),
             )
 
-            if (coin.quotes[0].percentChange24h > 0) {
+            if (coin.quotes[0].percentChange1h > 0) {
                 Text(
-                    text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%+" + coin.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     style = Style.greenNormalTextStyle
                 )
-            } else if (coin.quotes[0].percentChange24h < 0) {
+            } else if (coin.quotes[0].percentChange1h < 0) {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                    text = "%" + coin.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     style = Style.redNormalTextStyle
                 )
             } else {
                 Text(
-                    text = if (coin.quotes[0].percentChange24h.toString().length > 4)
-                        "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 4)
+                    text = if (coin.quotes[0].percentChange1h.toString().length > 4)
+                        "%" + coin.quotes[0].percentChange1h.toString().subSequence(0, 4)
                     else
-                        "%" + coin.quotes[0].percentChange24h.toString(),
+                        "%" + coin.quotes[0].percentChange1h.toString(),
                     style = Style.baseTextStyle
                 )
             }
@@ -227,7 +227,7 @@ fun CryptoListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                 .build(), contentDescription = null,
             modifier = Modifier.size(120.dp),
             colorFilter =
-            if (coin.quotes[0].percentChange24h > 0) {
+            if (coin.quotes[0].percentChange1h > 0) {
                 ColorFilter.tint(Green)
             } else {
                 ColorFilter.tint(Red)

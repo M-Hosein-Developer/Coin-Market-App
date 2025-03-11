@@ -312,7 +312,7 @@ fun CoinItem(data: CryptoCurrencyEntity) {
                 .clip(RoundedCornerShape(12.dp))
                 .size(55.dp)
                 .background(
-                    if (data.quotes[0].percentChange24h > 0) {
+                    if (data.quotes[0].percentChange1h > 0) {
                         GreenShadow
                     } else {
                         RedShadow
@@ -345,19 +345,19 @@ fun CoinItem(data: CryptoCurrencyEntity) {
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
-                if (data.quotes[0].percentChange24h > 0) {
+                if (data.quotes[0].percentChange1h > 0) {
                     Text(
-                        text = "%+" + data.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                        text = "%+" + data.quotes[0].percentChange1h.toString().subSequence(0, 3),
                         color = Green
                     )
-                } else if (data.quotes[0].percentChange24h < 0) {
+                } else if (data.quotes[0].percentChange1h < 0) {
                     Text(
-                        text = "%" + data.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                        text = "%" + data.quotes[0].percentChange1h.toString().subSequence(0, 4),
                         color = Red
                     )
                 } else {
                     Text(
-                        text = "%" + data.quotes[0].percentChange24h.toString().subSequence(0, 4),
+                        text = "%" + data.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     )
                 }
 

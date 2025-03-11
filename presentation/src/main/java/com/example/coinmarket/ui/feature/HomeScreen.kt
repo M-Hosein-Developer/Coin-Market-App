@@ -195,23 +195,23 @@ fun CardSlider(viewModel: MainViewModel) {
                             color = Color.White
                         )
 
-                        if (data[0]!!.quotes[0].percentChange24h > 0) {
+                        if (data[0]!!.quotes[0].percentChange1h > 0) {
                             Text(
-                                text = "%+" + (data[0]!!.quotes[0].percentChange24h).toString()
+                                text = "%+" + (data[0]!!.quotes[0].percentChange1h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.greenXNormalBoldTextStyle
                             )
-                        } else if (data[0]!!.quotes[0].percentChange24h < 0) {
+                        } else if (data[0]!!.quotes[0].percentChange1h < 0) {
                             Text(
-                                text = "%" + (data[0]!!.quotes[0].percentChange24h).toString()
+                                text = "%" + (data[0]!!.quotes[0].percentChange1h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.redXNormalBoldTextStyle
                             )
                         } else {
                             Text(
-                                text = "%" + (data[0]!!.quotes[0].percentChange24h).toString()
+                                text = "%" + (data[0]!!.quotes[0].percentChange1h).toString()
                                     .subSequence(0, 4),
                                 Modifier.padding(start = 24.dp, bottom = 8.dp),
                                 style = Style.xNormalTextStyle,
@@ -360,12 +360,12 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
 
             if (coin.quotes[0].percentChange1h > 0) {
                 Text(
-                    text = "%+" + coin.quotes[0].percentChange24h.toString().subSequence(0, 3),
+                    text = "%+" + coin.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     style = Style.greenNormalTextStyle
                 )
             } else if (coin.quotes[0].percentChange1h < 0) {
                 Text(
-                    text = "%" + coin.quotes[0].percentChange24h.toString().subSequence(0, 3),
+                    text = "%" + coin.quotes[0].percentChange1h.toString().subSequence(0, 3),
                     style = Style.redNormalTextStyle
                 )
             } else {
@@ -385,7 +385,7 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
             contentDescription = null,
             modifier = Modifier.size(120.dp),
             colorFilter =
-            if (coin.quotes[0].percentChange24h > 0) {
+            if (coin.quotes[0].percentChange1h > 0) {
                 ColorFilter.tint(Green)
             } else {
                 ColorFilter.tint(Red)
@@ -407,12 +407,8 @@ fun CoinListItem(coin: CryptoCurrencyEntity, onClickedItem: (Int) -> Unit) {
                 text = coin.ath.toString().subSequence(0, 7).toString() + " " + coin.symbol,
                 style = Style.baseTextStyle.copy(color = MaterialTheme.colorScheme.onBackground)
             )
-
-
         }
-
     }
-
 }
 
 //loading animation
