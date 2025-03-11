@@ -396,7 +396,7 @@ fun CoinItem(data: CryptoCurrencyEntity) {
 @Composable
 fun Chart(data: CryptoCurrencyEntity) {
 
-    val checkData = data.quotes[0].percentChange24h
+    val checkData = data.quotes[0].percentChange1h
 
     val graphData = listOf(
 
@@ -527,7 +527,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange1h.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
@@ -540,7 +540,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange24h.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
@@ -553,7 +553,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange7d.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
@@ -579,7 +579,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange30d.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
@@ -592,7 +592,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange60d.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
@@ -605,7 +605,7 @@ fun DataToShow(data: CryptoCurrencyEntity, onMoreClicked: (String) -> Unit) {
                     else
                         data.quotes[0].percentChange90d.toString() + "%",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = if (data.quotes[0].percentChange24h > 0) {
+                    color = if (data.quotes[0].percentChange1h > 0) {
                         Green
                     } else {
                         Red
