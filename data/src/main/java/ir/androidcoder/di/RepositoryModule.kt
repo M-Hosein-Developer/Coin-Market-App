@@ -10,6 +10,7 @@ import ir.androidcoder.remote.ApiServicePrice
 import ir.androidcoder.repositories.MainRepositoryImpl
 import ir.androidcoder.repositories.ThemeRepositoryImpl
 import ir.androidcoder.source.CryptoSource
+import ir.androidcoder.source.ThemeSource
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -18,10 +19,10 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun mainRepository(source: CryptoSource ,apiService: ApiService , apiServicePrice: ApiServicePrice , dao : RoomDao) : MainRepositoryImpl = MainRepositoryImpl(source ,apiService , apiServicePrice , dao)
+    fun mainRepository(source: CryptoSource) : MainRepositoryImpl = MainRepositoryImpl(source)
 
     @Provides
     @Singleton
-    fun themeRepository(dao: RoomDao) : ThemeRepositoryImpl = ThemeRepositoryImpl(dao)
+    fun themeRepository(source: ThemeSource) : ThemeRepositoryImpl = ThemeRepositoryImpl(source)
 
 }
