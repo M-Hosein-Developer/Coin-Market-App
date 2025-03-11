@@ -21,12 +21,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MainRepositoryImpl @Inject constructor(
-    private val source : CryptoSource,
-    private val apiService: ApiService,
-    private val apiServicePrice: ApiServicePrice,
-    private val dao: RoomDao
-) : MainRepository {
+class MainRepositoryImpl @Inject constructor(private val source : CryptoSource, ) : MainRepository {
 
     override fun getCryptoListFormServer(): Flow<PagingData<CryptoCurrencyEntity>> = source.getCryptoListFormServer()
         .flow
@@ -37,30 +32,24 @@ class MainRepositoryImpl @Inject constructor(
         .map { pagingData -> pagingData.map { it.toCryptoEntity() } }
 
 
+    override fun getCryptoByIdFromDb(id: Int): Flow<CryptoCurrencyEntity> =
+        source.getCryptoByIdFromDb(id).map { it.toCryptoEntity() }
 
-    override fun getCryptoByIdFromDb(id: Int): Flow<CryptoCurrencyEntity> = dao.getCoinById(id).map { it.toCryptoEntity() }
 
-    override fun getDollarPrice(): Flow<PriceEntity> = flow {
-        while (true){
-            emit(apiServicePrice.getPriceDollar().toPriceEntity())
-            delay(10000)
-        }
-    }.flowOn(Dispatchers.IO)
+    override fun getDollarPrice(): Flow<PriceEntity> =
+        source.getDollarPrice().map { it.toPriceEntity() }
 
 
     //Bookmark
     override suspend fun insertBookmark(data: CryptoCurrencyEntity) {
-        dao.insertDataBookmark(data.toCryptoModel())
+        source.insertBookmark(data.toCryptoModel())
     }
 
-    override fun getBookmarkList(): Flow<List<CryptoCurrencyEntity>> = flow {
-        dao.getAlLBookmark().collect{
-            emit(it.map { data -> data.toBookmarkEntity() })
-        }
-    }.flowOn(Dispatchers.IO)
+    override fun getBookmarkList(): Flow<List<CryptoCurrencyEntity>> =
+        source.getBookmarkList()
 
     override suspend fun deleteBookmark(id: Int) {
-        dao.deleteBookmarkListById(id)
+        source.deleteBookmark(id)
     }
 
 
