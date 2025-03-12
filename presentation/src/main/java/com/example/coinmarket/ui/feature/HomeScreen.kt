@@ -76,17 +76,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(viewModel: MainViewModel, navController: NavHostController , onHamburgerClick :() -> Unit) {
 
-    //get data
-//    val getCoinList = remember { mutableStateOf(EmptyCoinList) }
-//    LaunchedEffect(Unit) {
-//        while (true) {
-//            getCoinList.value = viewModel.getCryptoList
-//            Log.v("testDataFromVar", getCoinList.toString())
-//            delay(2500)
-//        }
-//    }
-
-
     //screen
     Column(
         Modifier
