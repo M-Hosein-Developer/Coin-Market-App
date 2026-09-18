@@ -105,7 +105,7 @@ fun SettingScreen(navController: NavHostController, viewModel: ThemeViewModel) {
         )
     }
 
-    checked.value = viewModel.themeState.collectAsState().value.dynamicThemeState
+    checked.value = viewModel.themeState.collectAsState().value.dynamicThemeState!!
 
 }
 

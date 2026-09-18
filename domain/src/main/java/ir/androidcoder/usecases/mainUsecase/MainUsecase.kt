@@ -1,14 +1,15 @@
 package ir.androidcoder.usecases.mainUsecase
 
+import androidx.paging.PagingData
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MainUsecase {
 
-    fun getCryptoList() : Flow<List<CryptoCurrencyEntity>>
+    fun getCryptoListFormServer() : Flow<PagingData<CryptoCurrencyEntity>>
 
-    fun getCryptoListFromDb() : Flow<List<CryptoCurrencyEntity>>
+    fun getCryptoListFormDatabase(query : String) : Flow<PagingData<CryptoCurrencyEntity>>
 
     fun getCryptoByIdFromDb(id : Int) : Flow<CryptoCurrencyEntity>
 

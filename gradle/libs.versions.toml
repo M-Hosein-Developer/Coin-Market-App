@@ -1,4 +1,5 @@
 [versions]
+accompanistSwiperefresh = "0.33.2-alpha"
 activityCompose = "1.8.2"
 androidxJunit = "1.2.1"
 appcompat = "1.7.0"
@@ -22,10 +23,12 @@ material = "1.12.0"
 material3 = "1.2.1"
 mpandroidchart = "v3.1.0"
 navigationCompose = "2.7.7"
+pagingRuntimeKtx = "3.3.2"
 retrofit = "2.9.0"
 roomKtx = "2.6.1"
 uiTestJunit4 = "1.6.5"
 activityKtx = "1.8.0"
+pagingCommonJvm = "3.3.6"
 
 agp = "9.4.0"
 kotlin = "2.1.10"
@@ -36,6 +39,7 @@ mockitoKotlin = "4.0.0"
 archCoreTesting = "2.1.0"
 
 [libraries]
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
@@ -48,6 +52,9 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx"
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntimeKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntimeKtx" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
@@ -78,7 +85,6 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

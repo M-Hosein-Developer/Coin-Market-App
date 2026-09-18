@@ -97,7 +97,7 @@ class MainActivity : ComponentActivity() {
         initTheme()
 
         setContent {
-            CoinMarketTheme(dynamicColor = themeViewModel.themeState.collectAsState().value.dynamicThemeState) {
+            CoinMarketTheme(dynamicColor = themeViewModel.themeState.collectAsState().value.dynamicThemeState!!) {
                 UiScreen(viewModel, signInUpViewModel, {
                     signInUser(it)
                 }, {

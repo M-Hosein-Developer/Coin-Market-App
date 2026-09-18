@@ -5,60 +5,43 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.room.Query
 import com.example.coinmarket.util.EmptyCoinList
 import com.example.coinmarket.util.EmptyCoinListBook
 import com.example.coinmarket.util.EmptyDollar
-import com.example.coinmarket.util.NetworkChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androidcoder.entities.CryptoCurrencyEntity
 import ir.androidcoder.entities.PriceEntity
 import ir.androidcoder.usecases.mainUsecase.MainUsecase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val usecase: MainUsecase, context: Context) : ViewModel() {
+class MainViewModel @Inject constructor(private val usecase: MainUsecase) : ViewModel() {
 
-    val getCryptoList = mutableStateOf(EmptyCoinList)
     val getCryptoBookmarkList = mutableStateOf(EmptyCoinListBook)
-    val getDollarPrice = MutableStateFlow<PriceEntity>(EmptyDollar)
+    val getCryptoListFormDatabase = mutableStateOf<Flow<PagingData<CryptoCurrencyEntity>>?>(null)
+    val getDollarPrice = MutableStateFlow(EmptyDollar)
     val search = mutableStateOf("")
 
     init {
-        if (NetworkChecker(context).internetConnection){
-            getCryptoList()
-        }else{
-            getCryptoListFromDb()
-        }
         getCryptoById(-1){}
         getDollarPrice()
         getCryptoBookmarkList()
     }
 
-    @VisibleForTesting
-    fun getCryptoList() {
-        viewModelScope.launch {
-            usecase.getCryptoList()
-                .catch {  }
-                .collect {
-                    getCryptoList.value = it
-                }
-        }
-    }
 
-    @VisibleForTesting
-    fun getCryptoListFromDb() {
 
-        viewModelScope.launch {
-            usecase.getCryptoListFromDb()
-                .catch { }
-                .collect {
-                    getCryptoList.value = it
-                }
-        }
+    val getCryptoListFormServer = usecase.getCryptoListFormServer().cachedIn(viewModelScope)
 
+    fun getCryptoListFormDatabase(){
+        getCryptoListFormDatabase.value = usecase.getCryptoListFormDatabase(search.value)
+            .cachedIn(viewModelScope)
     }
 
     fun getCryptoById(id: Int , getCryptoById :(CryptoCurrencyEntity) -> Unit) {

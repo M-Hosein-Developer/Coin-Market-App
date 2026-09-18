@@ -38,7 +38,7 @@ class ThemeViewModel @Inject constructor(private val usecase: ThemeUsecase , pri
     fun getDynamicThemeState() = viewModelScope.launch {
         val entity = usecase.getDynamicThemeState() ?: DynamicThemeEntity(1 , false)
         themeState.value = entity
-        switchState = entity.dynamicThemeState
+        switchState = entity.dynamicThemeState ?: false
     }
 
     fun saveLanguagePreference(language: String) {

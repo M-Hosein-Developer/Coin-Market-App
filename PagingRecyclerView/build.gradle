@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'ir.androidcoder.pagingrecyclerviewlibrary'
+    compileSdk build_versions.compile_sdk
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    defaultConfig {
+        minSdk build_versions.min_sdk
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation deps.core_ktx
+    implementation deps.app_compat
+    implementation deps.material
+
+    // Paging library
+    implementation 'androidx.paging:paging-runtime:3.3.4'
+
+    // Skeleton shimmer effect
+    implementation 'com.ericktijerou.koleton:koleton:1.0.0-beta01'
+    implementation deps.shimmer
+}

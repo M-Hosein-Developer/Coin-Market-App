@@ -13,4 +13,7 @@ dependencies {
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
+    //paging
+    implementation(libs.androidx.paging.common)
+
 }

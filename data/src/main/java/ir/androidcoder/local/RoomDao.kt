@@ -1,5 +1,6 @@
 package ir.androidcoder.local
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,10 +17,13 @@ interface RoomDao {
     suspend fun insertDataFrom(data: List<CoinMarketResponse.Data.CryptoCurrency>)
 
     @Query("SELECT * FROM CryptoCurrency")
-    suspend fun getAlLCoinFromDb(): List<CoinMarketResponse.Data.CryptoCurrency>
+    fun getAlLCoinFromDb(): PagingSource<Int , CoinMarketResponse.Data.CryptoCurrency>
 
     @Query("SELECT * FROM CryptoCurrency WHERE id = :id ")
     fun getCoinById(id : Int) : Flow<CoinMarketResponse.Data.CryptoCurrency>
+
+    @Query("SELECT * FROM CryptoCurrency WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'")
+    fun getCoinByQuery(query : String) : PagingSource<Int , CoinMarketResponse.Data.CryptoCurrency>
 
     //Dynamic Theme
     @Insert(onConflict = OnConflictStrategy.REPLACE)
