@@ -15,6 +15,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CoinMarket"
-include(":presentation")
+include(":app")
 include(":data")
 include(":domain")

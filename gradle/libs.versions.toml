@@ -10,8 +10,8 @@ coreKtx = "1.12.0"
 espressoCore = "3.5.1"
 espressoCoreVersion = "3.6.1"
 firebaseBom = "32.7.3"
-hiltAndroid = "2.50"
-hiltAndroidCompiler = "2.50"
+hiltAndroid = "2.60.1"
+hiltAndroidCompiler = "2.60.1"
 hiltNavigationFragment = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -27,6 +27,13 @@ roomKtx = "2.6.1"
 uiTestJunit4 = "1.6.5"
 activityKtx = "1.8.0"
 
+agp = "9.4.0"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.30"
+kotlinxCoroutinesTest = "1.6.4"
+mockito = "4.6.1"
+mockitoKotlin = "4.0.0"
+archCoreTesting = "2.1.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -67,7 +74,18 @@ mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 
 
 [plugins]
-
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
