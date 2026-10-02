@@ -1,4 +1,4 @@
-package com.example.coinmarket.util
+package ir.android.ui.util
 
 import ir.androidcoder.Model.CryptoCurrency
 import ir.androidcoder.Model.Price

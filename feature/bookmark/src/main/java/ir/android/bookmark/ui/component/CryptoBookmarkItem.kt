@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import com.example.coinmarket.util.EmptyCoin
 import ir.android.ui.style.Style
 import ir.android.ui.theme.CoinMarketTheme
 import ir.android.ui.theme.Green
 import ir.android.ui.theme.Red
+import ir.android.ui.util.EmptyCoin
 import ir.android.ui.util.chartUrl
 import ir.android.ui.util.imageUrl
 import ir.androidcoder.Model.CryptoCurrency

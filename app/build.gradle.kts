@@ -48,9 +48,11 @@ android {
 
 dependencies {
 
+    implementation(project(":ui"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":feature:bookmark"))
+    implementation(project(":feature:home"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
