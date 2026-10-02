@@ -18,3 +18,6 @@ rootProject.name = "CoinMarket"
 include(":app")
 include(":data")
 include(":domain")
+include(":feature")
+include(":feature:bookmark")
+include(":ui")
