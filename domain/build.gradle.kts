@@ -13,4 +13,7 @@ dependencies {
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
+    //Hilt
+    implementation(libs.hilt.core)
+
 }

@@ -1,9 +1,9 @@
-package ir.androidcoder.local.dataClass
+package ir.androidcoder.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class BookmarkResponse(
+data class BookmarkResponseDto(
     val `data`: Data,
     val status: Status
 ) {

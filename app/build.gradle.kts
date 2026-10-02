@@ -82,11 +82,12 @@ dependencies {
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.kotlinx.collections.immutable)
 
     //Dagger Hilt
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.fragment)
 
     //Retrofit
     implementation(libs.retrofit)
